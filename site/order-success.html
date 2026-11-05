@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Request Received | FUTURE ROBOTIX</title>
+  <meta name="description" content="Your order request has reached FUTURE ROBOTIX. Our team will contact you to plan a visit and confirm the final price.">
+  <meta name="robots" content="noindex, nofollow">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/design.css">
+</head>
+<body>
+  <header class="nav" id="site-nav" role="banner"></header>
+
+  <main class="page-content" id="main">
+    <section class="section" aria-labelledby="success-heading">
+      <div class="container" style="text-align:center;max-width:640px;margin:0 auto">
+        <div style="font-size:4rem;margin-bottom:var(--s-6)" aria-hidden="true">✅</div>
+        <p class="eyebrow">Request sent</p>
+        <h1 class="h1 mt-4" id="success-heading">We have your request.</h1>
+        <p class="lead text-mid mt-4">Thank you. Your order request has been sent to our team.</p>
+
+        <!-- Reference & summary (populated from sessionStorage) -->
+        <div class="price-panel" style="text-align:left;margin-top:var(--s-8)" id="order-summary">
+          <p class="eyebrow">Your request</p>
+          <div style="margin-top:var(--s-5);display:flex;flex-direction:column;gap:var(--s-3)">
+            <div class="price-line"><span class="price-line__label">Reference</span><span class="price-line__value" id="ref-number">—</span></div>
+            <div class="price-line"><span class="price-line__label">Robot</span><span class="price-line__value" id="ref-robot">—</span></div>
+          </div>
+        </div>
+
+        <!-- What happens next -->
+        <div style="text-align:left;margin-top:var(--s-8)">
+          <h2 class="h2">What happens next.</h2>
+          <div class="steps-list mt-5" style="margin-top:var(--s-6)">
+            <div class="step reveal">
+              <div class="step__num" aria-hidden="true"></div>
+              <div class="step__body">
+                <p class="step__title">You get a confirmation.</p>
+                <p class="text-mid">We send a confirmation to the email you gave.</p>
+              </div>
+            </div>
+            <div class="step reveal" style="transition-delay:80ms">
+              <div class="step__num" aria-hidden="true"></div>
+              <div class="step__body">
+                <p class="step__title">We contact you.</p>
+                <p class="text-mid">Our team will reach out within 1 to 2 business days to arrange an on-site visit.</p>
+              </div>
+            </div>
+            <div class="step reveal" style="transition-delay:160ms">
+              <div class="step__num" aria-hidden="true"></div>
+              <div class="step__body">
+                <p class="step__title">We visit.</p>
+                <p class="text-mid">We look at your space and talk through the details.</p>
+              </div>
+            </div>
+            <div class="step reveal" style="transition-delay:240ms">
+              <div class="step__num" aria-hidden="true"></div>
+              <div class="step__body">
+                <p class="step__title">We confirm the price.</p>
+                <p class="text-mid">We share the final price and terms in writing before anything is final.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="note-box" style="text-align:left;margin-top:var(--s-7)">
+          <strong class="text-hi">This is a request, not a final sale.</strong> Nothing is charged until you accept our written confirmation.
+        </div>
+
+        <div class="flex wrap gap-3 items-center" style="margin-top:var(--s-8);justify-content:center">
+          <a href="index.html" class="btn btn--primary">Back to home</a>
+          <a href="robots.html" class="btn btn--secondary">Explore more robots</a>
+          <a href="contact.html" class="btn btn--secondary">Contact us</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer" id="site-footer" role="contentinfo"></footer>
+  <script src="js/components.js"></script>
+  <script src="js/main.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const ref = sessionStorage.getItem('fr_order_ref') || '—';
+      const robot = sessionStorage.getItem('fr_order_robot') || '—';
+      document.getElementById('ref-number').textContent = ref;
+      document.getElementById('ref-robot').textContent = robot;
+    });
+  </script>
+</body>
+</html>
