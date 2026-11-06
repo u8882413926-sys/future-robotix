@@ -1,4 +1,4 @@
-/**
+﻿/**
  * FUTURE ROBOTIX — Site Content & Configuration
  * All confirmed facts are filled in. [FILL: ...] items are still missing.
  * Used by main.js and all pages.
@@ -8,7 +8,7 @@ const SITE = {
   name: 'FUTURE ROBOTIX',
   wordmark: 'FUTURE',
   tagline: 'The future you imagined as a child. Built today.',
-  domain: 'futurerobotics.in',
+  domain: 'futurerobotix.in',
 
   // Confirmed
   udyam: 'UDYAM-DL-03-0091615',
@@ -39,9 +39,9 @@ const SITE = {
     phone: null,      // [FILL: official phone number]
     whatsapp: null,   // [FILL: WhatsApp business number]
     hours: null,      // [FILL: working hours]
-    emailHello: `hello@futurerobotics.in`,
-    emailOrders: `orders@futurerobotics.in`,
-    emailSupport: `support@futurerobotics.in`,
+    emailHello: `hello@futurerobotix.in`,
+    emailOrders: `orders@futurerobotix.in`,
+    emailSupport: `support@futurerobotix.in`,
   },
 
   // Infrastructure (all missing)
@@ -65,3 +65,4 @@ const SITE = {
 
 // Export for use in modules
 if (typeof module !== 'undefined') module.exports = SITE;
+

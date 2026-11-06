@@ -1,4 +1,4 @@
-/**
+﻿/**
  * FUTURE ROBOTIX — components.js
  * Injects nav and footer into every page via id="site-nav" and id="site-footer"
  */
@@ -7,7 +7,7 @@ const SITE = {
   wordmark: 'FUTURE ROBOTIX',
   udyam: 'UDYAM-DL-03-0091615',
   address: 'M-28, Top Floor, Sham Nagar, Khyala Road, New Delhi 110018',
-  emails: { hello: 'hello@futurerobotics.in', orders: 'orders@futurerobotics.in', support: 'support@futurerobotics.in' },
+  emails: { hello: 'hello@futurerobotix.in', orders: 'orders@futurerobotix.in', support: 'support@futurerobotix.in' },
   phone: null,
   year: new Date().getFullYear(),
 };
@@ -118,3 +118,4 @@ document.addEventListener('DOMContentLoaded', () => {
   injectNav();
   injectFooter();
 });
+

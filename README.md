@@ -1,4 +1,4 @@
-# FUTURE ROBOTIX — Website
+﻿# FUTURE ROBOTIX — Website
 
 Static multi-page website. No build step. Open `index.html` in any browser.
 
@@ -109,7 +109,7 @@ Quick reference:
 
 | Code | Missing item |
 |---|---|
-| A1 | Domain → confirmed as `futurerobotics.in` ✓ |
+| A1 | Domain → confirmed as `futurerobotix.in` ✓ |
 | A2 | Official phone number |
 | A3 | WhatsApp business number |
 | A4 | Working hours |
@@ -154,7 +154,8 @@ Quick reference:
 - ✅ Registered address: M-28, Top Floor, Sham Nagar, Khyala Road, New Delhi 110018
 - ✅ No GSTIN
 - ✅ Grievance Officer name: Ms. Shikha Choudhary
-- ✅ Domain: futurerobotics.in
-- ✅ Email addresses: hello@ / orders@ / support@ @futurerobotics.in
+- ✅ Domain: futurerobotix.in
+- ✅ Email addresses: hello@ / orders@ / support@ @futurerobotix.in
 - ✅ Product portfolio: 12 configurations across 5 families
 - ✅ Legal drafts: Privacy Policy, Terms of Use, Order Terms (awaiting lawyer review)
+

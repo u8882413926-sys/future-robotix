@@ -1,7 +1,0 @@
-User-agent: *
-Allow: /
-
-Disallow: /order-success.html
-Disallow: /404.html
-
-Sitemap: https://futurerobotics.in/sitemap.xml
