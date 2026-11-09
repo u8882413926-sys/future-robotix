@@ -20,7 +20,7 @@ const SITE = {
   founder: {
     name: 'Uday Sahu',
     role: 'Founder and CEO',
-    shortBio: 'Uday studies B.Tech in VLSI (Electrical Engineering) at VIPS-TC, GGSIPU. He is the Team Leader of the VIPS-TC Robotics Club. He works on robotics, embedded systems and AI-driven hardware.',
+    shortBio: 'Uday studies B.Tech in VLSI (Electrical Engineering) at VIPS-TC, GGSIPU. He works on autonomous robotics, embedded motor control systems, custom PCB avionics and AI-driven hardware.',
     story: null,        // [FILL: founder story]
     achievements: null, // [FILL: founder achievements]
     linkedin: null,     // [FILL: founder LinkedIn URL]

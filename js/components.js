@@ -1,4 +1,4 @@
-﻿/**
+/**
  * FUTURE ROBOTIX — components.js
  * Injects nav and footer into every page via id="site-nav" and id="site-footer"
  */

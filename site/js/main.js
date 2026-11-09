@@ -14,14 +14,13 @@ document.addEventListener('DOMContentLoaded', () => {
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  // Mobile menu
+  // Mobile menu (popover card)
   let menuOpen = false;
   function setMenu(open) {
     menuOpen = open;
     if (!links || !burger) return;
     links.classList.toggle('open', open);
     burger.setAttribute('aria-expanded', String(open));
-    document.body.style.overflow = open ? 'hidden' : '';
     // Animate hamburger → ✕
     const spans = burger.querySelectorAll('span');
     if (open) {
@@ -33,9 +32,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   }
 
-  burger?.addEventListener('click', () => setMenu(!menuOpen));
+  burger?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    setMenu(!menuOpen);
+  });
   links?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => setMenu(false)));
   document.addEventListener('keydown', e => { if (e.key === 'Escape' && menuOpen) { setMenu(false); burger?.focus(); } });
+  document.addEventListener('click', (e) => {
+    if (menuOpen && links && !links.contains(e.target) && !burger?.contains(e.target)) {
+      setMenu(false);
+    }
+  });
 
   /* ---- 2. Scroll reveals ---- */
   if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
