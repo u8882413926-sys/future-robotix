@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en-IN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Commercial Robots for Companies & Institutions | FUTURE ROBOTIX</title>
+  <meta name="description" content="Explore FUTURE ROBOTIX commercial robots. Select a model to configure capabilities, preview real-time estimates, and request an on-site demonstration in India.">
+  <link rel="canonical" href="https://futurerobotix.in/robots">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/design.css" onerror="this.onerror=null;this.href='../css/design.css'">
+</head>
+<body>
+  <!-- Global Navigation -->
+  <header class="nav" id="site-nav" role="banner"></header>
+
+  <main class="page-content" id="main">
+    
+    <!-- Hero / Header -->
+    <div class="page-hero" style="background:var(--bg-0);padding:calc(72px + var(--s-8)) 0 var(--s-6);border-bottom:1px solid var(--line)">
+      <div class="container">
+        <p class="eyebrow reveal">Commercial Robot Showroom</p>
+        <h1 class="h1 mt-3 reveal">Choose Your Robot.</h1>
+        <p class="lead text-mid mt-3 reveal" style="max-width:62ch">
+          Engineered for companies, schools, and universities across India. Hover over any model to preview specs or open the full configurator.
+        </p>
+
+        <!-- Automotive Style Family Filter Tabs -->
+        <div class="filter-pills-bar mt-7 reveal" role="tablist" aria-label="Filter robots by category">
+          <button class="filter-pill active-filter" data-family="all" id="filter-all" role="tab" aria-selected="true">All Models (12)</button>
+          <button class="filter-pill" data-family="humanoid" id="filter-humanoid" role="tab" aria-selected="false">Humanoids (3)</button>
+          <button class="filter-pill" data-family="assistant" id="filter-assistant" role="tab" aria-selected="false">Assistants (3)</button>
+          <button class="filter-pill" data-family="sphere" id="filter-sphere" role="tab" aria-selected="false">Spherical (2)</button>
+          <button class="filter-pill" data-family="pet" id="filter-pet" role="tab" aria-selected="false">Quadrupeds (3)</button>
+          <button class="filter-pill" data-family="butterfly" id="filter-butterfly" role="tab" aria-selected="false">Architectural (1)</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Robots Grid Showcase -->
+    <section class="section" style="padding-top:var(--s-8);padding-bottom:var(--s-10);background:var(--bg-1)" aria-label="Available robot models">
+      <div class="container">
+        <div class="robots-grid" id="robots-grid">
+          <!-- Injected synchronously by robots-data.js + robots-render.js -->
+        </div>
+
+        <!-- Empty Filter State (fallback) -->
+        <div id="no-robots-msg" style="display:none;text-align:center;padding:var(--s-10) 0">
+          <h3 class="h3">No robots found in this category.</h3>
+          <p class="text-mid mt-2">Try selecting another family above or view all models.</p>
+          <button class="btn btn--primary btn--sm mt-5" onclick="document.getElementById('filter-all').click()">View All Models</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Trust & On-Site Evaluation Callout -->
+    <section class="section" style="background:var(--bg-0);border-top:1px solid var(--line)">
+      <div class="container">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit, minmax(280px, 1fr));gap:var(--s-7)">
+          <div class="reveal">
+            <span class="badge mb-3">ON-SITE ASSESSMENTS</span>
+            <h3 class="h3">Try Before Committing</h3>
+            <p class="text-mid mt-2">Every order request includes an on-site demonstration and facility feasibility survey by our engineers in Delhi NCR or pan-India.</p>
+          </div>
+          <div class="reveal" style="transition-delay:80ms">
+            <span class="badge mb-3">CUSTOM TAILORING</span>
+            <h3 class="h3">Hardware & Software Options</h3>
+            <p class="text-mid mt-2">Add facial recognition, thermal scanning, custom Hindi/English voice dialogs, or elevator calling modules to any base platform.</p>
+          </div>
+          <div class="reveal" style="transition-delay:160ms">
+            <span class="badge mb-3">ACADEMIC & BUILD KITS</span>
+            <h3 class="h3">Student Build Workshops</h3>
+            <p class="text-mid mt-2">Colleges and schools can choose the 'Build' pathway: our mentors arrive on campus with full assembly kits and curriculum.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- Global Footer -->
+  <footer class="footer" id="site-footer" role="contentinfo"></footer>
+
+  <!-- Universal Script Loader -->
+  <script>
+    (function() {
+      const p = window.location.protocol === 'file:' ? '../js/' : '/js/';
+      ['robots-data.js', 'components.js', 'main.js', 'robots-render.js'].forEach(function(src) {
+        document.write('<script src="' + p + src + '"><\/script>');
+      });
+    })();
+  </script>
+  
+  <script>
+    function loadRobots() {
+      const grid = document.getElementById('robots-grid');
+      if (!grid) return;
+
+      const robots = window.ROBOTS_DATA?.robots || [];
+      if (robots.length === 0) {
+        grid.innerHTML = '<p class="text-mid">No robots currently loaded.</p>';
+        return;
+      }
+
+      grid.innerHTML = robots.map((robot, i) => renderRobotCard(robot, i, '')).join('');
+
+      const filterBtns = document.querySelectorAll('.filter-pill');
+      const emptyMsg = document.getElementById('no-robots-msg');
+
+      filterBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          filterBtns.forEach(b => {
+            b.classList.remove('active-filter');
+            b.setAttribute('aria-selected', 'false');
+          });
+          btn.classList.add('active-filter');
+          btn.setAttribute('aria-selected', 'true');
+
+          const fam = btn.dataset.family;
+          let visibleCount = 0;
+
+          document.querySelectorAll('#robots-grid .robot-box').forEach(card => {
+            const matches = (fam === 'all' || card.dataset.family === fam);
+            card.style.display = matches ? '' : 'none';
+            if (matches) visibleCount++;
+          });
+
+          if (emptyMsg) {
+            emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+          }
+        });
+      });
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', loadRobots);
+    } else {
+      loadRobots();
+    }
+  </script>
+
+  <style>
+    .filter-pills-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--s-3);
+    }
+    .filter-pill {
+      background: var(--bg-1);
+      border: 1px solid var(--line);
+      border-radius: var(--r-pill);
+      padding: 8px 18px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      color: var(--text-mid);
+      cursor: pointer;
+      transition: all var(--d-fast) var(--ease-standard);
+    }
+    .filter-pill:hover {
+      border-color: var(--text-hi);
+      color: var(--text-hi);
+      background: var(--bg-0);
+    }
+    .filter-pill.active-filter {
+      background: var(--text-hi);
+      border-color: var(--text-hi);
+      color: #fff;
+    }
+  </style>
+</body>
+</html>

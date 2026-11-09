@@ -13,35 +13,40 @@ const SITE = {
 };
 
 function _root() {
-  // Detect depth: robots/slug.html is depth-2 → needs '../'
-  const parts = window.location.pathname.replace(/\\/g, '/').split('/').filter(Boolean);
-  const inSubdir = parts.length >= 2 && !parts[parts.length - 1].includes('.');
-  // Simpler: check if we're in /robots/ directory by looking at href
-  const href = window.location.href;
-  const hasRobotsDir = /\/robots\/[^/]+\.html/.test(href);
-  return hasRobotsDir ? '../' : '';
+  if (window.location.protocol === 'file:') {
+    const href = window.location.href.replace(/\\/g, '/');
+    return href.includes('/robots/') ? '../' : '';
+  }
+  return '/';
+}
+
+function _url(slug) {
+  if (window.location.protocol === 'file:') {
+    const r = _root();
+    return slug === '' ? `${r}index.html` : `${r}${slug}.html`;
+  }
+  return slug === '' ? '/' : `/${slug}`;
 }
 
 function injectNav() {
   const el = document.getElementById('site-nav');
   if (!el) return;
-  const r = _root();
   const isDark = el.dataset.dark === 'true';
   if (isDark) el.classList.add('nav--dark');
 
   el.innerHTML = `
     <div class="nav__inner">
-      <a href="${r}index.html" class="nav__logo" aria-label="FUTURE ROBOTIX — go to home page">
+      <a href="${_url('')}" class="nav__logo" aria-label="FUTURE ROBOTIX — go to home page">
         <span class="wordmark">FUTURE ROBOTIX</span>
       </a>
       <nav id="nav-links" class="nav__links" aria-label="Main navigation">
-        <a href="${r}index.html"        class="nav__link" id="nl-home">Home</a>
-        <a href="${r}robots.html"       class="nav__link" id="nl-robots">Robots</a>
-        <a href="${r}institutions.html" class="nav__link" id="nl-inst">Institutions</a>
-        <a href="${r}experience.html"   class="nav__link" id="nl-exp">Experience</a>
-        <a href="${r}team.html"         class="nav__link" id="nl-team">Team</a>
-        <a href="${r}about.html"        class="nav__link" id="nl-about">About</a>
-        <a href="${r}contact.html" class="btn btn--primary btn--sm" id="nl-contact">Talk to us</a>
+        <a href="${_url('')}"             class="nav__link" id="nl-home">Home</a>
+        <a href="${_url('robots')}"       class="nav__link" id="nl-robots">Robots</a>
+        <a href="${_url('institutions')}" class="nav__link" id="nl-inst">Institutions</a>
+        <a href="${_url('experience')}"   class="nav__link" id="nl-exp">Experience</a>
+        <a href="${_url('team')}"         class="nav__link" id="nl-team">Team</a>
+        <a href="${_url('about')}"        class="nav__link" id="nl-about">About</a>
+        <a href="${_url('contact')}"      class="btn btn--primary btn--sm" id="nl-contact">Talk to us</a>
       </nav>
       <button class="nav__hamburger" id="nav-hamburger" aria-label="Open navigation menu" aria-expanded="false" aria-controls="nav-links">
         <span></span><span></span><span></span>
@@ -49,11 +54,18 @@ function injectNav() {
     </div>`;
 
   // Active link
-  const path = window.location.pathname;
-  const linkMap = { 'nl-home': 'index', 'nl-robots': 'robots', 'nl-inst': 'institutions', 'nl-exp': 'experience', 'nl-team': 'team', 'nl-about': 'about' };
-  for (const [id, key] of Object.entries(linkMap)) {
+  const path = window.location.pathname.toLowerCase();
+  const linkMap = {
+    'nl-home': path === '/' || path.endsWith('/index.html') || path.endsWith('/index') || path === '',
+    'nl-robots': path.includes('/robots'),
+    'nl-inst': path.includes('/institutions'),
+    'nl-exp': path.includes('/experience'),
+    'nl-team': path.includes('/team'),
+    'nl-about': path.includes('/about')
+  };
+  for (const [id, active] of Object.entries(linkMap)) {
     const lnk = document.getElementById(id);
-    if (lnk && (path.includes(key) || (key === 'index' && (path === '/' || path.endsWith('index.html'))))) {
+    if (lnk && active) {
       lnk.classList.add('active');
     }
   }
@@ -62,7 +74,6 @@ function injectNav() {
 function injectFooter() {
   const el = document.getElementById('site-footer');
   if (!el) return;
-  const r = _root();
   const phoneHtml = SITE.phone
     ? `<div class="footer__link"><a href="tel:${SITE.phone}" class="footer__link">${SITE.phone}</a></div>`
     : `<div class="footer__link" style="color:rgba(255,255,255,0.45);font-size:0.85rem">Mon–Sat: 09:30–18:30 IST</div>`;
@@ -81,20 +92,20 @@ function injectFooter() {
         <div>
           <p class="footer__col-title">Explore</p>
           <nav class="footer__links" aria-label="Footer navigation">
-            <a href="${r}robots.html" class="footer__link">Robots</a>
-            <a href="${r}institutions.html" class="footer__link">Institutions</a>
-            <a href="${r}experience.html" class="footer__link">Experience</a>
-            <a href="${r}team.html" class="footer__link">Team</a>
-            <a href="${r}about.html" class="footer__link">About</a>
-            <a href="${r}contact.html" class="footer__link">Contact</a>
+            <a href="${_url('robots')}" class="footer__link">Robots</a>
+            <a href="${_url('institutions')}" class="footer__link">Institutions</a>
+            <a href="${_url('experience')}" class="footer__link">Experience</a>
+            <a href="${_url('team')}" class="footer__link">Team</a>
+            <a href="${_url('about')}" class="footer__link">About</a>
+            <a href="${_url('contact')}" class="footer__link">Contact</a>
           </nav>
         </div>
         <div>
           <p class="footer__col-title">Legal</p>
           <nav class="footer__links" aria-label="Legal pages">
-            <a href="${r}privacy.html" class="footer__link">Privacy Policy</a>
-            <a href="${r}terms.html" class="footer__link">Terms of Use</a>
-            <a href="${r}order-terms.html" class="footer__link">Order Terms</a>
+            <a href="${_url('privacy')}" class="footer__link">Privacy Policy</a>
+            <a href="${_url('terms')}" class="footer__link">Terms of Use</a>
+            <a href="${_url('order-terms')}" class="footer__link">Order Terms</a>
           </nav>
         </div>
         <div>
@@ -118,4 +129,3 @@ document.addEventListener('DOMContentLoaded', () => {
   injectNav();
   injectFooter();
 });
-

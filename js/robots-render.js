@@ -14,9 +14,18 @@ function formatINR(n) {
 /* ─── Grid Robot Card (Tesla / Ola Box Style) ─── */
 function renderRobotCard(robot, idx = 0, root = '') {
   const delay = Math.min(idx * 50, 400);
+  const isFile = window.location.protocol === 'file:';
+  const inRobotsDir = window.location.href.replace(/\\/g, '/').includes('/robots/');
+  const r = (root !== undefined && root !== '') ? root : (isFile ? (inRobotsDir ? '../' : '') : '/');
+  
   const imgName = robot.images?.[0] || `${robot.slug}.svg`;
-  const imgPath = `${root}images/robots/${imgName}`;
+  const imgPath = `${r}images/robots/${imgName}`;
   const basePriceText = robot.modes?.buy?.basePrice ? `From ${formatINR(robot.modes.buy.basePrice)}` : 'Custom Quote';
+
+  const detailUrl = isFile ? `${r}robots/${robot.slug}.html` : `/robots/${robot.slug}`;
+  const contactUrl = isFile
+    ? `${r}contact.html?robot=${encodeURIComponent(robot.slug)}&name=${encodeURIComponent(robot.name)}`
+    : `/contact?robot=${encodeURIComponent(robot.slug)}&name=${encodeURIComponent(robot.name)}`;
 
   // Parse quick spec highlights from specs
   const specPills = (robot.specs || []).map(s => {
@@ -38,7 +47,7 @@ function renderRobotCard(robot, idx = 0, root = '') {
       <!-- Centered Product Image Container -->
       <div class="robot-box__media">
         <img src="${imgPath}" alt="${robot.name} by FUTURE ROBOTIX" loading="lazy" width="800" height="600"
-             onerror="this.onerror=null; this.src='${root}images/robots/${robot.slug}.svg';" />
+             onerror="this.onerror=null; this.src='${r}images/robots/${robot.slug}.svg';" />
       </div>
 
       <!-- Info Area -->
@@ -53,10 +62,10 @@ function renderRobotCard(robot, idx = 0, root = '') {
         <div class="robot-box__overlay-content">
           <p class="robot-box__overlay-text">${robot.tagline}</p>
           <div class="robot-box__actions">
-            <a href="${root}robots/${robot.slug}.html" class="btn btn--primary btn--sm" id="btn-know-more-${robot.slug}">
+            <a href="${detailUrl}" class="btn btn--primary btn--sm" id="btn-know-more-${robot.slug}">
               Know More <span class="btn__arrow">→</span>
             </a>
-            <a href="${root}contact.html?robot=${encodeURIComponent(robot.slug)}&name=${encodeURIComponent(robot.name)}" 
+            <a href="${contactUrl}" 
                class="btn btn--secondary btn--sm" id="btn-order-${robot.slug}">
               Order Robot
             </a>
@@ -65,14 +74,20 @@ function renderRobotCard(robot, idx = 0, root = '') {
       </div>
 
       <!-- Entire card clickable directly to detail page -->
-      <a href="${root}robots/${robot.slug}.html" class="robot-box__hitbox" aria-label="Explore ${robot.name}"></a>
+      <a href="${detailUrl}" class="robot-box__hitbox" aria-label="Explore ${robot.name}"></a>
     </article>`;
 }
 
 /* ─── Detail Page Renderer (Cinematic Vehicle-Showcase Style) ─── */
 function renderRobotDetail(robot, rootEl) {
   if (!rootEl) return;
-  const r = '../'; // Inside /robots/ directory
+  const isFile = window.location.protocol === 'file:';
+  const r = isFile ? '../' : '/';
+  const allRobotsUrl = isFile ? `${r}robots.html` : '/robots';
+  const contactUrl = isFile
+    ? `${r}contact.html?robot=${encodeURIComponent(robot.slug)}&name=${encodeURIComponent(robot.name)}`
+    : `/contact?robot=${encodeURIComponent(robot.slug)}&name=${encodeURIComponent(robot.name)}`;
+  const generalContactUrl = isFile ? `${r}contact.html` : '/contact';
 
   const imgName = robot.images?.[0] || `${robot.slug}.svg`;
   const imgPath = `${r}images/robots/${imgName}`;
@@ -140,13 +155,13 @@ function renderRobotDetail(robot, rootEl) {
       <div class="container">
         <div class="flex items-center justify-between wrap gap-3">
           <div class="flex items-center gap-3">
-            <a href="${r}robots.html" class="back-link">← All Robots</a>
+            <a href="${allRobotsUrl}" class="back-link">← All Robots</a>
             <span class="text-low">/</span>
             <span class="badge">${robot.family.toUpperCase()}</span>
             <span class="text-low">/</span>
             <span class="text-hi font-medium">${robot.name}</span>
           </div>
-          <a href="${r}contact.html?robot=${encodeURIComponent(robot.slug)}&name=${encodeURIComponent(robot.name)}" class="btn btn--primary btn--sm">
+          <a href="${contactUrl}" class="btn btn--primary btn--sm">
             Order This Robot <span class="btn__arrow">→</span>
           </a>
         </div>
@@ -260,7 +275,7 @@ function renderRobotDetail(robot, rootEl) {
                     Order requests are obligation-free. Our technical mentor visits your premises to verify navigation paths, calibrate sensors, and confirm timeline.
                   </p>
                   <div class="mt-6">
-                    <a href="${r}contact.html?robot=${encodeURIComponent(robot.slug)}&name=${encodeURIComponent(robot.name)}" 
+                    <a href="${contactUrl}" 
                        class="btn btn--primary" id="btn-place-order-now" style="width:100%;justify-content:center;padding:18px 28px;font-size:1.0625rem">
                       Proceed to Place Order Request <span class="btn__arrow">→</span>
                     </a>
@@ -283,11 +298,11 @@ function renderRobotDetail(robot, rootEl) {
                 <!-- Injected dynamically via updatePrice() -->
               </div>
               <div class="price-panel__cta">
-                <a href="${r}contact.html?robot=${encodeURIComponent(robot.slug)}&name=${encodeURIComponent(robot.name)}" 
+                <a href="${contactUrl}" 
                    class="btn btn--primary" style="width:100%;justify-content:center" id="btn-sidebar-order">
                   Order This Robot <span class="btn__arrow">→</span>
                 </a>
-                <a href="${r}contact.html" class="btn btn--secondary btn--sm" style="width:100%;justify-content:center">
+                <a href="${generalContactUrl}" class="btn btn--secondary btn--sm" style="width:100%;justify-content:center">
                   Speak to Engineer
                 </a>
               </div>
@@ -361,11 +376,13 @@ function initDetailPage() {
     if (metaDesc) metaDesc.content = `${robot.tagline} Customise specifications and order directly from FUTURE ROBOTIX.`;
     renderRobotDetail(robot, rootEl);
   } else {
+    const isFile = window.location.protocol === 'file:';
+    const allRobotsUrl = isFile ? '../robots.html' : '/robots';
     rootEl.innerHTML = `
       <div class="container" style="padding:120px 0;text-align:center">
         <h1 class="h2">Robot model not found.</h1>
         <p class="text-mid mt-3">The requested robot configuration does not exist or has been updated.</p>
-        <a href="../robots.html" class="btn btn--primary mt-6">← View All Robots</a>
+        <a href="${allRobotsUrl}" class="btn btn--primary mt-6">← View All Robots</a>
       </div>
     `;
   }

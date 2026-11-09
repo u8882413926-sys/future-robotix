@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;500;600&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/design.css">
+  <link rel="stylesheet" href="/css/design.css" onerror="this.onerror=null;this.href='css/design.css'">
 </head>
 <body>
   <header class="nav" id="site-nav" role="banner"></header>
@@ -21,16 +21,22 @@
         <h1 class="h1" id="notfound-heading">This page is not here.</h1>
         <p class="lead text-mid mt-4" style="max-width:44ch;margin-left:auto;margin-right:auto">The link may be old, or the address may have a typing mistake.</p>
         <div class="flex wrap gap-3 items-center" style="justify-content:center;margin-top:var(--s-7)">
-          <a href="index.html" class="btn btn--primary">Go to home <span class="btn__arrow">→</span></a>
-          <a href="robots.html" class="btn btn--secondary">See our robots</a>
-          <a href="contact.html" class="btn btn--secondary">Contact us</a>
+          <a href="/" class="btn btn--primary">Go to home <span class="btn__arrow">→</span></a>
+          <a href="/robots" class="btn btn--secondary">See our robots</a>
+          <a href="/contact" class="btn btn--secondary">Contact us</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer" id="site-footer" role="contentinfo"></footer>
-  <script src="js/components.js"></script>
-  <script src="js/main.js"></script>
+  <script>
+    (function() {
+      const p = window.location.protocol === 'file:' ? 'js/' : '/js/';
+      ['components.js', 'main.js'].forEach(function(src) {
+        document.write('<script src="' + p + src + '"><\/script>');
+      });
+    })();
+  </script>
 </body>
 </html>
