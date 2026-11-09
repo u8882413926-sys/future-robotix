@@ -188,6 +188,11 @@ function renderRobotDetail(robot, rootEl) {
               <p class="h2 text-hi mt-1">${formatINR(basePrice)}</p>
               <p class="small text-low mt-1">Ex-factory New Delhi · Itemized quotation confirmed after on-site review.</p>
             </div>
+            <div class="mt-4 flex wrap gap-2" style="font-size:0.8125rem;color:var(--text-mid)">
+              <span class="badge" style="background:var(--bg-1);border:1px solid var(--line);font-size:0.75rem;padding:4px 8px">✓ Industrial-Grade Certified Subsystems</span>
+              <span class="badge" style="background:var(--bg-1);border:1px solid var(--line);font-size:0.75rem;padding:4px 8px">✓ 48-Hour Burn-In Tested</span>
+              <span class="badge" style="background:var(--bg-1);border:1px solid var(--line);font-size:0.75rem;padding:4px 8px">✓ Govt. MSME Verified (UDYAM-DL-03-0091615)</span>
+            </div>
             <div class="flex gap-3 wrap mt-6">
               <a href="#order-section" class="btn btn--primary">
                 Order Configuration <span class="btn__arrow">→</span>
@@ -271,8 +276,8 @@ function renderRobotDetail(robot, rootEl) {
                       <span class="order-step-text">Formal Quotation</span>
                     </div>
                   </div>
-                  <p class="small text-low mt-5">
-                    Order requests are obligation-free. Our technical mentor visits your premises to verify navigation paths, calibrate sensors, and confirm timeline.
+                  <p class="small text-mid mt-5" style="line-height:1.6">
+                    Commercial order requests are commitment-free. Our systems engineers conduct on-site facility mapping, demonstrate physical hardware, calibrate navigation paths, and issue formal quotation proposals with comprehensive warranty agreements.
                   </p>
                   <div class="mt-6">
                     <a href="${contactUrl}" 

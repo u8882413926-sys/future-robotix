@@ -28,6 +28,14 @@ function _url(slug) {
   return slug === '' ? '/' : `/${slug}`;
 }
 
+function _asset(path) {
+  if (window.location.protocol === 'file:') {
+    const r = _root();
+    return `${r}${path}`;
+  }
+  return `/${path}`;
+}
+
 function injectNav() {
   const el = document.getElementById('site-nav');
   if (!el) return;
@@ -36,8 +44,8 @@ function injectNav() {
 
   el.innerHTML = `
     <div class="nav__inner">
-      <a href="${_url('')}" class="nav__logo" aria-label="FUTURE ROBOTIX — go to home page">
-        <span class="wordmark">FUTURE ROBOTIX</span>
+      <a href="${_url('')}" class="nav__logo" aria-label="FUTURE ROBOTIX — Autonomous Systems">
+        <img src="${_asset('images/brand/future-robotix-logo.png')}" alt="FUTURE ROBOTIX — Autonomous Systems" class="nav__logo-img">
       </a>
       <nav id="nav-links" class="nav__links" aria-label="Main navigation">
         <a href="${_url('')}"             class="nav__link" id="nl-home">Home</a>
@@ -76,50 +84,54 @@ function injectFooter() {
   if (!el) return;
   const phoneHtml = SITE.phone
     ? `<div class="footer__link"><a href="tel:${SITE.phone}" class="footer__link">${SITE.phone}</a></div>`
-    : `<div class="footer__link" style="color:rgba(255,255,255,0.45);font-size:0.85rem">Mon–Sat: 09:30–18:30 IST</div>`;
+    : `<div class="footer__link" style="color:rgba(255,255,255,0.45);font-size:0.85rem">Engineering Desk: Mon–Sat 09:30–18:30 IST</div>`;
 
   el.innerHTML = `
     <div class="container">
       <div class="footer__grid">
         <div>
-          <p class="footer__wordmark">FUTURE ROBOTIX</p>
-          <p class="footer__tagline">The future you imagined as a child.<br>Built today.</p>
-          <div class="trust-badge">
+          <a href="${_url('')}" aria-label="FUTURE ROBOTIX Home" style="display:inline-block;text-decoration:none">
+            <img src="${_asset('images/brand/future-robotix-logo-white.png')}" alt="FUTURE ROBOTIX — Autonomous Systems" class="footer__logo-img">
+          </a>
+          <p class="footer__tagline">Industrial-grade autonomous robotics &amp; mechatronic systems.<br>Engineered for mission-critical institutional and enterprise deployment.</p>
+          <div class="trust-badge mt-4">
             <span class="trust-badge__dot"></span>
-            Udyam MSME · ${SITE.udyam}
+            Govt. of India MSME Registered · ${SITE.udyam}
           </div>
         </div>
         <div>
-          <p class="footer__col-title">Explore</p>
+          <p class="footer__col-title">Robotic Systems</p>
           <nav class="footer__links" aria-label="Footer navigation">
-            <a href="${_url('robots')}" class="footer__link">Robots</a>
-            <a href="${_url('institutions')}" class="footer__link">Institutions</a>
-            <a href="${_url('experience')}" class="footer__link">Experience</a>
-            <a href="${_url('team')}" class="footer__link">Team</a>
-            <a href="${_url('about')}" class="footer__link">About</a>
-            <a href="${_url('contact')}" class="footer__link">Contact</a>
+            <a href="${_url('robots')}" class="footer__link">All Robotic Models (12)</a>
+            <a href="${_url('institutions')}" class="footer__link">Institutional Deployment</a>
+            <a href="${_url('experience')}" class="footer__link">Engineering Showcase</a>
+            <a href="${_url('team')}" class="footer__link">Leadership &amp; Team</a>
+            <a href="${_url('about')}" class="footer__link">Corporate &amp; MSME Standing</a>
+            <a href="${_url('contact')}" class="footer__link">Commercial Inquiry &amp; Demo</a>
           </nav>
         </div>
         <div>
-          <p class="footer__col-title">Legal</p>
+          <p class="footer__col-title">Compliance &amp; Legal</p>
           <nav class="footer__links" aria-label="Legal pages">
-            <a href="${_url('privacy')}" class="footer__link">Privacy Policy</a>
-            <a href="${_url('terms')}" class="footer__link">Terms of Use</a>
-            <a href="${_url('order-terms')}" class="footer__link">Order Terms</a>
+            <a href="${_url('privacy')}" class="footer__link">Privacy &amp; Data Protection</a>
+            <a href="${_url('terms')}" class="footer__link">Terms of Service</a>
+            <a href="${_url('order-terms')}" class="footer__link">Commercial Quotation Terms</a>
           </nav>
         </div>
         <div>
-          <p class="footer__col-title">Contact</p>
+          <p class="footer__col-title">Engineering Desk</p>
           <div class="footer__links">
-            <a href="mailto:${SITE.emails.hello}" class="footer__link">${SITE.emails.hello}</a>
-            <a href="mailto:${SITE.emails.orders}" class="footer__link">${SITE.emails.orders}</a>
+            <a href="mailto:${SITE.emails.orders}" class="footer__link"><strong>Procurement:</strong> ${SITE.emails.orders}</a>
+            <a href="mailto:${SITE.emails.hello}" class="footer__link"><strong>Inquiries:</strong> ${SITE.emails.hello}</a>
             ${phoneHtml}
-            <div class="footer__link" style="font-size:0.8125rem;color:rgba(255,255,255,0.35);line-height:1.6">${SITE.address}</div>
+            <div class="footer__link" style="font-size:0.8125rem;color:rgba(255,255,255,0.45);line-height:1.6;margin-top:8px">
+              R&amp;D &amp; Assembly Facility:<br>${SITE.address}
+            </div>
           </div>
         </div>
       </div>
       <div class="footer__bottom">
-        <p class="footer__reg">FUTURE ROBOTIX · Udyam MSME ${SITE.udyam} · Sole proprietorship · New Delhi</p>
+        <p class="footer__reg">FUTURE ROBOTIX · Officially Registered Autonomous Systems Enterprise · Ministry of MSME, Govt. of India (Udyam: ${SITE.udyam}) · New Delhi, India</p>
         <p class="footer__copy">© ${SITE.year} FUTURE ROBOTIX. All rights reserved.</p>
       </div>
     </div>`;

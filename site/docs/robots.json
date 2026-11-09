@@ -1,0 +1,65 @@
+{
+  "_readme": [
+    "TEMPLATE. No robot details were supplied, so this file has one empty entry. Copy the entry once per robot and fill in every [FILL: ...] value. Do not invent values.",
+    "Prices not supplied are null. In the UI a null price is shown as 'Price on request', never as 0.",
+    "images: the first file is used for the grid card and the detail hero. The rest form the gallery. Files live in /public/images/robots/.",
+    "operations[].unit describes how priceAdd is charged, for example one-time or per month. Fill it only when the founder gives it.",
+    "The build fails if any '[FILL' text is still present in production."
+  ],
+  "_pricingLogic": {
+    "status": "ASSUMPTION. Confirm with the founder (see docs/QUESTIONS.md).",
+    "currency": "INR",
+    "buy": "estimatedTotal = modes.buy.basePrice + sum(priceAdd of selected operations)",
+    "build": "estimatedTotal = modes.build.kitPrice + (modes.build.mentorDayRate * mentorDays) + (modes.build.perStudentMaterial * students) + sum(priceAdd of selected operations)",
+    "validation": "students must be at least modes.build.minStudents; mentorDays must be a whole number of at least 1",
+    "nullRule": "If any price needed for the chosen mode is null, show 'Price on request' instead of a total",
+    "company": "Companies use the buy price plus selected operations. Customisation for the office is confirmed after the team visit."
+  },
+  "currency": "INR",
+  "robots": [
+    {
+      "id": "robot-1",
+      "slug": "robot-1",
+      "name": "[FILL: robot name]",
+      "tagline": "[FILL: one-line purpose of the robot]",
+      "description": "[FILL: 2 to 4 plain-language sentences about what the robot is and who it is for]",
+      "specs": [
+        "[FILL: size, with dimensions and weight]",
+        "[FILL: key spec, e.g. battery life, payload or speed]",
+        "[FILL: key spec]"
+      ],
+      "images": [
+        "robot-1-card.webp",
+        "robot-1-detail-1.webp",
+        "robot-1-detail-2.webp"
+      ],
+      "operations": [
+        {
+          "id": "robot-1-op-1",
+          "label": "[FILL: operation name]",
+          "description": "[FILL: one sentence on what the robot does for this operation]",
+          "priceAdd": null,
+          "unit": "[FILL: how priceAdd is charged, e.g. one-time]"
+        },
+        {
+          "id": "robot-1-op-2",
+          "label": "[FILL: operation name]",
+          "description": "[FILL: one sentence on what the robot does for this operation]",
+          "priceAdd": null,
+          "unit": "[FILL: how priceAdd is charged, e.g. one-time]"
+        }
+      ],
+      "modes": {
+        "buy": {
+          "basePrice": null
+        },
+        "build": {
+          "kitPrice": null,
+          "mentorDayRate": null,
+          "perStudentMaterial": null,
+          "minStudents": null
+        }
+      }
+    }
+  ]
+}

@@ -221,6 +221,35 @@ h3, .h3 {
   gap: var(--s-6);
   position: relative;
 }
+.nav__logo {
+  display: inline-flex;
+  align-items: center;
+  text-decoration: none;
+  line-height: 1;
+  flex-shrink: 0;
+}
+.nav__logo-img {
+  height: 38px;
+  width: auto;
+  max-width: 210px;
+  display: block;
+  object-fit: contain;
+  transition: opacity var(--d-fast) var(--ease-standard);
+}
+.nav__logo:hover .nav__logo-img {
+  opacity: 0.85;
+}
+.nav--dark .nav__logo-img {
+  filter: brightness(0) invert(1);
+}
+.footer__logo-img {
+  height: 38px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
+  margin-bottom: var(--s-4);
+}
 .nav__links {
   display: flex;
   align-items: center;
