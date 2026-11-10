@@ -9,436 +9,946 @@
  */
 
 window.ROBOTS_DATA = {
-  currency: "INR",
-  robots: [
+  "_readme": [
+    "FUTURE ROBOTIX official commercial robot configurations.",
+    "Prices in INR, specifications, operations and imagery."
+  ],
+  "currency": "INR",
+  "robots": [
     {
-      id: "humanoid-essential",
-      slug: "humanoid-essential",
-      family: "humanoid",
-      name: "Humanoid Essential",
-      tagline: "Autonomous greeting and reception humanoid with 22 DOF and intelligent guidance.",
-      description: "Humanoid Essential is engineered for corporate headquarters, customer experience centers, and institutional receptions across India. It navigates indoor spaces smoothly, greets visitors in multiple Indian languages, handles visitor check-in, and escorts guests directly to conference rooms.",
-      specs: [
+      "id": "humanoid-essential",
+      "slug": "humanoid-essential",
+      "modelCode": "FR-HE22",
+      "family": "humanoid",
+      "name": "Humanoid Essential",
+      "tagline": "Autonomous greeting and reception humanoid with 22 DOF and intelligent guidance.",
+      "description": "Humanoid Essential is engineered for corporate headquarters, customer experience centers, and institutional receptions across India. It navigates indoor spaces smoothly, greets visitors in multiple Indian languages, handles visitor check-in, and escorts guests directly to conference rooms.",
+      "specs": [
         "Dimensions: 148 cm (H) × 52 cm (W) · Weight: 38 kg",
         "Battery: 8 Hours Continuous Run · Swappable LiFePO4 · Auto-docking",
         "Kinematics: 22 Degrees of Freedom · Stereo Vision · Ultrasonic Avoidance"
       ],
-      images: ["humanoid-essential.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "148 cm · 38 kg",
+        "battery": "8h Continuous Run",
+        "dof": "22 DOF Actuators",
+        "sensors": "3D LiDAR · Stereo Depth",
+        "compute": "Hexa-Core Edge AI",
+        "maxSpeed": "1.2 m/s",
+        "payload": "5 kg Carry Tray"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "148 cm (H) × 52 cm (W) × 48 cm (D) · Proportional humanoid silhouette",
+        "Net Weight": "38 kg (chassis with integrated ballast and battery pack)",
+        "Kinematic Structure & DOF": "22 Degrees of Freedom: Dual 5-DOF arms, 3-DOF expressive neck, 3-DOF holonomic base, 6-DOF active waist",
+        "Actuation & Motor Drives": "Brushless DC servo actuators with high-reduction planetary gearboxes and 17-bit magnetic encoders",
+        "Battery & Power Management": "Swappable 24V 40Ah LiFePO4 battery pack with active cell balancing, short-circuit and over-temperature cut-off",
+        "Autonomous Charging & Docking": "8 Hours continuous service; autonomous inductive base-station auto-docking + 90-min fast wired charging",
+        "Perception & Sensory Suite": "Solid-state 3D LiDAR (25 m radius, 360° FOV), dual stereo RGB-D depth cameras, 12× ultrasonic collision perimeter sensors, 9-DOF IMU",
+        "Onboard Compute Architecture": "Industrial edge computer with Hexa-core ARM Cortex + 128-core Tensor GPU, 16 GB unified LPDDR4X RAM, 256 GB NVMe SSD",
+        "Autonomy Software & ROS Stack": "ROS 2 Humble Hawksbill on Ubuntu 22.04 LTS Real-Time Kernel; Nav2 autonomous indoor navigation with dynamic crowd rerouting",
+        "Audio & Voice Localization": "Circular 6-microphone beamforming array with noise cancellation and speaker direction detection; 20W stereo speakers",
+        "Telecommunications & Ports": "Dual-Band Wi-Fi 6 (802.11ax), 4G/5G LTE cellular modem failover, Bluetooth 5.2, Gigabit Ethernet, dual USB 3.2 service ports",
+        "Chassis & Structural Materials": "Aviation-grade 6061-T6 aluminum skeleton with impact-resistant flame-retardant ABS-PC exterior panels",
+        "Industrial Safety & Certifications": "Hardware latching Emergency Stop button, virtual safety exclusion zones, cliff drop detection sensors; CE & RoHS compliant electronics"
+      },
+      "operations": [
         {
-          id: "he-op-1",
-          label: "Automated Visitor Check-In & Badge Dispensing",
-          description: "Scans meeting QR codes, validates identity, and sends instant SMS/Slack alerts to hosts.",
-          priceAdd: 45000,
-          unit: "one-time"
+          "id": "he-op-1",
+          "label": "Automated Visitor Check-In & Badge Dispensing",
+          "description": "Scans meeting QR codes, validates identity, and sends instant SMS/Slack alerts to hosts.",
+          "priceAdd": 45000,
+          "unit": "one-time"
         },
         {
-          id: "he-op-2",
-          label: "Autonomous Meeting Escort & Room Navigation",
-          description: "Generates 2D/3D facility maps and safely guides guests to assigned conference suites.",
-          priceAdd: 60000,
-          unit: "one-time"
+          "id": "he-op-2",
+          "label": "Autonomous Meeting Escort & Room Navigation",
+          "description": "Generates 2D/3D facility maps and safely guides guests to assigned conference suites.",
+          "priceAdd": 60000,
+          "unit": "one-time"
         },
         {
-          id: "he-op-3",
-          label: "Multilingual Indian Speech Engine",
-          description: "Conversational voice recognition in Hindi, English, Tamil, Telugu, and Marathi.",
-          priceAdd: 35000,
-          unit: "one-time"
+          "id": "he-op-3",
+          "label": "Multilingual Indian Speech Engine",
+          "description": "Conversational voice recognition in Hindi, English, Tamil, Telugu, and Marathi.",
+          "priceAdd": 35000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 485000 },
-        build: { kitPrice: 340000, mentorDayRate: 18000, perStudentMaterial: 4500, minStudents: 20 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 485000
+        },
+        "build": {
+          "kitPrice": 340000,
+          "mentorDayRate": 18000,
+          "perStudentMaterial": 4500,
+          "minStudents": 20
+        }
+      },
+      "applications": [
+        "Corporate Headquarters & Tech Parks",
+        "Customer Experience & Innovation Centers",
+        "High-Footfall Institutional Reception Halls",
+        "Hospital & Clinic Registration Foyers"
+      ],
+      "standardInclusions": [
+        "Pre-deployment facility mapping and radio survey in Delhi NCR / Pan-India",
+        "Complete ROS 2 Humble SDK with Python & C++ client APIs",
+        "1-Year Comprehensive On-Site Mechatronics Warranty",
+        "Half-day staff handover and operations training workshop"
+      ]
     },
     {
-      id: "humanoid-interactive",
-      slug: "humanoid-interactive",
-      family: "humanoid",
-      name: "Humanoid Interactive",
-      tagline: "Engaging conversational humanoid with integrated 10.1\" chest tablet & expressive gestural arms.",
-      description: "Humanoid Interactive combines expressive arm gestures with a vibrant capacitive chest tablet for interactive campus tours, museum curation, and high-footfall retail showrooms. Visitors interact via natural voice dialogue or touch-driven catalog exploration.",
-      specs: [
+      "id": "humanoid-interactive",
+      "slug": "humanoid-interactive",
+      "modelCode": "FR-HI28",
+      "family": "humanoid",
+      "name": "Humanoid Interactive",
+      "tagline": "Engaging conversational humanoid with integrated 10.1\" chest tablet & expressive gestural arms.",
+      "description": "Humanoid Interactive combines expressive arm gestures with a vibrant capacitive chest tablet for interactive campus tours, museum curation, and high-footfall retail showrooms. Visitors interact via natural voice dialogue or touch-driven catalog exploration.",
+      "specs": [
         "Dimensions: 154 cm (H) × 56 cm (W) · Weight: 42 kg",
         "Battery: 9 Hours Run · Smart BMS · Fast Charge to 80% in 90 min",
         "Kinematics: 28 Degrees of Freedom · Chest Tablet · 3D Depth LiDAR"
       ],
-      images: ["humanoid-interactive.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "154 cm · 42 kg",
+        "battery": "9h Fast-Charge Run",
+        "dof": "28 DOF Gestural",
+        "sensors": "Dual 3D LiDAR · RealSense",
+        "compute": "NVIDIA Orin Nano + Core i5",
+        "maxSpeed": "1.4 m/s",
+        "payload": "Chest Console Display"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "154 cm (H) × 56 cm (W) × 52 cm (D) · Expressive bipedal profile with aerodynamic contours",
+        "Net Weight": "42 kg (counterbalanced base for stability in crowds)",
+        "Kinematic Structure & DOF": "28 Degrees of Freedom: Dual 7-DOF gestural arms, 3-DOF expressive head/neck, 3-DOF omni base, 8-DOF torso articulation",
+        "Interactive Display Terminal": "10.1-inch IPS Full HD (1920×1200) capacitive touchscreen, 10-point multi-touch, 450 nits high-brightness antiglare surface",
+        "Actuation & Motor Drives": "Precision coreless servo actuators with steel planetary gear trains and dual optical encoders per axis",
+        "Battery Architecture": "48V 30Ah High-Density NMC Lithium-ion pack with thermal matrix monitoring and active charge management",
+        "Autonomous Charging & Docking": "9 Hours active conversational roaming; 80% fast-charge in 90 minutes; auto-return inductive floor dock",
+        "Perception & Sensory Suite": "Dual solid-state 3D LiDARs (fore & aft, 30 m range), Intel RealSense D435i depth camera, 16× ultrasonic sensors, 6-axis IMU",
+        "Onboard Compute Architecture": "Hybrid processing: NVIDIA Jetson Orin Nano (AI computer vision & voice NLP) + Industrial Intel Core i5 for UI/ROS 2",
+        "Autonomy Software & ROS Stack": "ROS 2 Humble with Nav2 path planning, continuous SLAM graph optimization, and predictive crowd pedestrian avoidance",
+        "Speech & Dialogue Engine": "Far-field 8-microphone circular array with voice localization; native conversational dialogue in Hindi, English, and regional languages",
+        "Telecommunications & Ports": "Dual-band Wi-Fi 6 MIMO, 4G/5G Dual-SIM global modem, Bluetooth 5.3 LE, dual Gigabit Ethernet ports",
+        "Chassis & Structural Materials": "CNC-milled aircraft aluminum skeleton with UV-stabilized composite polycarbonate outer armor",
+        "Industrial Safety & Compliance": "Dual-channel emergency stop circuit, tactile touch-sensitive bumper skirts, ISO 13482 safety standard alignment"
+      },
+      "operations": [
         {
-          id: "hi-op-1",
-          label: "Interactive Campus & Product Presentation Suite",
-          description: "Presents multimedia videos, campus maps, and product catalogs synchronized with gestural speech.",
-          priceAdd: 55000,
-          unit: "one-time"
+          "id": "hi-op-1",
+          "label": "Interactive Campus & Product Presentation Suite",
+          "description": "Presents multimedia videos, campus maps, and product catalogs synchronized with gestural speech.",
+          "priceAdd": 55000,
+          "unit": "one-time"
         },
         {
-          id: "hi-op-2",
-          label: "Facial Recognition & VIP Personalization",
-          description: "Recognizes returning faculty, VIP delegates, or registered employees with personalized greetings.",
-          priceAdd: 48000,
-          unit: "one-time"
+          "id": "hi-op-2",
+          "label": "Facial Recognition & VIP Personalization",
+          "description": "Recognizes returning faculty, VIP delegates, or registered employees with personalized greetings.",
+          "priceAdd": 48000,
+          "unit": "one-time"
         },
         {
-          id: "hi-op-3",
-          label: "Telepresence Operator Mode",
-          description: "Enables human operators to remotely beam in, speak, and pilot the robot with two-way HD video.",
-          priceAdd: 40000,
-          unit: "one-time"
+          "id": "hi-op-3",
+          "label": "Telepresence Operator Mode",
+          "description": "Enables human operators to remotely beam in, speak, and pilot the robot with two-way HD video.",
+          "priceAdd": 40000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 620000 },
-        build: { kitPrice: 440000, mentorDayRate: 20000, perStudentMaterial: 5000, minStudents: 20 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 620000
+        },
+        "build": {
+          "kitPrice": 440000,
+          "mentorDayRate": 20000,
+          "perStudentMaterial": 5000,
+          "minStudents": 20
+        }
+      },
+      "applications": [
+        "University Campus Information Centers",
+        "Museums & Science Exhibition Halls",
+        "Automotive & Real Estate Showrooms",
+        "Executive Boardrooms & Auditoriums"
+      ],
+      "standardInclusions": [
+        "On-site venue acoustic & pathway calibration survey",
+        "Custom presentation software suite preloaded with institutional media",
+        "1-Year Comprehensive On-Site Mechatronics Warranty",
+        "Staff operator training & cloud dashboard management access"
+      ]
     },
     {
-      id: "humanoid-ultimate",
-      slug: "humanoid-ultimate",
-      family: "humanoid",
-      name: "Humanoid Ultimate",
-      tagline: "Flagship 36-DOF bipedal service humanoid with articulated 5-finger hands & 360° LiDAR.",
-      description: "Our most advanced robotic system. Features five-finger dexterous hands, carbon-reinforced structural limbs, and an NVIDIA Orin edge AI computer. Built for advanced university robotics laboratories, high-tech industrial pavilions, and state-of-the-art corporate innovation hubs.",
-      specs: [
+      "id": "humanoid-ultimate",
+      "slug": "humanoid-ultimate",
+      "modelCode": "FR-HU36",
+      "family": "humanoid",
+      "name": "Humanoid Ultimate",
+      "tagline": "Flagship 36-DOF bipedal service humanoid with articulated 5-finger hands & 360° LiDAR.",
+      "description": "Our most advanced robotic system. Features five-finger dexterous hands, carbon-reinforced structural limbs, and an NVIDIA Orin edge AI computer. Built for advanced university robotics laboratories, high-tech industrial pavilions, and state-of-the-art corporate innovation hubs.",
+      "specs": [
         "Dimensions: 168 cm (H) × 60 cm (W) · Weight: 48 kg",
         "Battery: 10 Hours High-Performance Run · Dual Hot-swappable Packs",
         "Kinematics: 36 Degrees of Freedom · Dexterous 5-Finger Hands · Dual 3D LiDAR"
       ],
-      images: ["humanoid-ultimate.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "168 cm · 48 kg",
+        "battery": "10h Dual Hot-Swap",
+        "dof": "36 DOF Dexterous",
+        "sensors": "Dual Livox 3D LiDAR",
+        "compute": "NVIDIA Jetson AGX Orin",
+        "maxSpeed": "1.6 m/s",
+        "payload": "3.5 kg Per Hand"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "168 cm (H) × 60 cm (W) × 54 cm (D) · True full-scale ergonomic bipedal form",
+        "Net Weight": "48 kg (high-strength carbon-aluminum composite construction)",
+        "Kinematic Structure & DOF": "36 Degrees of Freedom: Dual 6-DOF dexterous 5-finger hands, Dual 7-DOF arms, 3-DOF neck/head, 7-DOF active waist/torso",
+        "Dexterous Hands & Manipulation": "Five-finger articulated hands with individual tactile micro-force pressure sensors on all fingertips (payload: 3.5 kg per hand)",
+        "Actuation & Motor Drives": "Custom frameless brushless torque motors coupled with zero-backlash strain wave harmonic drives and absolute dual encoders",
+        "Battery Architecture": "Dual hot-swappable 48V 25Ah LiFePO4 packs allowing continuous uninterrupted operation without system shutdown",
+        "Autonomous Charging & Docking": "10 Hours heavy-load runtime; high-amperage smart dock + automatic mechanical contact coupling",
+        "Perception & Sensory Suite": "Dual Livox high-resolution 3D LiDARs, 3× RGB-D stereoscopic cameras (270° visual coverage), 16× ultrasonic sensors, dual redundant IMUs",
+        "Onboard Compute Architecture": "NVIDIA Jetson AGX Orin (275 TOPS AI compute) + Ruggedized Intel Xeon-class x86 companion board with 64 GB unified RAM",
+        "Autonomy Software & ROS Stack": "Full ROS 2 Iron / Humble support with open torque-level API, MoveIt 2 motion planning, and NVIDIA Isaac ROS perception pipelines",
+        "Audio & Perception": "Studio-grade 8-element circular microphone array with beamforming, real-time speaker isolation, and directional audio output",
+        "Telecommunications & Ports": "Wi-Fi 6E, Dual 5G Industrial Cellular Modems, Bluetooth 5.3, Dual 10-Gigabit Ethernet ports, CAN-FD bus diagnostic tap",
+        "Chassis & Structural Materials": "Pre-preg autoclave-cured carbon-fiber composite armor over CNC aerospace 7075-T6 aluminum skeleton",
+        "Industrial Safety & Redundancy": "Dual physical E-Stops, electronic torque overload slip-protection, redundant safety monitoring microcontrollers"
+      },
+      "operations": [
         {
-          id: "hu-op-1",
-          label: "Dexterous Precision Manipulation & Object Handoff",
-          description: "Allows the robot to gently grasp, hold, and hand brochures, gifts, or tools up to 3 kg per hand.",
-          priceAdd: 95000,
-          unit: "one-time"
+          "id": "hu-op-1",
+          "label": "Dexterous Precision Manipulation & Object Handoff",
+          "description": "Allows the robot to gently grasp, hold, and hand brochures, gifts, or tools up to 3 kg per hand.",
+          "priceAdd": 95000,
+          "unit": "one-time"
         },
         {
-          id: "hu-op-2",
-          label: "Autonomous 24/7 Facility Patrol & Anomaly Detection",
-          description: "Schedules night rounds, checks doors and thermal signatures, and reports security anomalies.",
-          priceAdd: 75000,
-          unit: "one-time"
+          "id": "hu-op-2",
+          "label": "Autonomous 24/7 Facility Patrol & Anomaly Detection",
+          "description": "Schedules night rounds, checks doors and thermal signatures, and reports security anomalies.",
+          "priceAdd": 75000,
+          "unit": "one-time"
         },
         {
-          id: "hu-op-3",
-          label: "ROS 2 Humble / Iron Full Research API Access",
-          description: "Direct joint-level torque control and raw sensory access for university AI and robotics researchers.",
-          priceAdd: 50000,
-          unit: "one-time"
+          "id": "hu-op-3",
+          "label": "ROS 2 Humble / Iron Full Research API Access",
+          "description": "Direct joint-level torque control and raw sensory access for university AI and robotics researchers.",
+          "priceAdd": 50000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 940000 },
-        build: { kitPrice: 680000, mentorDayRate: 24000, perStudentMaterial: 6500, minStudents: 20 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 940000
+        },
+        "build": {
+          "kitPrice": 680000,
+          "mentorDayRate": 24000,
+          "perStudentMaterial": 6500,
+          "minStudents": 20
+        }
+      },
+      "applications": [
+        "Advanced University AI & Robotics Research Labs",
+        "Industrial Defense & Mechatronics R&D Centers",
+        "Flagship Technology Pavilions & Corporate Showcases",
+        "High-Security Facility Autonomous Surveillance"
+      ],
+      "standardInclusions": [
+        "Complete ROS 2 research workspace with simulated URDF/Gazebo digital twin",
+        "On-site precision commissioning by senior robotics systems engineers",
+        "1-Year Comprehensive Mechatronics & Avionics Warranty",
+        "Direct engineering line access for research software integration"
+      ]
     },
     {
-      id: "assistant-essential",
-      slug: "assistant-essential",
-      family: "assistant",
-      name: "Assistant Essential",
-      tagline: "Compact countertop & podium concierge robot with directional beamforming audio and touch terminal.",
-      description: "Designed for reception counters, library inquiry desks, and hospital registration kiosks. Occupies zero floor space while automating queries, appointment registrations, and queue ticket issuance with instant reliability.",
-      specs: [
+      "id": "assistant-essential",
+      "slug": "assistant-essential",
+      "modelCode": "FR-AE10",
+      "family": "assistant",
+      "name": "Assistant Essential",
+      "tagline": "Compact countertop & podium concierge robot with directional beamforming audio and touch terminal.",
+      "description": "Designed for reception counters, library inquiry desks, and hospital registration kiosks. Occupies zero floor space while automating queries, appointment registrations, and queue ticket issuance with instant reliability.",
+      "specs": [
         "Dimensions: 46 cm (H) × 32 cm (W) · Weight: 7.8 kg",
         "Power: 12V 5A Direct Mains Adapter with 4-Hour UPS Battery Backup",
         "Display & Audio: 10.1\" IPS Full HD Touchscreen · 4-Mic Far-Field Array"
       ],
-      images: ["assistant-essential.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "46 cm · 7.8 kg (Desk)",
+        "battery": "Mains + 4h UPS Backup",
+        "dof": "2-DOF Head Pan/Tilt",
+        "sensors": "1080p HDR + Proximity",
+        "compute": "Quad-Core Industrial",
+        "maxSpeed": "Stationary Podium",
+        "payload": "Countertop Footprint"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "46 cm (H) × 32 cm (W) × 28 cm (D) · Compact space-saving desktop footprint",
+        "Net Weight": "7.8 kg (weighted anti-topple steel baseplate)",
+        "Kinematic Structure & DOF": "2 Degrees of Freedom: Motorized Pan & Tilt expressive head assembly with multi-color emotive LED status ring",
+        "Interactive Display Terminal": "10.1-inch IPS Full HD (1920×1200) multi-touch capacitive screen with anti-reflective and fingerprint-resistant oleophobic coating",
+        "Power Architecture": "Universal 100–240V AC mains power input with internal 4-Hour Li-ion UPS battery backup for power outage continuity",
+        "Perception & Sensory Suite": "Wide-angle 1080p HDR facial camera, dual optical proximity sensors, integrated NFC/RFID contactless access card reader",
+        "Audio & Voice Localization": "4-Microphone circular far-field array with hardware voice activity detection (VAD), 10W dual neodymium speakers",
+        "Onboard Compute Architecture": "Quad-core 2.0 GHz industrial embedded processor, 8 GB LPDDR4 RAM, 128 GB eMMC 5.1 local flash storage",
+        "Software & Connectivity": "FUTURE Assistant OS (Linux-based) with local offline FAQ caching; Dual-band Wi-Fi, Ethernet, and cloud webhook sync",
+        "Peripherals & Expandability": "Integrated thermal receipt printer port, barcode/QR-code scanning engine, dual USB 3.0 expansion ports",
+        "Chassis & Structural Materials": "Heavy powder-coated steel base with anodized aluminum central neck and impact-resistant polymer head",
+        "Security & Physical Integrity": "Integrated Kensington lock slot, hardware tamper switch, AES-256 encrypted local credential storage"
+      },
+      "operations": [
         {
-          id: "ae-op-1",
-          label: "Automated Token & Appointment Queue Manager",
-          description: "Issues digital tokens, syncs with hospital or office ERP, and displays real-time waiting times.",
-          priceAdd: 28000,
-          unit: "one-time"
+          "id": "ae-op-1",
+          "label": "Automated Token & Appointment Queue Manager",
+          "description": "Issues digital tokens, syncs with hospital or office ERP, and displays real-time waiting times.",
+          "priceAdd": 28000,
+          "unit": "one-time"
         },
         {
-          id: "ae-op-2",
-          label: "Voice AI Receptionist & FAQ Assistant",
-          description: "Trained on your institutional documentation to answer questions about courses, timings, and fees.",
-          priceAdd: 32000,
-          unit: "one-time"
+          "id": "ae-op-2",
+          "label": "Voice AI Receptionist & FAQ Assistant",
+          "description": "Trained on your institutional documentation to answer questions about courses, timings, and fees.",
+          "priceAdd": 32000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 195000 },
-        build: { kitPrice: 135000, mentorDayRate: 14000, perStudentMaterial: 3000, minStudents: 15 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 195000
+        },
+        "build": {
+          "kitPrice": 135000,
+          "mentorDayRate": 14000,
+          "perStudentMaterial": 3000,
+          "minStudents": 15
+        }
+      },
+      "applications": [
+        "Hospital & Clinic Registration Desks",
+        "College & University Admissions Helpdesks",
+        "Corporate Reception & Security Counters",
+        "Municipal & Government Service Centers"
+      ],
+      "standardInclusions": [
+        "Custom FAQ and knowledge base pre-configuration",
+        "Countertop mounting bracket or weighted freestanding base",
+        "1-Year Comprehensive Replacement & Repair Warranty",
+        "Remote software updates & security patch management"
+      ]
     },
     {
-      id: "assistant-interactive",
-      slug: "assistant-interactive",
-      family: "assistant",
-      name: "Assistant Interactive",
-      tagline: "Autonomous wheeled mobile office assistant with payload tray and indoor slam navigation.",
-      description: "An agile mobile robot that moves silently across office floors, libraries, and laboratories. Equipped with a built-in courier shelf for internal mail, medicine delivery, or snacks, and an interactive front touchscreen for staff check-ins.",
-      specs: [
+      "id": "assistant-interactive",
+      "slug": "assistant-interactive",
+      "modelCode": "FR-AI15",
+      "family": "assistant",
+      "name": "Assistant Interactive",
+      "tagline": "Autonomous wheeled mobile office assistant with payload tray and indoor slam navigation.",
+      "description": "An agile mobile robot that moves silently across office floors, libraries, and laboratories. Equipped with a built-in courier shelf for internal mail, medicine delivery, or snacks, and an interactive front touchscreen for staff check-ins.",
+      "specs": [
         "Dimensions: 112 cm (H) × 48 cm (Base Ø) · Weight: 26 kg",
         "Battery: 12 Hours Runtime · Auto-Return Inductive Charging Dock",
         "Mobility: Differential Drive · Max Speed 1.2 m/s · Payload 15 kg"
       ],
-      images: ["assistant-interactive.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "112 cm · 26 kg",
+        "battery": "12h All-Day Roaming",
+        "dof": "Differential Drive Base",
+        "sensors": "360° LiDAR · Depth Cam",
+        "compute": "Industrial Intel x86",
+        "maxSpeed": "1.2 m/s",
+        "payload": "15 kg Cargo Shelf"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "112 cm (H) × 48 cm (Base Diameter) · Slender cylindrical footprint for narrow corridors",
+        "Net Weight": "26 kg",
+        "Cargo & Payload Capacity": "15 kg dual-tier enclosed courier shelf with non-slip silicone matting and magnetic retention flaps",
+        "Drive Kinematics & Agility": "Dual differential drive with brushless in-hub motors and dual passive castors for zero-radius turns; max speed 1.2 m/s",
+        "Terrain & Obstacle Handling": "Crosses door thresholds up to 15 mm, negotiates ramps up to 8 degrees, detects stairs with 4× cliff sensors",
+        "Battery Architecture": "24V 32Ah LiFePO4 battery pack delivering 12 Hours continuous roaming; autonomous inductive dock charging",
+        "Perception & Sensory Suite": "360° Slamtec 2D LiDAR (18 m range), forward-facing 3D depth camera, 8× ultrasonic rangefinders, bottom optical cliff sensors",
+        "Interactive Terminal": "7-inch tilted IPS touchscreen for PIN entry, recipient selection, and destination confirmation",
+        "Onboard Compute Architecture": "Industrial Intel x86 embedded platform with ROS 2 Nav2 stack, local SLAM graph optimization, and IoT elevator bridge",
+        "Multi-Floor Elevator Dispatch": "Optional Wi-Fi / LoRa IoT elevator calling module for multi-floor autonomous courier service",
+        "Chassis & Safety": "360° mechanical collision bumper with dual microswitches, software deceleration zones, audio alert horn, LED indicator turn lights",
+        "Compliance": "Industrial cleanroom compatible materials, ISO 3691-4 industrial vehicle safety design"
+      },
+      "operations": [
         {
-          id: "ai-op-1",
-          label: "Intra-Office Document & Parcel Delivery",
-          description: "Calls elevators, arrives at specific cubicles or desks, and notifies recipient via mobile PIN.",
-          priceAdd: 42000,
-          unit: "one-time"
+          "id": "ai-op-1",
+          "label": "Intra-Office Document & Parcel Delivery",
+          "description": "Calls elevators, arrives at specific cubicles or desks, and notifies recipient via mobile PIN.",
+          "priceAdd": 42000,
+          "unit": "one-time"
         },
         {
-          id: "ai-op-2",
-          label: "Crowd Flow Analysis & Visitor Greeting",
-          description: "Detects human foot traffic density and roams actively to provide help in busy halls.",
-          priceAdd: 36000,
-          unit: "one-time"
+          "id": "ai-op-2",
+          "label": "Crowd Flow Analysis & Visitor Greeting",
+          "description": "Detects human foot traffic density and roams actively to provide help in busy halls.",
+          "priceAdd": 36000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 380000 },
-        build: { kitPrice: 265000, mentorDayRate: 16000, perStudentMaterial: 3800, minStudents: 20 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 380000
+        },
+        "build": {
+          "kitPrice": 265000,
+          "mentorDayRate": 16000,
+          "perStudentMaterial": 3800,
+          "minStudents": 20
+        }
+      },
+      "applications": [
+        "Corporate Offices & Multi-Floor Headquarters",
+        "Hospital Wards & Pharmaceutical Courier",
+        "University Libraries & Research Labs",
+        "Hospitality & Hotel Internal Room Service"
+      ],
+      "standardInclusions": [
+        "Full facility SLAM mapping and charging dock installation",
+        "ROS 2 Nav2 fleet management integration",
+        "1-Year Comprehensive On-Site Mechatronics Warranty",
+        "Software license for multi-destination courier dispatch"
+      ]
     },
     {
-      id: "assistant-premium",
-      slug: "assistant-premium",
-      family: "assistant",
-      name: "Assistant Premium",
-      tagline: "Executive floor concierge robot with dual touch displays, motorized lock-boxes & telepresence.",
-      description: "Built for boardroom wings, VIP university administration complexes, and private wealth banking suites. Features brushed metallic aesthetics, dual electronic lock-boxes for sensitive items, and broadcast-grade telepresence hardware.",
-      specs: [
+      "id": "assistant-premium",
+      "slug": "assistant-premium",
+      "modelCode": "FR-AP34",
+      "family": "assistant",
+      "name": "Assistant Premium",
+      "tagline": "Executive floor concierge robot with dual touch displays, motorized lock-boxes & telepresence.",
+      "description": "Built for boardroom wings, VIP university administration complexes, and private wealth banking suites. Features brushed metallic aesthetics, dual electronic lock-boxes for sensitive items, and broadcast-grade telepresence hardware.",
+      "specs": [
         "Dimensions: 125 cm (H) × 52 cm (Base Ø) · Weight: 34 kg",
         "Battery: 14 Hours Continuous Operation · Heavy-Duty Lithium Core",
         "Sensors: 3D LiDAR · Dual Ultra-HD PTZ Cameras · Ultrasonic Safety Ring"
       ],
-      images: ["assistant-premium.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "125 cm · 34 kg",
+        "battery": "14h Executive Patrol",
+        "dof": "Omnidirectional Base",
+        "sensors": "3D LiDAR · 4K PTZ Camera",
+        "compute": "Intel Core i7 12th Gen",
+        "maxSpeed": "1.5 m/s",
+        "payload": "Dual Biometric Vaults"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "125 cm (H) × 52 cm (Base Diameter) · Executive sculptural profile with brushed metallic finishes",
+        "Net Weight": "34 kg",
+        "Dual Interactive Displays": "Primary 12.3-inch Full HD capacitive visitor display + Secondary 7-inch rear console for administrative authentication",
+        "Secure Biometric Lock-Boxes": "Dual motorized compartments with electronic solenoid deadbolts, biometric fingerprint access, and audit trail logging",
+        "Drive Kinematics & Locomotion": "Three-wheel omnidirectional holonomic drive platform with ultra-quiet field-oriented control (FOC) motors (max speed 1.5 m/s)",
+        "Battery & Power Architecture": "48V 35Ah Grade-A NMC battery pack delivering 14 Hours continuous executive floor presence; automatic fast docking",
+        "Perception & Sensory Suite": "Solid-State 3D LiDAR (30 m range), dual wide-angle stereo cameras, 12× perimeter ultrasonic sensors, 3D ToF floor drop sensors",
+        "Executive Telepresence Hardware": "Motorized 4K pan-tilt-zoom (PTZ) camera with 3× optical zoom, dual-channel echo-cancelling conference microphone, 30W acoustic speakers",
+        "Onboard Compute Architecture": "Industrial Intel Core i7 12th Gen edge computer, 32 GB DDR5 RAM, 512 GB PCIe Gen4 SSD",
+        "Telecommunications & Connectivity": "Wi-Fi 6E, Dual 5G LTE SIM failover, Bluetooth 5.3, Gigabit Ethernet with hardware VPN encryption support",
+        "Chassis & Structural Materials": "Hand-brushed aerospace aluminum casing with champagne-titanium anodized accents and tempered acoustic glass panels",
+        "Industrial Safety & Redundancy": "Full perimeter capacitive touch safety bumper, dual emergency stop push-buttons, CE Mark certified mechatronics"
+      },
+      "operations": [
         {
-          id: "ap-op-1",
-          label: "Biometric & RFID Secure Compartment Access",
-          description: "Dual motorized compartments that open only for authorized personnel via fingerprint or RFID.",
-          priceAdd: 54000,
-          unit: "one-time"
+          "id": "ap-op-1",
+          "label": "Biometric & RFID Secure Compartment Access",
+          "description": "Dual motorized compartments that open only for authorized personnel via fingerprint or RFID.",
+          "priceAdd": 54000,
+          "unit": "one-time"
         },
         {
-          id: "ap-op-2",
-          label: "Executive Boardroom Telepresence Suite",
-          description: "High-definition zoom cameras and echo-cancelling conference audio for remote executive presence.",
-          priceAdd: 46000,
-          unit: "one-time"
+          "id": "ap-op-2",
+          "label": "Executive Boardroom Telepresence Suite",
+          "description": "High-definition zoom cameras and echo-cancelling conference audio for remote executive presence.",
+          "priceAdd": 46000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 510000 },
-        build: { kitPrice: 360000, mentorDayRate: 18000, perStudentMaterial: 4500, minStudents: 20 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 510000
+        },
+        "build": {
+          "kitPrice": 360000,
+          "mentorDayRate": 18000,
+          "perStudentMaterial": 4500,
+          "minStudents": 20
+        }
+      },
+      "applications": [
+        "Corporate Executive Suites & Boardrooms",
+        "Private Wealth & Embassy Consular Lounges",
+        "VIP University Chancellor Suites",
+        "Confidential High-Security Courier Zones"
+      ],
+      "standardInclusions": [
+        "Executive suite custom aesthetic calibration & docking station",
+        "Encrypted telepresence server software integration",
+        "1-Year Comprehensive White-Glove On-Site Warranty",
+        "Quarterly preventative maintenance visits by senior engineers"
+      ]
     },
     {
-      id: "sphere-play",
-      slug: "sphere-play",
-      family: "sphere",
-      name: "Sphere Play",
-      tagline: "Programmable spherical STEM robot with 360° omnidirectional gyroscopic drive & glowing shell.",
-      description: "Sphere Play is an ultra-durable, waterproof spherical robot designed for school and college engineering labs. Students learn computational logic, sensor fusion, and PID control by programming its gyroscopic momentum drive in Python and Scratch.",
-      specs: [
+      "id": "sphere-play",
+      "slug": "sphere-play",
+      "modelCode": "FR-SP02",
+      "family": "sphere",
+      "name": "Sphere Play",
+      "tagline": "Programmable spherical STEM robot with 360° omnidirectional gyroscopic drive & glowing shell.",
+      "description": "Sphere Play is an ultra-durable, waterproof spherical robot designed for school and college engineering labs. Students learn computational logic, sensor fusion, and PID control by programming its gyroscopic momentum drive in Python and Scratch.",
+      "specs": [
         "Dimensions: 22 cm Diameter · Weight: 1.6 kg",
         "Battery: 4 Hours Dynamic Rolling · Wireless Qi Inductive Fast Charging",
         "Sensors: 9-DOF IMU · Ambient Light Sensor · RGB Programmable Core"
       ],
-      images: ["sphere-play.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "22 cm Ø · 1.6 kg",
+        "battery": "4h Qi Wireless Charge",
+        "dof": "360° Gyroscopic Drive",
+        "sensors": "9-DOF IMU · Light Sensor",
+        "compute": "ARM Cortex Microcontroller",
+        "maxSpeed": "2.2 m/s",
+        "payload": "Impact-Sealed Sphere"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "22 cm Diameter · Seamless spherical polycarbonate shell",
+        "Net Weight": "1.6 kg",
+        "Drive Kinematics": "Dual-motor internal differential pendulum drive with gyroscopic momentum wheel for 360° omnidirectional rolling",
+        "Maximum Velocity": "Up to 2.2 m/s (approx. 8 km/h); rolls smoothly over carpet, hardwood, tiles, asphalt, and low grass",
+        "Shell Material & Ingress Protection": "High-impact polycarbonate seamless shell; IP65 waterproof and dustproof; drop-resistant up to 1.2 m onto concrete",
+        "Battery Architecture & Charging": "Internal 7.4V 3200 mAh Li-ion battery (4 Hours active dynamic rolling); Qi wireless inductive charging dock",
+        "Sensor Suite": "High-bandwidth 9-DOF IMU (3-axis gyro, 3-axis accelerometer, 3-axis magnetometer), optical surface velocity encoder, ambient light sensor",
+        "Programmable Illumination": "Internal 32-LED RGB addressable halo ring with programmable lighting choreography, telemetry indicators, and mood states",
+        "Wireless Telemetry": "Bluetooth 5.0 Low Energy (up to 30 m line-of-sight range) with optional 2.4 GHz Wi-Fi educational lab bridge",
+        "Programming Software Ecosystem": "Browser-based Scratch block-coding IDE, Python 3 SDK with real-time telemetry streaming, and native ROS 2 node",
+        "Educational Curriculum": "40-Project lab experiment handbook, student challenge arena mats, and instructor lesson plans aligned with CBSE/AICTE standards",
+        "Safety & Construction": "Zero exposed moving parts or pinch hazards; hermetically sealed against liquids and dust"
+      },
+      "operations": [
         {
-          id: "sp-op-1",
-          label: "Institutional STEM Curriculum & 40 Project Lab Kit",
-          description: "Complete curriculum aligned with CBSE / AICTE standards, instructor manuals, and challenge course mats.",
-          priceAdd: 18000,
-          unit: "one-time"
+          "id": "sp-op-1",
+          "label": "Institutional STEM Curriculum & 40 Project Lab Kit",
+          "description": "Complete curriculum aligned with CBSE / AICTE standards, instructor manuals, and challenge course mats.",
+          "priceAdd": 18000,
+          "unit": "one-time"
         },
         {
-          id: "sp-op-2",
-          label: "Multi-Robot Swarm Synchronized Choreography",
-          description: "Software protocol to program up to 16 spheres to dance and navigate synchronously.",
-          priceAdd: 22000,
-          unit: "one-time"
+          "id": "sp-op-2",
+          "label": "Multi-Robot Swarm Synchronized Choreography",
+          "description": "Software protocol to program up to 16 spheres to dance and navigate synchronously.",
+          "priceAdd": 22000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 85000 },
-        build: { kitPrice: 58000, mentorDayRate: 12000, perStudentMaterial: 2200, minStudents: 25 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 85000
+        },
+        "build": {
+          "kitPrice": 58000,
+          "mentorDayRate": 12000,
+          "perStudentMaterial": 2200,
+          "minStudents": 25
+        }
+      },
+      "applications": [
+        "K-12 Atal Tinkering Labs (ATL) & STEM Classrooms",
+        "Engineering College Control Systems & Robotics Labs",
+        "Interactive Science Centers & Children's Museums",
+        "Robotics Competitions & Swarm Research Experiments"
+      ],
+      "standardInclusions": [
+        "Qi wireless inductive fast-charging cradle & power supply",
+        "Python 3 and Scratch educational software suite",
+        "1-Year Comprehensive Replacement & Component Warranty",
+        "Teacher training guide & starter project challenge mats"
+      ]
     },
     {
-      id: "sphere-ai",
-      slug: "sphere-ai",
-      family: "sphere",
-      name: "Sphere AI",
-      tagline: "Autonomous spherical inspection drone with IP67 sealed chassis & panoramic multi-spectral camera.",
-      description: "Sphere AI operates where wheeled or legged robots cannot. Its hermetically sealed spherical shell rolls through chemical tanks, HVAC ducts, agricultural fields, and pipeline infrastructure while transmitting live 360° video and gas detection data.",
-      specs: [
+      "id": "sphere-ai",
+      "slug": "sphere-ai",
+      "modelCode": "FR-SA05",
+      "family": "sphere",
+      "name": "Sphere AI",
+      "tagline": "Autonomous spherical inspection drone with IP67 sealed chassis & panoramic multi-spectral camera.",
+      "description": "Sphere AI operates where wheeled or legged robots cannot. Its hermetically sealed spherical shell rolls through chemical tanks, HVAC ducts, agricultural fields, and pipeline infrastructure while transmitting live 360° video and gas detection data.",
+      "specs": [
         "Dimensions: 34 cm Diameter · Weight: 4.8 kg",
         "Battery: 6 Hours Exploration Run · IP67 Waterproof & Dustproof",
         "Sensors: 360° Dual Fisheye Optics · VOC Gas Sensor · Infrared Night Vision"
       ],
-      images: ["sphere-ai.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "34 cm Ø · 4.8 kg",
+        "battery": "6h Exploration Run",
+        "dof": "Hermetic Internal Drive",
+        "sensors": "360° Panoramic · Multi-Gas",
+        "compute": "ARM Cortex Quad-Core",
+        "maxSpeed": "1.5 m/s",
+        "payload": "IP67 Submersible Body"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "34 cm Diameter · Hermetically sealed self-contained sphere",
+        "Net Weight": "4.8 kg (with internal pendular drive and sensory ballast)",
+        "Ingress Protection Rating": "IP67 Certified: fully dust-tight and submersible in water up to 1 meter depth for 30 minutes; resistant to caustic washdowns",
+        "Locomotion & Mobility": "Internal motorized pendular drive with heavy-duty stepper actuators and dual gyroscopic stabilizers; navigates mud, standing water, and pipes",
+        "Battery Architecture": "High-capacity 14.8V 12000 mAh LiFePO4 internal core delivering 6 Hours continuous inspection runtime",
+        "Panoramic Optical System": "Dual ultra-wide 180° fisheye optical lenses with real-time onboard 360° video stitching (4K 30fps stream)",
+        "Hazardous Environmental Sensing": "Integrated multi-gas VOC sensor array (Methane, CO, H2S, and hydrocarbon vapors), thermal infrared spot radiometer (-20°C to +350°C)",
+        "Illumination System": "1800 lumen high-output LED ring floodlight with strobe mode and infrared illumination for zero-light pipe environments",
+        "Long-Range Telecommunications": "5.8 GHz long-range wireless video link (up to 800 m line-of-sight) + 4G cellular IoT uplink with automatic local flash storage failover",
+        "Onboard Compute Hardware": "Industrial ARM Cortex-A72 quad-core processing module with hardware H.265 video compression and real-time gas alarm logic",
+        "Chassis & Shell Integrity": "Ultra-tough cross-linked polymer shell reinforced against crushing loads up to 250 kg; non-sparking outer surface"
+      },
+      "operations": [
         {
-          id: "sa-op-1",
-          label: "Hazardous Gas & Thermal Anomaly Detection",
-          description: "Monitors methane, carbon monoxide, temperature differentials, and flags leak coordinates.",
-          priceAdd: 42000,
-          unit: "one-time"
+          "id": "sa-op-1",
+          "label": "Hazardous Gas & Thermal Anomaly Detection",
+          "description": "Monitors methane, carbon monoxide, temperature differentials, and flags leak coordinates.",
+          "priceAdd": 42000,
+          "unit": "one-time"
         },
         {
-          id: "sa-op-2",
-          label: "Confined Space 3D Photogrammetry Mapping",
-          description: "Creates digital-twin 3D point clouds of pipes, tunnels, and tanks without exposing human workers.",
-          priceAdd: 58000,
-          unit: "one-time"
+          "id": "sa-op-2",
+          "label": "Confined Space 3D Photogrammetry Mapping",
+          "description": "Creates digital-twin 3D point clouds of pipes, tunnels, and tanks without exposing human workers.",
+          "priceAdd": 58000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 275000 },
-        build: { kitPrice: 195000, mentorDayRate: 15000, perStudentMaterial: 3500, minStudents: 20 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 275000
+        },
+        "build": {
+          "kitPrice": 195000,
+          "mentorDayRate": 15000,
+          "perStudentMaterial": 3500,
+          "minStudents": 20
+        }
+      },
+      "applications": [
+        "Industrial Storage Tank & Chemical Vessel Inspection",
+        "Underground Culvert & Stormwater Pipe Audits",
+        "Agricultural Field Surveying & Canopy Monitoring",
+        "HVAC Large-Duct Hazardous Anomaly Mapping"
+      ],
+      "standardInclusions": [
+        "Ruggedized outdoor field base station with high-gain directional antennas",
+        "IP67 wireless inductive charging base & rugged transport case",
+        "1-Year Comprehensive Industrial Hardware Warranty",
+        "Desktop inspection report generator & video export software"
+      ]
     },
     {
-      id: "pet-essential",
-      slug: "pet-essential",
-      family: "pet",
-      name: "Pet Essential",
-      tagline: "Dynamic 12-DOF companion quadruped with terrain-adaptive gait, voice response & stair climbing.",
-      description: "An agile, lovable robotic pet designed for school robotics demonstrations, special education therapy, and office leisure zones. Responds to vocal instructions, executes trotting and rolling gaits, and effortlessly navigates carpets and stairs.",
-      specs: [
+      "id": "pet-essential",
+      "slug": "pet-essential",
+      "modelCode": "FR-PE12",
+      "family": "pet",
+      "name": "Pet Essential",
+      "tagline": "Dynamic 12-DOF companion quadruped with terrain-adaptive gait, voice response & stair climbing.",
+      "description": "An agile, lovable robotic pet designed for school robotics demonstrations, special education therapy, and office leisure zones. Responds to vocal instructions, executes trotting and rolling gaits, and effortlessly navigates carpets and stairs.",
+      "specs": [
         "Dimensions: 58 cm (L) × 34 cm (W) × 38 cm (H) · Weight: 9.5 kg",
         "Battery: 2.5 Hours Active Walking · Fast Battery Bay Swap",
         "Mobility: 12 Coreless High-Torque Joint Servos · Max Speed 1.8 m/s"
       ],
-      images: ["pet-essential.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "58 cm (L) · 9.5 kg",
+        "battery": "2.5h Active Walking",
+        "dof": "12-DOF Quadruped",
+        "sensors": "Vision Tracking · 6-Axis IMU",
+        "compute": "High-Torque Joint Controller",
+        "maxSpeed": "1.8 m/s",
+        "payload": "Stair Climbing Gait"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "58 cm (Length) × 34 cm (Width) × 38 cm (Standing Height)",
+        "Net Weight": "9.5 kg",
+        "Leg Kinematics & DOF": "4 Legs × 3-DOF each = 12 Degrees of Freedom with real-time inverse kinematics (IK) trot, walk, and pronk gaits",
+        "Joint Actuators": "12× Custom coreless high-torque digital servos with full-metal planetary gears (torque: 35 kg·cm per joint) and thermal telemetry",
+        "Locomotion Agility": "Handles dynamic trotting, roll-over auto-recovery, and stair climbing (navigates stair heights up to 12 cm); max speed 1.8 m/s",
+        "Battery Architecture": "Quick-swap 11.1V 6000 mAh LiPo battery pack; 2.5 Hours active dynamic walking; 45-minute battery dock charging",
+        "Sensors & Vision": "Forward-facing wide-angle HD camera with human and gesture recognition, 4× foot contact micro-switches, 6-axis balance IMU",
+        "Speech & Companion Interaction": "Integrated directional microphone for spoken command recognition (sit, follow, trot, roll) and expressive digital vocalizer",
+        "Control & Programming": "iOS and Android companion app with virtual joystick, drag-and-drop choreography timeline, and Scratch coding interface",
+        "Frame & Structural Durability": "CNC-machined carbon-fiber structural sideplates with injection-molded protective thigh armor and rubberized high-grip foot pads",
+        "Industrial Safety": "Current-limiting joint stall protection, automatic fall-detection limp mode to safeguard internal gearboxes"
+      },
+      "operations": [
         {
-          id: "pe-op-1",
-          label: "Gesture Recognition & Smart Companion Mode",
-          description: "Follows recognized humans, responds to hand gestures, and performs greeting bows.",
-          priceAdd: 24000,
-          unit: "one-time"
+          "id": "pe-op-1",
+          "label": "Gesture Recognition & Smart Companion Mode",
+          "description": "Follows recognized humans, responds to hand gestures, and performs greeting bows.",
+          "priceAdd": 24000,
+          "unit": "one-time"
         },
         {
-          id: "pe-op-2",
-          label: "Student Programming Sandbox & Mobile App",
-          description: "Drag-and-drop block coding app for tablets allowing custom choreography and gait planning.",
-          priceAdd: 19000,
-          unit: "one-time"
+          "id": "pe-op-2",
+          "label": "Student Programming Sandbox & Mobile App",
+          "description": "Drag-and-drop block coding app for tablets allowing custom choreography and gait planning.",
+          "priceAdd": 19000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 240000 },
-        build: { kitPrice: 170000, mentorDayRate: 14000, perStudentMaterial: 2800, minStudents: 20 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 240000
+        },
+        "build": {
+          "kitPrice": 170000,
+          "mentorDayRate": 14000,
+          "perStudentMaterial": 2800,
+          "minStudents": 20
+        }
+      },
+      "applications": [
+        "School Robotics Labs & STEM Demonstrations",
+        "Special Education & Cognitive Therapy Centers",
+        "Corporate Wellness & Tech Lounge Companions",
+        "Public Robotics Exhibitions & Science Festivals"
+      ],
+      "standardInclusions": [
+        "Fast multi-battery charging cradle with 2× battery packs",
+        "Mobile app controller license for iOS and Android tablets",
+        "1-Year Comprehensive Parts & Servicing Warranty",
+        "Starter gait programming workbook for students"
+      ]
     },
     {
-      id: "pet-advanced",
-      slug: "pet-advanced",
-      family: "pet",
-      name: "Pet Advanced",
-      tagline: "Autonomous ROS 2 research quadruped with 3D LiDAR, RealSense depth cameras & terrain mapping.",
-      description: "Built specifically for university engineering departments and industrial research centers. Powered by high-bandwidth field-oriented control (FOC) brushless motors and a Linux onboard computer with preconfigured ROS 2 navigation stacks.",
-      specs: [
+      "id": "pet-advanced",
+      "slug": "pet-advanced",
+      "modelCode": "FR-PA14",
+      "family": "pet",
+      "name": "Pet Advanced",
+      "tagline": "Autonomous ROS 2 research quadruped with 3D LiDAR, RealSense depth cameras & terrain mapping.",
+      "description": "Built specifically for university engineering departments and industrial research centers. Powered by high-bandwidth field-oriented control (FOC) brushless motors and a Linux onboard computer with preconfigured ROS 2 navigation stacks.",
+      "specs": [
         "Dimensions: 68 cm (L) × 38 cm (W) × 45 cm (H) · Weight: 14.2 kg",
         "Battery: 3.5 Hours Runtime · High-C LiPo Core with Telemetry",
         "Sensors: Solid-State 3D LiDAR · Intel RealSense D435i · 100 Hz IMU"
       ],
-      images: ["pet-advanced.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "68 cm (L) · 14.2 kg",
+        "battery": "3.5h Research Run",
+        "dof": "12× FOC Brushless Joints",
+        "sensors": "3D LiDAR · RealSense D435i",
+        "compute": "Industrial Intel Core i5",
+        "maxSpeed": "2.4 m/s",
+        "payload": "5 kg Research Top-Rail"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "68 cm (Length) × 38 cm (Width) × 45 cm (Standing Height)",
+        "Net Weight": "14.2 kg",
+        "Actuation & Motor Drives": "12× Quasi-Direct Drive (QDD) field-oriented control (FOC) brushless motors with 6:1 planetary reducers (peak torque: 24 N·m per joint)",
+        "Research Control Loops": "Open torque, velocity, and position control loops running at 500 Hz on dual real-time CAN-FD buses",
+        "Perception & Sensory Suite": "Solid-state 3D LiDAR (16-beam, 20 m range), Intel RealSense D435i depth camera, 100 Hz industrial 9-DOF IMU",
+        "Foot Force Sensing": "4× Tri-axial optoelectronic ground reaction force (GRF) foot sensors providing real-time terrain impedance estimation",
+        "Autonomy & Onboard Compute": "Industrial x86 computer (Intel Core i5, 16 GB RAM) running Ubuntu 22.04 LTS real-time kernel with native ROS 2 Humble/Iron",
+        "Battery & Power Architecture": "22.2V 10000 mAh High-Discharge LiPo battery pack with smart telemetry (3.5 Hours active dynamic operation)",
+        "Terrain Traversal Capabilities": "Traverses slopes up to 25 degrees, loose gravel, outdoor grass, wet floors, and curbs autonomously",
+        "Software Stack & SDK": "Pre-configured autonomous navigation stack (Nav2), dynamic 3D SLAM mapping, open Python & C++ development APIs",
+        "Payload Top-Rail": "Integrated aluminum T-slot accessory rail supporting up to 5 kg of scientific sensors or robotic arm attachments",
+        "Safety Architecture": "Emergency wireless stop transmitter, thermal monitoring across all 12 motor controllers, auto-crouch on loss of telemetry"
+      },
+      "operations": [
         {
-          id: "pa-op-1",
-          label: "Autonomous Uneven Terrain Navigation (Slamtec)",
-          description: "Navigates slopes up to 25 degrees, grass, gravel, and steps completely autonomously.",
-          priceAdd: 48000,
-          unit: "one-time"
+          "id": "pa-op-1",
+          "label": "Autonomous Uneven Terrain Navigation (Slamtec)",
+          "description": "Navigates slopes up to 25 degrees, grass, gravel, and steps completely autonomously.",
+          "priceAdd": 48000,
+          "unit": "one-time"
         },
         {
-          id: "pa-op-2",
-          label: "Edge AI Vision (YOLOv8 Object & Person Tracker)",
-          description: "Runs real-time object detection and spatial classification on the onboard edge accelerator.",
-          priceAdd: 39000,
-          unit: "one-time"
+          "id": "pa-op-2",
+          "label": "Edge AI Vision (YOLOv8 Object & Person Tracker)",
+          "description": "Runs real-time object detection and spatial classification on the onboard edge accelerator.",
+          "priceAdd": 39000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 460000 },
-        build: { kitPrice: 325000, mentorDayRate: 18000, perStudentMaterial: 4200, minStudents: 20 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 460000
+        },
+        "build": {
+          "kitPrice": 325000,
+          "mentorDayRate": 18000,
+          "perStudentMaterial": 4200,
+          "minStudents": 20
+        }
+      },
+      "applications": [
+        "University Mechanical & AI Engineering Departments",
+        "Industrial Robotics Perception R&D Labs",
+        "Outdoor Search & Rescue Simulation Testbeds",
+        "Agricultural Canopy & Topography Mapping"
+      ],
+      "standardInclusions": [
+        "Full ROS 2 simulation model (URDF + Gazebo / Isaac Sim assets)",
+        "High-output balancing field charger with 2× flight packs",
+        "1-Year Comprehensive On-Site Hardware Warranty",
+        "Full developer documentation and sample control code repository"
+      ]
     },
     {
-      id: "pet-premium",
-      slug: "pet-premium",
-      family: "pet",
-      name: "Pet Premium",
-      tagline: "Heavy-duty industrial quadruped with 5-DOF top robotic inspection arm & 8 kg back payload rail.",
-      description: "Our industrial-grade robotic quadruped. Built for power substation inspections, construction sites, and manufacturing floor security. Equipped with an articulated robotic arm and dual thermal cameras to read analog gauges and inspect heat signatures.",
-      specs: [
+      "id": "pet-premium",
+      "slug": "pet-premium",
+      "modelCode": "FR-PP22",
+      "family": "pet",
+      "name": "Pet Premium",
+      "tagline": "Heavy-duty industrial quadruped with 5-DOF top robotic inspection arm & 8 kg back payload rail.",
+      "description": "Our industrial-grade robotic quadruped. Built for power substation inspections, construction sites, and manufacturing floor security. Equipped with an articulated robotic arm and dual thermal cameras to read analog gauges and inspect heat signatures.",
+      "specs": [
         "Dimensions: 82 cm (L) × 46 cm (W) × 58 cm (H) · Weight: 22 kg",
         "Battery: 4.5 Hours Continuous Patrol · Heavy Duty IP54 Weather-resistant",
         "Payload: 8 kg Rail Payload · 5-DOF Articulated Arm with Gripper"
       ],
-      images: ["pet-premium.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "82 cm (L) · 22 kg",
+        "battery": "4.5h Continuous Patrol",
+        "dof": "12-DOF Legs + 5-DOF Arm",
+        "sensors": "Radiometric Thermal + LiDAR",
+        "compute": "NVIDIA Jetson AGX Orin",
+        "maxSpeed": "2.0 m/s",
+        "payload": "8 kg Industrial Rail"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "82 cm (Length) × 46 cm (Width) × 58 cm (Standing Height)",
+        "Net Weight": "22 kg (arm and payloads included)",
+        "Ingress Protection Rating": "IP54 Certified: sealed against high-dust industrial environments and water splashing from any direction",
+        "Manipulator Robotic Arm": "5-DOF articulated top mechatronic arm with interchangeable 2-finger parallel gripper (gripper reach: 65 cm, lifting capacity: 2.5 kg)",
+        "Leg Actuators & Powertrain": "12× Industrial-grade planetary FOC brushless actuators with sealed harmonic reducers (peak torque: 45 N·m per joint)",
+        "Thermal & Visual Inspection Suite": "FLIR Radiometric Thermal Camera (accuracy ±2°C, -10°C to +450°C) + 30× Optical Zoom HD visual inspection camera",
+        "Navigation & Terrain Sensors": "Dual 360° LiDAR units (top and front-underbody, 40 m range), 4× stereo depth cameras, dual redundant IMUs",
+        "Battery & Power Architecture": "48V 20Ah Industrial LiFePO4 battery pack (4.5 Hours continuous autonomous patrol); hot-swappable in 60 seconds",
+        "Compute Hardware": "NVIDIA Jetson AGX Orin Industrial edge computer with AI inference acceleration for automated dial reading and hot-spot detection",
+        "Industrial Telecommunications": "Private LTE / 5G industrial cellular module, dual external high-gain Wi-Fi antennas, Satellite IoT uplink option",
+        "Safety Systems": "Visual high-intensity LED strobe bar, 85 dB audible alert horn, 3× mechanical emergency stop mushroom push-buttons",
+        "Payload Mounting": "Heavy-duty 8 kg continuous payload rating on NATO/Picatinny top rail system"
+      },
+      "operations": [
         {
-          id: "pp-op-1",
-          label: "Thermal Substation & Gauge Inspection System",
-          description: "Reads analog dials, detects hot spots in electrical switchgear, and logs timestamped alerts.",
-          priceAdd: 72000,
-          unit: "one-time"
+          "id": "pp-op-1",
+          "label": "Thermal Substation & Gauge Inspection System",
+          "description": "Reads analog dials, detects hot spots in electrical switchgear, and logs timestamped alerts.",
+          "priceAdd": 72000,
+          "unit": "one-time"
         },
         {
-          id: "pp-op-2",
-          label: "Motorized Arm Valve & Switch Actuation",
-          description: "Allows the robotic arm to flip breaker switches and turn valves in hazardous industrial zones.",
-          priceAdd: 85000,
-          unit: "one-time"
+          "id": "pp-op-2",
+          "label": "Motorized Arm Valve & Switch Actuation",
+          "description": "Allows the robotic arm to flip breaker switches and turn valves in hazardous industrial zones.",
+          "priceAdd": 85000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 790000 },
-        build: { kitPrice: 560000, mentorDayRate: 22000, perStudentMaterial: 5500, minStudents: 20 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 790000
+        },
+        "build": {
+          "kitPrice": 560000,
+          "mentorDayRate": 22000,
+          "perStudentMaterial": 5500,
+          "minStudents": 20
+        }
+      },
+      "applications": [
+        "Electrical Substation & Switchyard Routine Audits",
+        "Petrochemical & Oil Refinery Pipeline Patrol",
+        "Construction Site Volumetric & Safety Monitoring",
+        "Manufacturing Floor Security & Anomaly Surveillance"
+      ],
+      "standardInclusions": [
+        "Industrial charging station & fast battery swap dock",
+        "Automated inspection reporting software with thermal PDF export",
+        "1-Year Comprehensive Industrial On-Site Warranty",
+        "Field operator deployment and safety protocol training"
+      ]
     },
     {
-      id: "butterfly-guide",
-      slug: "butterfly-guide",
-      family: "butterfly",
-      name: "Butterfly Guide",
-      tagline: "Architectural kinetic guide robot with illuminated carbon-fiber flapping wings & ambient projection.",
-      description: "A mesmerizing architectural kinetic robot designed for grand atriums, science city galleries, and modern corporate entrances. Suspended overhead or wall-mounted, its fluid biomimetic wing motions and ambient optical projection guide crowds toward halls and auditoriums.",
-      specs: [
+      "id": "butterfly-guide",
+      "slug": "butterfly-guide",
+      "modelCode": "FR-BG04",
+      "family": "butterfly",
+      "name": "Butterfly Guide",
+      "tagline": "Architectural kinetic guide robot with illuminated carbon-fiber flapping wings & ambient projection.",
+      "description": "A mesmerizing architectural kinetic robot designed for grand atriums, science city galleries, and modern corporate entrances. Suspended overhead or wall-mounted, its fluid biomimetic wing motions and ambient optical projection guide crowds toward halls and auditoriums.",
+      "specs": [
         "Dimensions: 140 cm Wingspan · Fuselage: 55 cm · Weight: 4.2 kg",
         "Power: 24V Continuous Ceiling Tether with Integrated Safety Arrestor",
         "Mechanism: Dual Harmonic Drive Wing Actuators · Addressable LED Veins"
       ],
-      images: ["butterfly-guide.svg"],
-      operations: [
+      "quickSpecs": {
+        "form": "140 cm Wingspan · 4.2 kg",
+        "battery": "Continuous 24V Tether",
+        "dof": "Biomimetic Harmonic Wings",
+        "sensors": "Optical Crowd Flow Sensor",
+        "compute": "DMX512 + ArtNet Controller",
+        "maxSpeed": "1.5 Hz Flap Frequency",
+        "payload": "Laser Ground Projection"
+      },
+      "detailedSpecs": {
+        "Dimensions & Form Factor": "140 cm Wingspan; Fuselage Length: 55 cm; Fuselage Depth: 24 cm · Biomimetic lepidopteran form",
+        "Net Weight": "4.2 kg (high-strength ultralight carbon-fiber construction)",
+        "Wing Kinematics & Mechanism": "Dual independent harmonic drive actuators generating smooth, fluid biomimetic flapping motion (0.2 Hz to 1.5 Hz variable frequency)",
+        "Wing Structure & Lighting": "Structural carbon-fiber spars with translucent diffusing membrane and embedded addressable micro-LED veins (over 450 RGBW pixels)",
+        "Optical Wayfinding Projection": "Integrated 1080p ultra-short-throw LED projection module in fuselage base, casting luminous directional arrows and hall names on floors",
+        "Power Delivery & Suspension": "24V DC continuous overhead power tether with braided stainless aircraft safety arrestor cable (250 kg breaking strength)",
+        "Audio & Sensing": "Ambient acoustic chime generator; downward optical flow sensor measuring crowd foot traffic density in real-time",
+        "Architectural Integration": "DMX512 architectural lighting control support + ArtNet + REST API over Wi-Fi/Ethernet for building automation sync",
+        "Duty Cycle & Reliability": "Engineered for continuous 24/7 commercial operation with silent brushless motor bearings and zero maintenance lubrication",
+        "Ceiling Rigging & Safety": "Standard VESA / truss mounting bracket with quick-release safety pin and secondary fail-safe safety lanyard",
+        "Construction Materials": "Aircraft-grade carbon-fiber composite, anodized aluminum fuselage core, and flame-retardant optical diffuser film"
+      },
+      "operations": [
         {
-          id: "bg-op-1",
-          label: "Dynamic Directional Ground Projection",
-          description: "Projects glowing light arrows and hall names on the floor synchronized with wing movement.",
-          priceAdd: 34000,
-          unit: "one-time"
+          "id": "bg-op-1",
+          "label": "Dynamic Directional Ground Projection",
+          "description": "Projects glowing light arrows and hall names on the floor synchronized with wing movement.",
+          "priceAdd": 34000,
+          "unit": "one-time"
         },
         {
-          id: "bg-op-2",
-          label: "Ambient Music & Visitor Flow Synchrony",
-          description: "Adapts wing flap frequency and luminous colors to match ambient atrium acoustics and crowd density.",
-          priceAdd: 28000,
-          unit: "one-time"
+          "id": "bg-op-2",
+          "label": "Ambient Music & Visitor Flow Synchrony",
+          "description": "Adapts wing flap frequency and luminous colors to match ambient atrium acoustics and crowd density.",
+          "priceAdd": 28000,
+          "unit": "one-time"
         }
       ],
-      modes: {
-        buy: { basePrice: 320000 },
-        build: { kitPrice: 220000, mentorDayRate: 15000, perStudentMaterial: 3200, minStudents: 20 }
-      }
+      "modes": {
+        "buy": {
+          "basePrice": 320000
+        },
+        "build": {
+          "kitPrice": 220000,
+          "mentorDayRate": 15000,
+          "perStudentMaterial": 3200,
+          "minStudents": 20
+        }
+      },
+      "applications": [
+        "Corporate Atriums & Innovation Centers",
+        "Science City & Technology Museums",
+        "University Main Foyers & Auditoriums",
+        "High-End Hospitality & Luxury Retail Entrances"
+      ],
+      "standardInclusions": [
+        "Overhead ceiling rigging hardware & electrical tether kit",
+        "DMX512 / ArtNet building integration controller",
+        "1-Year Comprehensive On-Site Mechatronics Warranty",
+        "Custom lighting choreography & wayfinding projection programming"
+      ]
     }
   ]
 };
