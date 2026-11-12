@@ -8,11 +8,14 @@
  * 1. Appends every customer order/inquiry directly into Google Sheets in real-time.
  * 2. Sends an instant formatted alert email to orders@futurerobotix.in & udaysahu@futurerobotix.in.
  * 3. Sends an automated confirmation email with official Tracking Ref # to the customer.
- * 4. Provides direct 1-click WhatsApp and Phone links in your alert email for rapid response.
+ * 4. Dispatches emails as "FUTURE ROBOTIX" with reply-to & sender support@futurerobotix.in.
+ * 5. Provides direct 1-click WhatsApp and Phone links in your alert email for rapid response.
  */
 
-// CONFIGURATION: Admin notification recipients
+// CONFIGURATION: Admin notification recipients & sender identity
 const ADMIN_EMAILS = "orders@futurerobotix.in, udaysahu@futurerobotix.in";
+const SENDER_NAME = "FUTURE ROBOTIX Support";
+const SENDER_EMAIL = "support@futurerobotix.in";
 const COMPANY_NAME = "FUTURE ROBOTIX";
 const COMPANY_WEBSITE = "https://futurerobotix.in";
 const SHEET_NAME = "Orders & Inquiries";
@@ -24,6 +27,7 @@ function doGet(e) {
   return ContentService.createTextOutput(JSON.stringify({
     status: "active",
     service: "FUTURE ROBOTIX Procurement Pipeline",
+    sender: SENDER_EMAIL,
     authorizedRecipients: ADMIN_EMAILS,
     timestamp: new Date().toISOString()
   })).setMimeType(ContentService.MimeType.JSON);
@@ -141,7 +145,6 @@ function logToSheet(rowData) {
   
   if (!sheet) {
     sheet = ss.insertSheet(SHEET_NAME);
-    // Create Header Row with styling
     const headers = [
       "Timestamp (IST)", 
       "Reference #", 
@@ -158,7 +161,7 @@ function logToSheet(rowData) {
     ];
     sheet.appendRow(headers);
     
-    // Style headers
+    // Header Styling
     const headerRange = sheet.getRange(1, 1, 1, headers.length);
     headerRange.setBackground("#0F172A");
     headerRange.setFontColor("#FFFFFF");
@@ -171,6 +174,44 @@ function logToSheet(rowData) {
   }
 
   sheet.appendRow(rowData);
+}
+
+/**
+ * Helper: Sends email with support@futurerobotix.in identity and alias support
+ */
+function sendCustomEmail(recipient, subject, htmlBody) {
+  let fromAlias = null;
+  try {
+    const aliases = GmailApp.getAliases();
+    if (aliases && aliases.indexOf(SENDER_EMAIL) !== -1) {
+      fromAlias = SENDER_EMAIL;
+    }
+  } catch (e) {
+    Logger.log("Alias check error: " + e.toString());
+  }
+
+  const options = {
+    htmlBody: htmlBody,
+    name: SENDER_NAME,
+    replyTo: SENDER_EMAIL
+  };
+
+  if (fromAlias) {
+    options.from = fromAlias;
+  }
+
+  try {
+    GmailApp.sendEmail(recipient, subject, "", options);
+  } catch (err) {
+    Logger.log("GmailApp send error: " + err.toString() + ". Falling back to MailApp.");
+    MailApp.sendEmail({
+      to: recipient,
+      subject: subject,
+      htmlBody: htmlBody,
+      name: SENDER_NAME,
+      replyTo: SENDER_EMAIL
+    });
+  }
 }
 
 /**
@@ -254,11 +295,7 @@ ${d.message}
     </div>
   `;
 
-  MailApp.sendEmail({
-    to: ADMIN_EMAILS,
-    subject: subject,
-    htmlBody: htmlBody
-  });
+  sendCustomEmail(ADMIN_EMAILS, subject, htmlBody);
 }
 
 /**
@@ -294,7 +331,7 @@ function sendCustomerConfirmation(d) {
         </ol>
 
         <p style="font-size: 13px; color: #94A3B8; line-height: 1.6;">
-          If you have urgent questions, you can reply directly to this email or write to <a href="mailto:orders@futurerobotix.in" style="color: #FF8A3D; text-decoration: none;">orders@futurerobotix.in</a>.
+          If you have urgent questions, you can reply directly to this email or write to <a href="mailto:support@futurerobotix.in" style="color: #FF8A3D; text-decoration: none;">support@futurerobotix.in</a>.
         </p>
       </div>
 
@@ -305,9 +342,5 @@ function sendCustomerConfirmation(d) {
     </div>
   `;
 
-  MailApp.sendEmail({
-    to: d.email,
-    subject: subject,
-    htmlBody: htmlBody
-  });
+  sendCustomEmail(d.email, subject, htmlBody);
 }
