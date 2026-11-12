@@ -27,10 +27,32 @@
 
         <!-- Reference & summary (populated from sessionStorage) -->
         <div class="price-panel" style="text-align:left;margin-top:var(--s-8)" id="order-summary">
-          <p class="eyebrow">Deployment Reference</p>
-          <div style="margin-top:var(--s-5);display:flex;flex-direction:column;gap:var(--s-3)">
-            <div class="price-line"><span class="price-line__label">Reference Number</span><span class="price-line__value" id="ref-number">—</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--line);padding-bottom:var(--s-3);margin-bottom:var(--s-4)">
+            <p class="eyebrow" style="margin:0">Deployment Reference</p>
+            <span class="badge" style="background:rgba(34,197,94,0.12);color:#22C55E;border:1px solid rgba(34,197,94,0.3);font-size:0.75rem;padding:3px 8px;border-radius:4px">● Request Queued</span>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:var(--s-3)">
+            <div class="price-line"><span class="price-line__label">Tracking Ref #</span><span class="price-line__value" id="ref-number" style="font-family:var(--font-mono);font-weight:600;color:var(--accent)">—</span></div>
+            <div class="price-line"><span class="price-line__label">Client / Institution</span><span class="price-line__value" id="ref-client">—</span></div>
             <div class="price-line"><span class="price-line__label">Robotic Configuration</span><span class="price-line__value" id="ref-robot">—</span></div>
+            <div class="price-line" id="row-total" style="display:none"><span class="price-line__label">Estimated Quote</span><span class="price-line__value" id="ref-total" style="color:var(--hi);font-weight:600">—</span></div>
+            <div class="price-line"><span class="price-line__label">Procurement Desk Contact</span><span class="price-line__value">orders@futurerobotix.in</span></div>
+          </div>
+        </div>
+
+        <!-- WhatsApp Fast-Track Connect Box -->
+        <div style="background:rgba(37,211,102,0.06);border:1px solid rgba(37,211,102,0.25);border-radius:var(--r-md);padding:var(--s-5);margin-top:var(--s-6);text-align:left">
+          <div style="display:flex;align-items:center;gap:14px">
+            <div style="font-size:2rem;line-height:1">💬</div>
+            <div>
+              <p class="h4 text-hi" style="margin:0;font-size:1.05rem">Need Immediate Feasibility Scheduling?</p>
+              <p class="small text-mid" style="margin:3px 0 0">Connect directly with our Chief Technology Architect on WhatsApp with your deployment reference.</p>
+            </div>
+          </div>
+          <div style="margin-top:var(--s-4)">
+            <a id="btn-whatsapp-track" href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" class="btn" style="background:#25D366;color:#000;font-weight:600;width:100%;justify-content:center;padding:12px 20px">
+              Fast-Track on WhatsApp →
+            </a>
           </div>
         </div>
 
@@ -68,39 +90,57 @@
             </div>
           </div>
         </div>
-            </div>
-            <div class="step reveal" style="transition-delay:240ms">
-              <div class="step__num" aria-hidden="true"></div>
-              <div class="step__body">
-                <p class="step__title">We confirm the price.</p>
-                <p class="text-mid">We share the final price and terms in writing before anything is final.</p>
-              </div>
-            </div>
-          </div>
-        </div>
 
         <div class="note-box" style="text-align:left;margin-top:var(--s-7)">
-          <strong class="text-hi">This is a request, not a final sale.</strong> Nothing is charged until you accept our written confirmation.
+          <strong class="text-hi">This is an order request, not a final charge.</strong> You will receive an itemized commercial quotation and technical survey report before any contract is finalized.
         </div>
 
         <div class="flex wrap gap-3 items-center" style="margin-top:var(--s-8);justify-content:center">
-          <a href="index.html" class="btn btn--primary">Back to home</a>
-          <a href="robots.html" class="btn btn--secondary">Explore more robots</a>
-          <a href="contact.html" class="btn btn--secondary">Contact us</a>
+          <a href="index.html" class="btn btn--primary">Back to Home</a>
+          <button type="button" onclick="window.print()" class="btn btn--secondary">🖨️ Print Request Receipt</button>
+          <a href="robots.html" class="btn btn--secondary">Explore Robot Showroom</a>
         </div>
       </div>
     </section>
   </main>
 
   <footer class="footer" id="site-footer" role="contentinfo"></footer>
+  <script src="js/config.js"></script>
   <script src="js/components.js"></script>
   <script src="js/main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      const ref = sessionStorage.getItem('fr_order_ref') || '—';
-      const robot = sessionStorage.getItem('fr_order_robot') || '—';
+      const ref = sessionStorage.getItem('fr_order_ref') || ('FR-' + Date.now().toString(36).toUpperCase().slice(-6));
+      const robot = sessionStorage.getItem('fr_order_robot') || 'Autonomous Robotic Platform';
+      const name = sessionStorage.getItem('fr_order_name') || '';
+      const org = sessionStorage.getItem('fr_order_org') || '';
+      const total = sessionStorage.getItem('fr_order_total') || '';
+
       document.getElementById('ref-number').textContent = ref;
       document.getElementById('ref-robot').textContent = robot;
+      
+      const clientEl = document.getElementById('ref-client');
+      if (clientEl) {
+        clientEl.textContent = (name && org) ? `${name} (${org})` : (name || org || 'Commercial Client');
+      }
+
+      if (total && total !== 'Custom Quotation') {
+        const rowTotal = document.getElementById('row-total');
+        const refTotal = document.getElementById('ref-total');
+        if (rowTotal && refTotal) {
+          rowTotal.style.display = 'flex';
+          refTotal.textContent = total;
+        }
+      }
+
+      // Configure WhatsApp fast-track deep link
+      const waBtn = document.getElementById('btn-whatsapp-track');
+      if (waBtn) {
+        const waNumber = (window.SITE?.contact?.whatsappNumber || '919876543210').replace(/[^0-9]/g, '');
+        const clientDesc = (name && org) ? ` for ${name} at ${org}` : (name ? ` for ${name}` : '');
+        const waText = encodeURIComponent(`Hello FUTURE ROBOTIX,\n\nI have initiated procurement order request ${ref} for the ${robot}${clientDesc}.\n\nPlease let me know the soonest available slot for technical consultation / on-site demonstration.`);
+        waBtn.href = `https://wa.me/${waNumber}?text=${waText}`;
+      }
     });
   </script>
 </body>

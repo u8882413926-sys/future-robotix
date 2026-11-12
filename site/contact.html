@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en-IN">
 <head>
   <meta charset="UTF-8">
@@ -42,6 +42,10 @@
             <div id="ct-robot-banner" class="note-box note-box--info" style="display:none;margin-bottom:var(--s-5)"></div>
 
             <form id="contact-form" style="display:flex;flex-direction:column;gap:var(--s-5)" novalidate>
+              <!-- Hidden tracking fields for order calculation -->
+              <input type="hidden" id="ct-mode" name="mode" value="buy">
+              <input type="hidden" id="ct-total" name="total" value="">
+              <input type="hidden" id="ct-ref" name="ref" value="">
               
               <!-- Robot Model Selection (Populated & pre-selected from robot cards) -->
               <div class="field" id="field-robot-select">
@@ -201,69 +205,146 @@
 
   <footer class="footer" id="site-footer" role="contentinfo"></footer>
 
+  <script src="js/config.js"></script>
   <script src="js/robots-data.js"></script>
   <script src="js/components.js"></script>
   <script src="js/main.js"></script>
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // 1. Check for URL parameters (?robot=... or ?name=...)
+      // 1. Check for URL parameters (?robot=... or ?name=... or ?mode=... or ?total=...)
       const params = new URLSearchParams(window.location.search);
       const robotSlug = params.get('robot') || '';
       const robotName = params.get('name') || '';
+      const mode = params.get('mode') || 'buy';
+      const total = params.get('total') || '';
+
+      const modeInput = document.getElementById('ct-mode');
+      const totalInput = document.getElementById('ct-total');
+      if (modeInput) modeInput.value = mode;
+      if (totalInput) totalInput.value = total;
 
       if (robotSlug || robotName) {
         const select = document.getElementById('ct-robot');
         if (select) {
-          let found = false;
           for (let i = 0; i < select.options.length; i++) {
             if (select.options[i].value === robotSlug || select.options[i].text.toLowerCase().includes((robotName || robotSlug).toLowerCase())) {
               select.selectedIndex = i;
-              found = true;
               break;
             }
           }
         }
 
-        // Show confirmation badge
+        // Show confirmation badge with mode & quote if present
         const banner = document.getElementById('ct-robot-banner');
         if (banner) {
           banner.style.display = 'block';
           const displayLabel = robotName || robotSlug.replace('-', ' ').toUpperCase();
-          banner.innerHTML = `<strong>Selected Model: ${displayLabel}</strong> — Your request is pre-configured for this robot. Our engineering team will prepare technical specifications and coordinate an on-site feasibility demonstration.`;
+          const modeLabel = mode === 'build' ? 'Academic Build Workshop' : 'Commercial Turnkey Purchase';
+          const totalLabel = total ? ` · Configured Estimate: ${window.FR?.formatINR ? window.FR.formatINR(total) : '₹' + total}` : '';
+          banner.innerHTML = `<strong>Selected Platform: ${displayLabel}</strong> (${modeLabel}${totalLabel}) — Your request is pre-configured for this robot. Our engineering desk will review technical specifications and coordinate an on-site feasibility demonstration.`;
         }
 
         // Pre-fill message
         const msgEl = document.getElementById('ct-message');
         if (msgEl && !msgEl.value) {
           const displayLabel = robotName || robotSlug.replace('-', ' ').toUpperCase();
-          msgEl.value = `Hello FUTURE ROBOTIX team,\n\nI would like to place an order request / schedule an on-site demonstration for the ${displayLabel} at our premises. Please provide the official itemized quote and next steps.\n`;
+          const totalStr = total ? ` with estimated configured budget of ${window.FR?.formatINR ? window.FR.formatINR(total) : '₹' + total}` : '';
+          msgEl.value = `Hello FUTURE ROBOTIX team,\n\nI would like to initiate an order request / schedule an on-site feasibility demonstration for the ${displayLabel}${totalStr} at our facility. Please provide the official itemized quote and next steps.\n`;
         }
       }
 
-      // 2. Form submission handler
+      // 2. Form submission handler with live Webhook & Session handoff
       const form = document.getElementById('contact-form');
       if (form && window.FR) {
-        window.FR.initForm(form, (formEl) => {
+        window.FR.initForm(form, async (formEl) => {
           const btn = document.getElementById('btn-ct-submit');
+          const errorMsg = document.getElementById('ct-error-msg');
+          const successMsg = document.getElementById('ct-success-msg');
+          if (errorMsg) errorMsg.style.display = 'none';
+          if (successMsg) successMsg.style.display = 'none';
+
           if (btn) { 
             btn.disabled = true; 
-            btn.innerHTML = '<span class="spinner"></span> Submitting...'; 
+            btn.innerHTML = '<span class="spinner"></span> Logging Request...'; 
           }
+
+          // Generate unique reference
+          const ref = window.FR.genRef ? window.FR.genRef() : ('FR-' + Date.now().toString(36).toUpperCase().slice(-6));
+          const robotSelect = document.getElementById('ct-robot');
+          const selectedRobot = (robotSelect && robotSelect.selectedIndex >= 0 && robotSelect.value) 
+            ? robotSelect.options[robotSelect.selectedIndex].text 
+            : (robotName || 'General Robotic Advisory');
           
-          setTimeout(() => {
-            document.getElementById('ct-success-msg').style.display = 'block';
-            formEl.reset();
-            if (btn) { 
-              btn.disabled = false; 
-              btn.innerHTML = 'Submit Request <span class="btn__arrow">→</span>'; 
+          const name = (document.getElementById('ct-name')?.value || '').trim();
+          const org = (document.getElementById('ct-org')?.value || '').trim();
+          const type = (document.getElementById('ct-type')?.value || 'company');
+          const email = (document.getElementById('ct-email')?.value || '').trim();
+          const phone = (document.getElementById('ct-phone')?.value || '').trim();
+          const message = (document.getElementById('ct-message')?.value || '').trim();
+          const modeVal = (document.getElementById('ct-mode')?.value || mode);
+          const totalVal = (document.getElementById('ct-total')?.value || total);
+
+          // Save to sessionStorage for receipt verification & WhatsApp follow-up
+          sessionStorage.setItem('fr_order_ref', ref);
+          sessionStorage.setItem('fr_order_robot', selectedRobot);
+          sessionStorage.setItem('fr_order_name', name);
+          sessionStorage.setItem('fr_order_org', org);
+          sessionStorage.setItem('fr_order_email', email);
+          sessionStorage.setItem('fr_order_phone', phone);
+          sessionStorage.setItem('fr_order_mode', modeVal);
+          sessionStorage.setItem('fr_order_total', totalVal ? (window.FR.formatINR(totalVal) || ('₹' + totalVal)) : 'Custom Quotation');
+
+          // Check if webhook pipeline is active in SITE.contact with fallback
+          const pipelineEndpoint = (window.SITE?.contact?.pipelineEndpoint || 'https://script.google.com/macros/s/AKfycbxuxSe2bZTvJxUK3QrKHjy_ACUlzS4BCcrCe-6-O02SGJ2UJJye_5ELLBGv2Jx9wGcr/exec').trim();
+
+          if (pipelineEndpoint) {
+            try {
+              const payload = new URLSearchParams();
+              payload.append('ref', ref);
+              payload.append('name', name);
+              payload.append('organisation', org);
+              payload.append('type', type);
+              payload.append('email', email);
+              payload.append('phone', phone);
+              payload.append('robot', selectedRobot);
+              payload.append('mode', modeVal);
+              payload.append('total', totalVal);
+              payload.append('message', message);
+
+              // Mode: 'no-cors' allows submission to Google Apps Script Web App without CORS 302 redirect errors
+              await fetch(pipelineEndpoint, {
+                method: 'POST',
+                mode: 'no-cors',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: payload.toString()
+              });
+            } catch (err) {
+              console.warn('Pipeline webhook dispatch notice:', err);
             }
-          }, 1000);
+          }
+
+          // Smooth transition to Order Success page
+          setTimeout(() => {
+            window.location.href = 'order-success.html';
+          }, 600);
         });
       }
     });
   </script>
 
   <style>
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .spinner {
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      border: 2px solid rgba(255,255,255,0.3);
+      border-top-color: #fff;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
     @media (max-width: 1024px) {
       #contact-layout { grid-template-columns: 1fr; }
     }
