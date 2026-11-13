@@ -92,3 +92,43 @@ Open `js/config.js` and paste your URL into `pipelineEndpoint`:
 3. **Google Sheets as Mobile CRM**: You can install the Google Sheets app on your phone and get real-time order alerts anywhere. You can also add custom columns to the sheet (e.g. "Quotation Amount", "Assigned Engineer", "Follow-up Date").
 4. **WhatsApp Instant Fallback**: High-ticket B2B deals in India move fast. The automatic WhatsApp button on `order-success.html` and in your alert emails ensures you can respond to institutional buyers in under 5 minutes.
 
+---
+
+## 🛠️ Troubleshooting: Why Mails Show Your Personal Gmail (`udayasuss@gmail.com`) & How to Fix It
+
+### The Cause
+Google Apps Script runs with your authorized Google Account. For anti-phishing security, Google **strictly blocks** any script from forging or sending from a domain email (`support@futurerobotix.in`) unless **one of the following two solutions** is configured:
+
+---
+
+### Solution A: Register `support@futurerobotix.in` as an Alias in Gmail (Recommended if you have email hosting)
+1. Open [Gmail](https://mail.google.com) on your `udayasuss@gmail.com` account.
+2. Click the ⚙️ **Settings** gear icon (top right) → **See all settings**.
+3. Click the **Accounts and Import** tab.
+4. Under **"Send mail as"**, click **"Add another email address"**.
+5. Enter:
+   - **Name**: `FUTURE ROBOTIX Support`
+   - **Email address**: `support@futurerobotix.in`
+   - Uncheck "Treat as an alias".
+6. Click **Next Step** and enter your SMTP server credentials (from Zoho, Titan, Hostinger, cPanel, etc.).
+7. Enter the verification code sent to your inbox.
+8. **CRITICAL STEP**: In Google Apps Script, you MUST redeploy a new version:
+   - Click **Deploy** → **Manage deployments**.
+   - Click the ✏️ **Edit** icon next to the active deployment.
+   - Under **Version**, select **New version**.
+   - Click **Deploy**.
+
+---
+
+### Solution B: Use Free Resend API (Recommended if you don't have custom SMTP setup)
+If you don't have an active SMTP mailbox or want 100% cloud delivery without touching Gmail settings:
+1. Sign up for a free account at [Resend.com](https://resend.com) (free 3,000 emails/month).
+2. Add your domain `futurerobotix.in` and add the 3 DNS records to verify it.
+3. Generate an API Key (starts with `re_...`).
+4. In `google_apps_script_order_pipeline.js`, set:
+   ```javascript
+   const RESEND_API_KEY = "re_your_api_key_here";
+   ```
+5. Paste into Google Apps Script, then click **Deploy** → **Manage deployments** → **Edit** → **New version** → **Deploy**.
+All emails will now dispatch cleanly and reliably from `FUTURE ROBOTIX Support <support@futurerobotix.in>`!
+

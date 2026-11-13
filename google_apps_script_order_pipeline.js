@@ -21,6 +21,14 @@ const COMPANY_WEBSITE = "https://futurerobotix.in";
 const SHEET_NAME = "Orders & Inquiries";
 
 /**
+ * OPTIONAL: Resend API Key (Recommended for 100% custom domain sending without Gmail setup)
+ * If you have a free Resend account (resend.com), paste your API key here (e.g. "re_123456789...").
+ * When set, all customer and admin emails will be sent directly through Resend from support@futurerobotix.in.
+ * If left empty (""), the script will send via GmailApp with alias verification.
+ */
+const RESEND_API_KEY = "";
+
+/**
  * Health check endpoint (when accessed via browser)
  */
 function doGet(e) {
@@ -180,6 +188,43 @@ function logToSheet(rowData) {
  * Helper: Sends email with support@futurerobotix.in identity and alias support
  */
 function sendCustomEmail(recipient, subject, htmlBody) {
+  // 1. Try sending via Resend API if API Key is configured
+  if (typeof RESEND_API_KEY !== 'undefined' && RESEND_API_KEY && RESEND_API_KEY.trim().startsWith("re_")) {
+    try {
+      const recipients = recipient.split(",").map(function(e) { return e.trim(); }).filter(Boolean);
+      const resendPayload = {
+        from: SENDER_NAME + " <" + SENDER_EMAIL + ">",
+        to: recipients,
+        reply_to: SENDER_EMAIL,
+        subject: subject,
+        html: htmlBody
+      };
+
+      const response = UrlFetchApp.fetch("https://api.resend.com/emails", {
+        method: "post",
+        contentType: "application/json",
+        headers: {
+          "Authorization": "Bearer " + RESEND_API_KEY.trim()
+        },
+        payload: JSON.stringify(resendPayload),
+        muteHttpExceptions: true
+      });
+
+      const responseCode = response.getResponseCode();
+      const responseText = response.getContentText();
+      Logger.log("Resend API Status: " + responseCode + " - " + responseText);
+
+      if (responseCode === 200 || responseCode === 201) {
+        return; // Successfully sent via Resend API
+      } else {
+        Logger.log("Resend API rejected: " + responseText + ". Falling back to GmailApp.");
+      }
+    } catch (apiErr) {
+      Logger.log("Resend API Error: " + apiErr.toString() + ". Falling back to GmailApp.");
+    }
+  }
+
+  // 2. Send via GmailApp (Checks for alias)
   let fromAlias = null;
   try {
     const aliases = GmailApp.getAliases();
@@ -198,6 +243,8 @@ function sendCustomEmail(recipient, subject, htmlBody) {
 
   if (fromAlias) {
     options.from = fromAlias;
+  } else {
+    Logger.log("NOTICE: '" + SENDER_EMAIL + "' is not registered as a Gmail alias for this account. Outgoing mail will show primary account email.");
   }
 
   try {
@@ -212,6 +259,45 @@ function sendCustomEmail(recipient, subject, htmlBody) {
       replyTo: SENDER_EMAIL
     });
   }
+}
+
+/**
+ * DIAGNOSTIC FUNCTION
+ * Run this function directly inside Google Apps Script editor (Select "testSenderIdentity" from dropdown, click Run)
+ * to diagnose why emails are showing your personal Gmail instead of support@futurerobotix.in.
+ */
+function testSenderIdentity() {
+  const accountEmail = Session.getActiveUser().getEmail() || Session.getEffectiveUser().getEmail();
+  let aliases = [];
+  try {
+    aliases = GmailApp.getAliases();
+  } catch (e) {
+    Logger.log("Could not fetch aliases: " + e.toString());
+  }
+
+  Logger.log("==================================================");
+  Logger.log("FUTURE ROBOTIX Pipeline — Sender Diagnostic");
+  Logger.log("==================================================");
+  Logger.log("Current Google Account: " + accountEmail);
+  Logger.log("Configured Target Sender: " + SENDER_EMAIL);
+  Logger.log("Available Gmail Aliases: " + JSON.stringify(aliases));
+
+  if (typeof RESEND_API_KEY !== 'undefined' && RESEND_API_KEY && RESEND_API_KEY.startsWith("re_")) {
+    Logger.log("Resend API: ACTIVE. Emails will be dispatched via Resend from: " + SENDER_EMAIL);
+  } else if (aliases.indexOf(SENDER_EMAIL) !== -1) {
+    Logger.log("Alias Status: VERIFIED. '" + SENDER_EMAIL + "' is an active Gmail alias.");
+    Logger.log("Outgoing emails will appear from: " + SENDER_EMAIL);
+  } else {
+    Logger.log("Alias Status: MISSING!");
+    Logger.log("WHY MAILS SHOW " + accountEmail + ":");
+    Logger.log("Google Apps Script enforces strict anti-spoofing security. Because '" + SENDER_EMAIL + "' is NOT added as a 'Send mail as' alias in Gmail Settings, Google overrides the sender with your primary address (" + accountEmail + ").");
+    Logger.log("HOW TO FIX:");
+    Logger.log("1. Open Gmail -> Settings (gear icon) -> See all settings -> Accounts and Import.");
+    Logger.log("2. Under 'Send mail as', click 'Add another email address'.");
+    Logger.log("3. Add " + SENDER_EMAIL + " and your SMTP credentials.");
+    Logger.log("OR alternatively paste your free Resend API key into RESEND_API_KEY at the top of this script.");
+  }
+  Logger.log("==================================================");
 }
 
 /**
