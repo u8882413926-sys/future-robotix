@@ -13,7 +13,8 @@
  */
 
 // CONFIGURATION: Admin notification recipients & sender identity
-const ADMIN_EMAILS = "orders@futurerobotix.in, udaysahu@futurerobotix.in";
+// Orders and alerts will be delivered to these email addresses
+const ADMIN_EMAILS = "orders@futurerobotix.in, udaysahu@futurerobotix.in, udayasuss@gmail.com";
 const SENDER_NAME = "FUTURE ROBOTIX Support";
 const SENDER_EMAIL = "support@futurerobotix.in";
 const COMPANY_NAME = "FUTURE ROBOTIX";
