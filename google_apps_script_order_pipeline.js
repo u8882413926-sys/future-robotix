@@ -77,6 +77,9 @@ function doGet(e) {
   const statusResponse = {
     service: "FUTURE ROBOTIX Procurement Pipeline Webhook",
     status: sheetStatus === "connected" ? "operational" : "degraded",
+    buildVersion: "2026.11.14-v2.1",
+    templateVersion: "v2-monochrome-executive",
+    emailTheme: "Executive Black, Charcoal Grey & Platinum White (Zero Orange)",
     spreadsheet: {
       status: sheetStatus,
       name: spreadsheetName,
@@ -428,6 +431,24 @@ function testSenderIdentity() {
   Logger.log("Recipients: " + ADMIN_EMAILS);
 }
 
+/**
+ * 1-CLICK INSTANT TEST: Customer Confirmation Email (Executive Theme)
+ * In the Apps Script editor, select 'testSendCustomerConfirmation' from the toolbar
+ * dropdown and click 'Run'. It instantly sends the new monochrome email to your inbox!
+ */
+function testSendCustomerConfirmation() {
+  Logger.log("=== Testing Executive Monochrome Customer Confirmation Email ===");
+  sendCustomerConfirmation({
+    ref: "FR-TEST-PREVIEW",
+    name: "Uday Sahu (Founder Test)",
+    email: SENDER_EMAIL, // Dispatches directly to support@futurerobotix.in
+    robot: "Humanoid Ultimate (36 DOF & 5-Finger Hands)",
+    mode: "Commercial Turnkey Purchase",
+    total: "₹24,50,000"
+  });
+  Logger.log("SUCCESS! Test email dispatched to: " + SENDER_EMAIL);
+}
+
 
 // =============================================================================
 // 9. LUXURY MONOCHROME EMAIL TEMPLATES (Black, Grey & White Theme)
@@ -451,9 +472,14 @@ function sendAdminNotification(d) {
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body style="margin: 0; padding: 24px 12px; background-color: #050505; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #E4E4E7; -webkit-font-smoothing: antialiased;">
+    <body style="margin: 0; padding: 0; background-color: #050505; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #E4E4E7; -webkit-font-smoothing: antialiased;">
       
-      <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #0F0F11; border: 1px solid #27272A; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
+      <!-- Outer Full-Width Wrapper Table (Forces Gmail Web to keep dark executive background) -->
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#050505" style="width: 100% !important; background-color: #050505; margin: 0; padding: 32px 12px;">
+        <tr>
+          <td align="center" valign="top" bgcolor="#050505">
+            
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #0F0F11; border: 1px solid #27272A; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
         
         <!-- Header -->
         <tr>
@@ -575,6 +601,10 @@ ${d.message}
 
       </table>
 
+          </td>
+        </tr>
+      </table>
+
     </body>
     </html>
   `;
@@ -597,9 +627,14 @@ function sendCustomerConfirmation(d) {
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body style="margin: 0; padding: 32px 12px; background-color: #09090B; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #E4E4E7; -webkit-font-smoothing: antialiased;">
+    <body style="margin: 0; padding: 0; background-color: #09090B; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #E4E4E7; -webkit-font-smoothing: antialiased;">
       
-      <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #121214; border: 1px solid #27272A; border-radius: 8px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.7);">
+      <!-- Outer Full-Width Wrapper Table (Forces Gmail Web to keep dark executive background) -->
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#09090B" style="width: 100% !important; background-color: #09090B; margin: 0; padding: 32px 12px;">
+        <tr>
+          <td align="center" valign="top" bgcolor="#09090B">
+            
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #121214; border: 1px solid #27272A; border-radius: 8px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.7);">
         
         <!-- Minimalist Brand Header -->
         <tr>
@@ -719,6 +754,10 @@ function sendCustomerConfirmation(d) {
           </td>
         </tr>
 
+      </table>
+
+          </td>
+        </tr>
       </table>
 
     </body>
