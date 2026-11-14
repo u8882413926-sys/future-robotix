@@ -42,7 +42,7 @@ const SITE = {
     phone: '+91 98765 43210',
     whatsappNumber: '919876543210',
     // Google Apps Script Web App URL (Google Workspace: support@futurerobotix.in):
-    pipelineEndpoint: 'https://script.google.com/macros/s/AKfycbytUe3H_qAyNcEaEeKUd9RBj-4gsaGLgC55MxW99nrYWd9_bEGKkJWSr_e1zIpLEbg/exec', 
+    pipelineEndpoint: 'https://script.google.com/macros/s/AKfycbyzFx9gO5mgzYrxGtF6m78bgH0tlisJy-Hh7u3SHJvCujIZ_-oDZVLcMXnic4JXLvHB/exec', 
     supportHours: 'Monday – Saturday: 09:30 – 18:30 IST',
     responseTime: 'Guaranteed technical response within 1 business day'
   },
