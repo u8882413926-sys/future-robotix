@@ -113,16 +113,27 @@ function doGet(e) {
 function doPost(e) {
   try {
     let data = {};
-    if (e && e.postData && e.postData.type && e.postData.type.includes("json")) {
-      data = JSON.parse(e.postData.contents);
-    } else if (e && e.parameter && Object.keys(e.parameter).length > 0) {
-      data = e.parameter;
-    } else if (e && e.postData && e.postData.contents) {
-      // Parse URL-encoded body
-      const pairs = e.postData.contents.split('&');
-      for (let i = 0; i < pairs.length; i++) {
-        const pair = pairs[i].split('=');
-        data[decodeURIComponent(pair[0])] = decodeURIComponent((pair[1] || '').replace(/\+/g, ' '));
+    if (e && e.parameter && Object.keys(e.parameter).length > 0) {
+      for (const k in e.parameter) {
+        data[k] = e.parameter[k];
+      }
+    }
+    if (e && e.postData && e.postData.contents) {
+      if (e.postData.type && e.postData.type.includes("json")) {
+        try {
+          const parsed = JSON.parse(e.postData.contents);
+          for (const k in parsed) { data[k] = parsed[k]; }
+        } catch (jErr) {}
+      } else {
+        try {
+          const pairs = e.postData.contents.split('&');
+          for (let i = 0; i < pairs.length; i++) {
+            const pair = pairs[i].split('=');
+            if (pair[0]) {
+              data[decodeURIComponent(pair[0])] = decodeURIComponent((pair[1] || '').replace(/\+/g, ' '));
+            }
+          }
+        } catch (uErr) {}
       }
     }
 
@@ -133,7 +144,7 @@ function doPost(e) {
     const name = (data.name || "Client").trim();
     const organisation = (data.organisation || data.organization || "Individual / Not specified").trim();
     const contactType = (data.type || "Corporate").trim();
-    const email = (data.email || "").trim();
+    const email = (data.email || data.Email || data.EMAIL || data['ct-email'] || "").trim();
     const phone = (data.phone || "Not provided").trim();
     const robot = (data.robot || "General Robotic Advisory").trim();
     const mode = data.mode === "build" ? "Academic Build Workshop" : "Commercial Turnkey Purchase";
@@ -198,7 +209,7 @@ function doPost(e) {
     }
 
     // 3. Send Automated Customer Confirmation Email (if valid customer email provided)
-    if (email && email.includes("@")) {
+    if (email && email.indexOf("@") !== -1 && email.indexOf(".") !== -1) {
       try {
         sendCustomerConfirmation({
           ref: ref,
@@ -208,9 +219,12 @@ function doPost(e) {
           mode: mode,
           total: total
         });
+        Logger.log("Customer Confirmation successfully dispatched to: " + email);
       } catch (custMailErr) {
         Logger.log("Customer Email Error: " + custMailErr.toString());
       }
+    } else {
+      Logger.log("Skipping customer email: invalid or missing address: '" + email + "'");
     }
 
     return ContentService.createTextOutput(JSON.stringify({
@@ -436,17 +450,26 @@ function testSenderIdentity() {
  * In the Apps Script editor, select 'testSendCustomerConfirmation' from the toolbar
  * dropdown and click 'Run'. It instantly sends the new monochrome email to your inbox!
  */
-function testSendCustomerConfirmation() {
-  Logger.log("=== Testing Executive Monochrome Customer Confirmation Email ===");
+/**
+ * 1-CLICK INSTANT TEST: Customer Confirmation Email (White/Grey/Black Theme)
+ * You can test sending this to any email by putting your email below!
+ */
+function testSendCustomerConfirmation(customEmail) {
+  const targetEmail = (customEmail && typeof customEmail === 'string' && customEmail.includes('@'))
+    ? customEmail
+    : "udayasuss@gmail.com"; // Test directly to personal Gmail or customer email
+    
+  Logger.log("=== Testing Executive White/Grey/Black Customer Confirmation Email ===");
+  Logger.log("Sending preview to: " + targetEmail);
   sendCustomerConfirmation({
     ref: "FR-TEST-PREVIEW",
-    name: "Uday Sahu (Founder Test)",
-    email: SENDER_EMAIL, // Dispatches directly to support@futurerobotix.in
+    name: "Uday Sahu (Client Test)",
+    email: targetEmail,
     robot: "Humanoid Ultimate (36 DOF & 5-Finger Hands)",
     mode: "Commercial Turnkey Purchase",
     total: "₹24,50,000"
   });
-  Logger.log("SUCCESS! Test email dispatched to: " + SENDER_EMAIL);
+  Logger.log("SUCCESS! Test email dispatched to: " + targetEmail);
 }
 
 
