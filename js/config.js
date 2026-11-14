@@ -39,8 +39,8 @@ const SITE = {
     emailHello: 'hello@futurerobotix.in',
     emailOrders: 'orders@futurerobotix.in',
     emailSupport: 'support@futurerobotix.in',
-    phone: '+91 98765 43210',
-    whatsappNumber: '919876543210',
+    phone: '+91 84480 22906',
+    whatsappNumber: '918448022906',
     // Google Apps Script Web App URL (Google Workspace: support@futurerobotix.in):
     pipelineEndpoint: 'https://script.google.com/macros/s/AKfycbyzFx9gO5mgzYrxGtF6m78bgH0tlisJy-Hh7u3SHJvCujIZ_-oDZVLcMXnic4JXLvHB/exec', 
     supportHours: 'Monday – Saturday: 09:30 – 18:30 IST',

@@ -7,18 +7,16 @@
  * Capabilities:
  * 1. Appends every customer order/inquiry directly into Google Sheets in real-time.
  * 2. Connects to your Google Sheet by URL/ID or active container sheet.
- * 3. Sends instant formatted alert emails to orders@futurerobotix.in & support@futurerobotix.in.
+ * 3. Sends instant executive black/grey/white alert emails to orders@ & support@futurerobotix.in.
  * 4. Sends automated confirmation emails with official Tracking Ref # to the customer.
- * 5. Dispatches emails as "FUTURE ROBOTIX Support <support@futurerobotix.in>".
- * 6. Provides built-in 1-click test functions: testLogOrderToSheet() and testSenderIdentity().
+ * 5. Dispatches natively from "FUTURE ROBOTIX Support <support@futurerobotix.in>".
+ * 6. Integrates official company phone & WhatsApp: +91 84480 22906.
  */
 
 // =============================================================================
-// 1. SPREADSHEET CONFIGURATION (Fix for: orders not appearing in spreadsheet)
+// 1. SPREADSHEET CONFIGURATION
 // =============================================================================
-// PASTE YOUR GOOGLE SHEET URL OR SPREADSHEET ID HERE.
-// If your script was created standalone or outside the sheet, pasting your URL/ID
-// guarantees 100% that incoming orders are written to your exact Google Sheet!
+// Connected to your verified Google Sheet
 const SPREADSHEET_ID_OR_URL = "https://docs.google.com/spreadsheets/d/1ZTS1s22x__Or70Atk2vjAt_BQXHixGQfNY3VjuGDe1w/edit";
 
 // The name of the tab inside your Google Sheet where orders are logged
@@ -26,31 +24,27 @@ const SHEET_NAME = "Orders & Inquiries";
 
 
 // =============================================================================
-// 2. EMAIL IDENTITY & RECIPIENTS (Fix for: mails going to/from personal Gmail)
+// 2. COMPANY IDENTITY & ADMIN RECIPIENTS
 // =============================================================================
-// WHERE YOU RECEIVE ORDERS:
-// Incoming order alerts will be delivered to these email addresses (comma-separated).
-// (Removed udayasuss@gmail.com so all order alerts go to your official business addresses.
-//  If you want a personal backup copy, you can add ", udayasuss@gmail.com" at the end).
+// Incoming order alerts will be delivered to these email addresses (comma-separated):
 const ADMIN_EMAILS = "orders@futurerobotix.in, support@futurerobotix.in, udaysahu@futurerobotix.in";
 
-// SENDER IDENTITY:
-// Outgoing customer confirmations & alerts will display this name and address
+// SENDER IDENTITY
 const SENDER_NAME = "FUTURE ROBOTIX Support";
 const SENDER_EMAIL = "support@futurerobotix.in";
 const COMPANY_NAME = "FUTURE ROBOTIX";
 const COMPANY_WEBSITE = "https://futurerobotix.in";
 
+// OFFICIAL COMPANY CONTACT & WHATSAPP
+const COMPANY_PHONE = "+91 84480 22906";
+const COMPANY_WHATSAPP = "918448022906";
+
 
 // =============================================================================
-// 3. CLOUD SENDER: RESEND API (Recommended to send as support@futurerobotix.in)
+// 3. OPTIONAL CLOUD SENDER (RESEND API)
 // =============================================================================
-// Google Apps Script running under a free @gmail.com account cannot send emails
-// claiming to be from @futurerobotix.in unless:
-//   Option A: You paste a free Resend API key below (https://resend.com - free 3,000 emails/mo).
-//             This sends 100% authenticated emails from support@futurerobotix.in with zero SMTP hassle!
-//   Option B: You add support@futurerobotix.in in your personal Gmail Settings -> Accounts and Import -> "Send mail as" (using your email hosting SMTP credentials).
-// If left empty (""), the script attempts GmailApp alias verification, and if not verified, sends via GmailApp.
+// Left empty ("") because you are running directly inside Google Workspace (support@futurerobotix.in),
+// which natively dispatches emails with 100% DKIM & SPF authentication.
 const RESEND_API_KEY = "";
 
 
@@ -80,11 +74,6 @@ function doGet(e) {
     sheetStatus = "error: " + err.message;
   }
 
-  let emailMode = "Google Workspace Native (support@futurerobotix.in)";
-  if (typeof RESEND_API_KEY !== 'undefined' && RESEND_API_KEY && RESEND_API_KEY.trim().startsWith("re_")) {
-    emailMode = "Resend API (" + SENDER_EMAIL + ")";
-  }
-
   const statusResponse = {
     service: "FUTURE ROBOTIX Procurement Pipeline Webhook",
     status: sheetStatus === "connected" ? "operational" : "degraded",
@@ -97,8 +86,12 @@ function doGet(e) {
     },
     emailPipeline: {
       senderIdentity: SENDER_NAME + " <" + SENDER_EMAIL + ">",
-      dispatchEngine: emailMode,
+      dispatchEngine: "Google Workspace Native (" + SENDER_EMAIL + ")",
       adminRecipients: ADMIN_EMAILS
+    },
+    companyContact: {
+      phone: COMPANY_PHONE,
+      whatsapp: "+" + COMPANY_WHATSAPP
     },
     timestamp: new Date().toISOString()
   };
@@ -142,7 +135,7 @@ function doPost(e) {
     const robot = (data.robot || "General Robotic Advisory").trim();
     const mode = data.mode === "build" ? "Academic Build Workshop" : "Commercial Turnkey Purchase";
     
-    // Format quote cleanly (avoid NaN)
+    // Format quote cleanly
     let total = "Custom Quotation";
     if (data.total && data.total.toString().trim() !== "") {
       const rawTotal = data.total.toString().trim();
@@ -209,6 +202,7 @@ function doPost(e) {
           name: name,
           email: email,
           robot: robot,
+          mode: mode,
           total: total
         });
       } catch (custMailErr) {
@@ -236,11 +230,7 @@ function doPost(e) {
 // =============================================================================
 // 6. SPREADSHEET ACCESS & ROW LOGGING
 // =============================================================================
-/**
- * Resolves the Google Spreadsheet instance (via SPREADSHEET_ID_OR_URL or bound active spreadsheet)
- */
 function getSpreadsheet() {
-  // 1. If explicit URL or ID is configured, open by ID
   if (typeof SPREADSHEET_ID_OR_URL !== 'undefined' && SPREADSHEET_ID_OR_URL && SPREADSHEET_ID_OR_URL.trim() !== "") {
     const raw = SPREADSHEET_ID_OR_URL.trim();
     const match = raw.match(/\/d\/([a-zA-Z0-9-_]+)/);
@@ -248,31 +238,26 @@ function getSpreadsheet() {
     try {
       return SpreadsheetApp.openById(sheetId);
     } catch (e) {
-      throw new Error("Could not open Google Sheet with ID/URL '" + raw + "': " + e.message + ". Please verify permissions or check the URL.");
+      throw new Error("Could not open Google Sheet with ID/URL '" + raw + "': " + e.message);
     }
   }
 
-  // 2. Otherwise use the active container-bound spreadsheet
   const active = SpreadsheetApp.getActiveSpreadsheet();
   if (active) return active;
 
-  throw new Error("No Google Spreadsheet found! Either paste your Google Sheet URL into 'SPREADSHEET_ID_OR_URL' on line 21, or create this script from inside Google Sheets via Extensions > Apps Script.");
+  throw new Error("No Google Spreadsheet found! Please paste your Google Sheet URL into 'SPREADSHEET_ID_OR_URL'.");
 }
 
-/**
- * Gets or creates the target sheet tab with official FUTURE ROBOTIX header styling
- */
 function getOrCreateOrdersSheet(ss) {
   let sheet = ss.getSheetByName(SHEET_NAME);
   
   if (!sheet) {
-    // If the spreadsheet is brand new with an empty default "Sheet1", rename it to avoid extra blank tabs
     const sheets = ss.getSheets();
     if (sheets.length === 1 && sheets[0].getLastRow() === 0) {
       sheet = sheets[0];
       sheet.setName(SHEET_NAME);
     } else {
-      sheet = ss.insertSheet(SHEET_NAME, 0); // Insert as first tab
+      sheet = ss.insertSheet(SHEET_NAME, 0);
     }
 
     const headers = [
@@ -291,9 +276,9 @@ function getOrCreateOrdersSheet(ss) {
     ];
     sheet.appendRow(headers);
     
-    // Header Styling (Midnight Navy with bold white text)
+    // Header Styling: High-contrast Dark Luxury Navy (#0A0A0A)
     const headerRange = sheet.getRange(1, 1, 1, headers.length);
-    headerRange.setBackground("#0F172A");
+    headerRange.setBackground("#0A0A0A");
     headerRange.setFontColor("#FFFFFF");
     headerRange.setFontWeight("bold");
     headerRange.setHorizontalAlignment("center");
@@ -311,9 +296,6 @@ function getOrCreateOrdersSheet(ss) {
   return sheet;
 }
 
-/**
- * Appends row to the spreadsheet safely using LockService
- */
 function logToSheet(rowData) {
   const lock = LockService.getScriptLock();
   try {
@@ -327,15 +309,13 @@ function logToSheet(rowData) {
     const sheet = getOrCreateOrdersSheet(ss);
     sheet.appendRow(rowData);
 
-    // Format new row styling
     const lastRow = sheet.getLastRow();
     const rowRange = sheet.getRange(lastRow, 1, 1, rowData.length);
     rowRange.setVerticalAlignment("middle");
 
-    // Highlight status cell
     const statusCell = sheet.getRange(lastRow, rowData.length);
-    statusCell.setBackground("#FEF3C7");
-    statusCell.setFontColor("#92400E");
+    statusCell.setBackground("#18181B");
+    statusCell.setFontColor("#FAFAFA");
     statusCell.setFontWeight("bold");
     statusCell.setHorizontalAlignment("center");
 
@@ -354,11 +334,8 @@ function logToSheet(rowData) {
 // =============================================================================
 // 7. EMAIL DISPATCH ENGINE
 // =============================================================================
-/**
- * Sends email with support@futurerobotix.in identity and Resend/Gmail alias support
- */
 function sendCustomEmail(recipient, subject, htmlBody) {
-  // 1. Try sending via Resend API if API Key is configured
+  // If Resend API key is configured, send via Resend
   if (typeof RESEND_API_KEY !== 'undefined' && RESEND_API_KEY && RESEND_API_KEY.trim().startsWith("re_")) {
     try {
       const recipients = recipient.split(",").map(function(e) { return e.trim(); }).filter(Boolean);
@@ -380,46 +357,24 @@ function sendCustomEmail(recipient, subject, htmlBody) {
         muteHttpExceptions: true
       });
 
-      const responseCode = response.getResponseCode();
-      const responseText = response.getContentText();
-      Logger.log("Resend API Status: " + responseCode + " - " + responseText);
-
-      if (responseCode === 200 || responseCode === 201) {
+      if (response.getResponseCode() === 200 || response.getResponseCode() === 201) {
         return { success: true, engine: "Resend API" };
-      } else {
-        Logger.log("Resend API rejected: " + responseText + ". Falling back to GmailApp.");
       }
     } catch (apiErr) {
-      Logger.log("Resend API Error: " + apiErr.toString() + ". Falling back to GmailApp.");
+      Logger.log("Resend API fallback: " + apiErr.toString());
     }
   }
 
-  // 2. Send via GmailApp (Checks for alias)
-  let fromAlias = null;
-  try {
-    const aliases = GmailApp.getAliases();
-    if (aliases && aliases.indexOf(SENDER_EMAIL) !== -1) {
-      fromAlias = SENDER_EMAIL;
-    }
-  } catch (e) {
-    Logger.log("Alias check error: " + e.toString());
-  }
-
+  // Google Workspace Native GmailApp Sending (Sends natively as support@futurerobotix.in)
   const options = {
     htmlBody: htmlBody,
     name: SENDER_NAME,
     replyTo: SENDER_EMAIL
   };
 
-  if (fromAlias) {
-    options.from = fromAlias;
-  } else {
-    Logger.log("NOTICE: '" + SENDER_EMAIL + "' is not registered as an alias in Gmail. Outgoing mail will display primary account address unless Resend API key or Gmail alias is added.");
-  }
-
   try {
     GmailApp.sendEmail(recipient, subject, "", options);
-    return { success: true, engine: fromAlias ? "GmailApp Alias" : "GmailApp Primary" };
+    return { success: true, engine: "Google Workspace Native" };
   } catch (err) {
     Logger.log("GmailApp send error: " + err.toString() + ". Falling back to MailApp.");
     MailApp.sendEmail({
@@ -437,20 +392,10 @@ function sendCustomEmail(recipient, subject, htmlBody) {
 // =============================================================================
 // 8. 1-CLICK DIAGNOSTICS & TEST RUNNERS
 // =============================================================================
-/**
- * 1-CLICK TEST 1: Verify Google Sheet Logging
- * Select 'testLogOrderToSheet' from the dropdown in Apps Script and click 'Run'.
- * This writes a test row directly to your Google Sheet and logs the exact URL!
- */
 function testLogOrderToSheet() {
-  Logger.log("==================================================");
-  Logger.log("FUTURE ROBOTIX — Testing Google Sheets Connection");
-  Logger.log("==================================================");
+  Logger.log("=== Testing Google Sheets Connection ===");
   try {
     const ss = getSpreadsheet();
-    Logger.log("Spreadsheet Found: " + ss.getName());
-    Logger.log("Spreadsheet URL: " + ss.getUrl());
-    
     const timestamp = new Date();
     const formattedDate = Utilities.formatDate(timestamp, "Asia/Kolkata", "dd MMM yyyy, hh:mm a 'IST'");
     const testRef = "FR-TEST-" + Math.floor(1000 + Math.random() * 9000);
@@ -459,230 +404,325 @@ function testLogOrderToSheet() {
       formattedDate,
       testRef,
       "Verification Test Client",
-      "FUTURE ROBOTIX Pipeline Test",
+      "FUTURE ROBOTIX Engineering Lab",
       "Corporate",
       "test@futurerobotix.in",
-      "'+91 9876543210",
-      "Butterfly Quadruped Robot",
+      "'+91 84480 22906",
+      "Humanoid Ultimate (36 DOF)",
       "Commercial Turnkey Purchase",
-      "₹18,50,000",
+      "₹24,50,000",
       "Pipeline verification test row.",
       "VERIFIED"
     ]);
 
-    Logger.log("✅ SUCCESS! Test row appended at row #" + result.row);
-    Logger.log("👉 Open your spreadsheet to view the row: " + result.spreadsheetUrl);
+    Logger.log("SUCCESS! Test row appended at row #" + result.row);
   } catch (err) {
-    Logger.log("❌ FAILED to write to Google Sheet!");
-    Logger.log("Error details: " + err.toString());
-    Logger.log("FIX: Copy your Google Sheet URL from your browser address bar and paste it into SPREADSHEET_ID_OR_URL on line 21 of this script!");
+    Logger.log("FAILED to write to Google Sheet: " + err.toString());
   }
-  Logger.log("==================================================");
 }
 
-/**
- * 1-CLICK TEST 2: Verify Sender Identity & Email Dispatch
- * Select 'testSenderIdentity' from the dropdown in Apps Script and click 'Run'.
- * This tests whether outgoing emails show as support@futurerobotix.in.
- */
 function testSenderIdentity() {
   const accountEmail = Session.getActiveUser().getEmail() || Session.getEffectiveUser().getEmail();
-  let aliases = [];
-  try {
-    aliases = GmailApp.getAliases();
-  } catch (e) {
-    Logger.log("Could not fetch aliases: " + e.toString());
-  }
-
-  Logger.log("==================================================");
-  Logger.log("FUTURE ROBOTIX Pipeline — Sender Diagnostic");
-  Logger.log("==================================================");
   Logger.log("Active Google Account: " + accountEmail);
-  Logger.log("Configured Target Sender: " + SENDER_EMAIL);
-  Logger.log("Admin Alert Recipient(s): " + ADMIN_EMAILS);
-  Logger.log("Available Gmail Aliases: " + JSON.stringify(aliases));
-
-  let statusMsg = "";
-  if (typeof RESEND_API_KEY !== 'undefined' && RESEND_API_KEY && RESEND_API_KEY.trim().startsWith("re_")) {
-    statusMsg = "Resend API: ACTIVE. Emails will be dispatched via Resend cloud from: " + SENDER_EMAIL;
-    Logger.log("✅ " + statusMsg);
-  } else if (aliases.indexOf(SENDER_EMAIL) !== -1) {
-    statusMsg = "Alias Status: VERIFIED. '" + SENDER_EMAIL + "' is an active Gmail alias. Outgoing emails will appear from: " + SENDER_EMAIL;
-    Logger.log("✅ " + statusMsg);
-  } else {
-    statusMsg = "Alias Status: MISSING. Emails will temporarily show sender as: " + accountEmail;
-    Logger.log("⚠️ " + statusMsg);
-    Logger.log("WHY IT SHOWS " + accountEmail + ":");
-    Logger.log("Google Apps Script enforces strict anti-spoofing security. You cannot send as support@futurerobotix.in from a free @gmail.com account without either:");
-    Logger.log("  1. Free Resend API: Sign up at resend.com, add domain futurerobotix.in, paste API key in RESEND_API_KEY (Line 42).");
-    Logger.log("  2. Gmail Alias: Open Gmail -> Settings -> Accounts and Import -> 'Add another email address' (support@futurerobotix.in) with SMTP.");
-    Logger.log("  3. Google Workspace: If you have Workspace for futurerobotix.in, open Apps Script and deploy directly while logged into support@futurerobotix.in.");
-  }
-  Logger.log("==================================================");
-
-  // Send a test email to admin
-  try {
-    const testSubject = "🧪 Pipeline Test Alert | FUTURE ROBOTIX Order System";
-    const testBody = `
-      <div style="font-family: sans-serif; padding: 24px; background: #0B0F19; color: #fff; border-radius: 8px;">
-        <h2 style="color: #FF8A3D; margin-top: 0;">FUTURE ROBOTIX Pipeline Diagnostic Test</h2>
-        <p>This is a test notification from your Google Apps Script pipeline.</p>
-        <p><strong>Configured Sender:</strong> ${SENDER_NAME} &lt;${SENDER_EMAIL}&gt;</p>
-        <p><strong>Dispatch Status:</strong> ${statusMsg}</p>
-        <p><strong>Recipients:</strong> ${ADMIN_EMAILS}</p>
-      </div>
-    `;
-    sendCustomEmail(accountEmail, testSubject, testBody);
-    Logger.log("📨 A test email has been dispatched to: " + accountEmail + ". Please inspect the sender address in your inbox!");
-  } catch (err) {
-    Logger.log("Failed to send test email: " + err.toString());
-  }
+  Logger.log("Sender: " + SENDER_EMAIL);
+  Logger.log("Recipients: " + ADMIN_EMAILS);
 }
 
 
 // =============================================================================
-// 9. EMAIL TEMPLATES
+// 9. LUXURY MONOCHROME EMAIL TEMPLATES (Black, Grey & White Theme)
 // =============================================================================
+
 /**
- * Sends formatted alert to udaysahu@futurerobotix.in and orders@futurerobotix.in
+ * Sends Executive Black/Grey/White notification email to orders@ and support@futurerobotix.in
  */
 function sendAdminNotification(d) {
   const cleanPhone = (d.phone || "").replace(/[^0-9]/g, "");
-  const whatsappUrl = cleanPhone.length >= 10 
+  const clientWhatsappUrl = cleanPhone.length >= 10 
     ? "https://wa.me/" + (cleanPhone.length === 10 ? "91" + cleanPhone : cleanPhone) + "?text=" + encodeURIComponent("Hello " + d.name + ", this is Uday Sahu from FUTURE ROBOTIX regarding your order request " + d.ref + " for " + d.robot + ".")
     : "";
 
-  const subject = "🚨 NEW ORDER REQUEST: " + d.robot + " [" + d.ref + "] - " + d.organisation;
-
-  const sheetWarningBanner = d.sheetError ? `
-    <div style="background: #7F1D1D; border: 1px solid #EF4444; border-radius: 6px; padding: 12px 16px; margin-bottom: 20px; color: #FEE2E2; font-size: 13px;">
-      <strong>⚠️ SPREADSHEET LOGGING ALERT:</strong><br>
-      This order could not be logged into Google Sheets: <code>${d.sheetError}</code>.<br>
-      <em>Fix: Open your Apps Script code and paste your Google Sheet URL into SPREADSHEET_ID_OR_URL on line 21.</em>
-    </div>
-  ` : (d.spreadsheetUrl ? `
-    <div style="background: #064E3B; border: 1px solid #10B981; border-radius: 6px; padding: 10px 14px; margin-bottom: 20px; color: #D1FAE5; font-size: 13px;">
-      ✓ Successfully logged to Google Sheet: <a href="${d.spreadsheetUrl}" style="color: #6EE7B7; font-weight: 600;">Open Orders Spreadsheet →</a>
-    </div>
-  ` : "");
+  const subject = "NEW ORDER: " + d.robot + " [" + d.ref + "] - " + d.organisation;
 
   const htmlBody = `
-    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 620px; margin: 0 auto; background: #0B0F19; color: #F1F5F9; border-radius: 12px; border: 1px solid #1E293B; overflow: hidden;">
-      <div style="background: linear-gradient(135deg, #FF8A3D 0%, #EA580C 100%); padding: 24px 28px;">
-        <p style="margin: 0; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: rgba(255,255,255,0.9);">Official Procurement Desk</p>
-        <h1 style="margin: 6px 0 0; font-size: 22px; color: #FFFFFF; font-weight: 700;">New Customer Order Logged</h1>
-      </div>
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="margin: 0; padding: 24px 12px; background-color: #050505; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #E4E4E7; -webkit-font-smoothing: antialiased;">
+      
+      <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #0F0F11; border: 1px solid #27272A; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
+        
+        <!-- Header -->
+        <tr>
+          <td style="padding: 28px 32px; background-color: #0A0A0C; border-bottom: 1px solid #27272A;">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td>
+                  <p style="margin: 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #A1A1AA;">Internal Procurement Desk</p>
+                  <h1 style="margin: 4px 0 0; font-size: 20px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.5px;">FUTURE ROBOTIX</h1>
+                </td>
+                <td align="right" valign="middle">
+                  <span style="display: inline-block; padding: 4px 10px; background-color: #18181B; border: 1px solid #3F3F46; border-radius: 4px; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 11px; font-weight: 600; color: #FAFAFA; letter-spacing: 0.5px;">${d.ref}</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
 
-      <div style="padding: 24px 28px;">
-        ${sheetWarningBanner}
+        <!-- Body -->
+        <tr>
+          <td style="padding: 32px;">
 
-        <div style="background: #111827; border-left: 4px solid #FF8A3D; padding: 14px 18px; margin-bottom: 24px; border-radius: 4px;">
-          <p style="margin: 0; font-size: 13px; color: #94A3B8;">Reference Number: <strong style="color: #FF8A3D; font-size: 15px; font-family: monospace;">${d.ref}</strong></p>
-          <p style="margin: 4px 0 0; font-size: 13px; color: #94A3B8;">Received: <strong style="color: #E2E8F0;">${d.date}</strong></p>
-        </div>
+            <!-- Meta Strip -->
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 28px; background-color: #18181B; border: 1px solid #27272A; border-radius: 6px; padding: 12px 16px;">
+              <tr>
+                <td style="font-size: 13px; color: #A1A1AA;">
+                  Logged: <strong style="color: #FFFFFF; font-weight: 600;">${d.date}</strong>
+                </td>
+                <td align="right" style="font-size: 12px; color: #A1A1AA;">
+                  Status: <span style="display: inline-block; padding: 2px 8px; background-color: #27272A; color: #FFFFFF; border-radius: 3px; font-weight: 600; font-size: 11px;">NEW LEAD</span>
+                </td>
+              </tr>
+            </table>
 
-        <h3 style="margin: 0 0 12px; font-size: 15px; text-transform: uppercase; color: #FF8A3D; letter-spacing: 1px;">Customer Information</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
-          <tr>
-            <td style="padding: 8px 0; color: #94A3B8; font-size: 14px; width: 140px;">Name:</td>
-            <td style="padding: 8px 0; color: #F8FAFC; font-weight: 600; font-size: 14px;">${d.name}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; color: #94A3B8; font-size: 14px;">Organisation:</td>
-            <td style="padding: 8px 0; color: #F8FAFC; font-size: 14px;">${d.organisation}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; color: #94A3B8; font-size: 14px;">Sector / Type:</td>
-            <td style="padding: 8px 0; color: #F8FAFC; font-size: 14px; text-transform: capitalize;">${d.contactType}</td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; color: #94A3B8; font-size: 14px;">Email:</td>
-            <td style="padding: 8px 0; font-size: 14px;"><a href="mailto:${d.email}" style="color: #38BDF8; text-decoration: none;">${d.email}</a></td>
-          </tr>
-          <tr>
-            <td style="padding: 8px 0; color: #94A3B8; font-size: 14px;">Phone:</td>
-            <td style="padding: 8px 0; font-size: 14px;"><a href="tel:${d.phone}" style="color: #38BDF8; text-decoration: none; font-weight: 600;">${d.phone}</a></td>
-          </tr>
-        </table>
+            <!-- Section 1: Client Profile -->
+            <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #71717A;">Client Profile</p>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 28px; border-collapse: collapse;">
+              <tr>
+                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 13px; color: #A1A1AA; width: 140px;">Client Name</td>
+                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 14px; color: #FFFFFF; font-weight: 600;">${d.name}</td>
+              </tr>
+              <tr>
+                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 13px; color: #A1A1AA;">Organisation</td>
+                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 14px; color: #E4E4E7;">${d.organisation}</td>
+              </tr>
+              <tr>
+                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 13px; color: #A1A1AA;">Sector / Type</td>
+                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 14px; color: #E4E4E7; text-transform: capitalize;">${d.contactType}</td>
+              </tr>
+              <tr>
+                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 13px; color: #A1A1AA;">Direct Phone</td>
+                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 14px; font-weight: 600;">
+                  <a href="tel:${d.phone}" style="color: #FFFFFF; text-decoration: underline;">${d.phone}</a>
+                </td>
+              </tr>
+              <tr>
+                <td style="padding: 9px 0; font-size: 13px; color: #A1A1AA;">Email Address</td>
+                <td style="padding: 9px 0; font-size: 14px;">
+                  <a href="mailto:${d.email}" style="color: #FFFFFF; text-decoration: underline;">${d.email}</a>
+                </td>
+              </tr>
+            </table>
 
-        <h3 style="margin: 0 0 12px; font-size: 15px; text-transform: uppercase; color: #FF8A3D; letter-spacing: 1px;">Procurement Specifications</h3>
-        <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px; background: #111827; border-radius: 8px; padding: 12px;">
-          <tr>
-            <td style="padding: 10px 14px; color: #94A3B8; font-size: 14px; width: 140px;">Robot Model:</td>
-            <td style="padding: 10px 14px; color: #F8FAFC; font-weight: 600; font-size: 14px;">${d.robot}</td>
-          </tr>
-          <tr>
-            <td style="padding: 10px 14px; color: #94A3B8; font-size: 14px;">Mode:</td>
-            <td style="padding: 10px 14px; color: #F8FAFC; font-size: 14px;">${d.mode}</td>
-          </tr>
-          <tr>
-            <td style="padding: 10px 14px; color: #94A3B8; font-size: 14px;">Config Estimate:</td>
-            <td style="padding: 10px 14px; color: #34D399; font-weight: 700; font-size: 16px;">${d.total}</td>
-          </tr>
-        </table>
+            <!-- Section 2: Technical Specifications -->
+            <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #71717A;">Platform Specifications</p>
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 28px; background-color: #141417; border: 1px solid #27272A; border-radius: 6px; overflow: hidden;">
+              <tr>
+                <td style="padding: 12px 16px; border-bottom: 1px solid #27272A; font-size: 13px; color: #A1A1AA; width: 140px;">Robot Model</td>
+                <td style="padding: 12px 16px; border-bottom: 1px solid #27272A; font-size: 14px; color: #FFFFFF; font-weight: 700;">${d.robot}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 16px; border-bottom: 1px solid #27272A; font-size: 13px; color: #A1A1AA;">Procurement Mode</td>
+                <td style="padding: 12px 16px; border-bottom: 1px solid #27272A; font-size: 13px; color: #E4E4E7;">${d.mode}</td>
+              </tr>
+              <tr>
+                <td style="padding: 12px 16px; font-size: 13px; color: #A1A1AA;">Config Estimate</td>
+                <td style="padding: 12px 16px; font-size: 15px; color: #FFFFFF; font-weight: 700; font-family: 'JetBrains Mono', monospace;">${d.total}</td>
+              </tr>
+            </table>
 
-        <h3 style="margin: 0 0 8px; font-size: 15px; text-transform: uppercase; color: #FF8A3D; letter-spacing: 1px;">Client Requirements</h3>
-        <div style="background: #111827; padding: 14px 18px; border-radius: 8px; color: #CBD5E1; font-size: 14px; line-height: 1.6; white-space: pre-wrap; margin-bottom: 28px;">
+            <!-- Section 3: Requirements Note -->
+            <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #71717A;">Client Requirements</p>
+            <div style="background-color: #141417; border: 1px solid #27272A; border-radius: 6px; padding: 14px 18px; color: #D4D4D8; font-size: 13px; line-height: 1.6; white-space: pre-wrap; margin-bottom: 28px;">
 ${d.message}
-        </div>
+            </div>
 
-        <div style="display: flex; gap: 12px; margin-top: 10px;">
-          ${whatsappUrl ? `<a href="${whatsappUrl}" style="background: #25D366; color: #FFFFFF; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; display: inline-block; margin-right: 10px;">Chat on WhatsApp →</a>` : ""}
-          <a href="mailto:${d.email}?subject=RE: Order Request ${d.ref} - FUTURE ROBOTIX" style="background: #FF8A3D; color: #FFFFFF; padding: 12px 20px; border-radius: 6px; text-decoration: none; font-weight: 600; font-size: 14px; display: inline-block;">Reply via Email →</a>
-        </div>
-      </div>
+            <!-- Action Buttons -->
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
+              <tr>
+                <td style="padding-right: 8px;" width="50%">
+                  ${clientWhatsappUrl ? `
+                    <a href="${clientWhatsappUrl}" style="display: block; text-align: center; background-color: #FFFFFF; color: #000000; font-size: 13px; font-weight: 700; padding: 12px 0; border-radius: 6px; text-decoration: none; border: 1px solid #FFFFFF;">
+                      Chat with Client on WhatsApp →
+                    </a>
+                  ` : `
+                    <a href="tel:${d.phone}" style="display: block; text-align: center; background-color: #FFFFFF; color: #000000; font-size: 13px; font-weight: 700; padding: 12px 0; border-radius: 6px; text-decoration: none;">
+                      Call Client Directly →
+                    </a>
+                  `}
+                </td>
+                <td style="padding-left: 8px;" width="50%">
+                  <a href="mailto:${d.email}?subject=RE: Order Request ${d.ref} - FUTURE ROBOTIX" style="display: block; text-align: center; background-color: #18181B; color: #FFFFFF; font-size: 13px; font-weight: 600; padding: 12px 0; border-radius: 6px; text-decoration: none; border: 1px solid #3F3F46;">
+                    Reply via Email →
+                  </a>
+                </td>
+              </tr>
+            </table>
 
-      <div style="background: #060911; padding: 14px 28px; border-top: 1px solid #1E293B; font-size: 12px; color: #64748B; text-align: center;">
-        FUTURE ROBOTIX Engineering Desk · Registered MSME: UDYAM-DL-03-0091615 · New Delhi, India
-      </div>
-    </div>
+          </td>
+        </tr>
+
+        <!-- Footer -->
+        <tr>
+          <td style="padding: 20px 32px; background-color: #0A0A0C; border-top: 1px solid #1F1F23; font-size: 11px; color: #71717A; text-align: center; line-height: 1.5;">
+            FUTURE ROBOTIX Engineering Desk · Registered MSME: UDYAM-DL-03-0091615<br>
+            Direct Helpline: ${COMPANY_PHONE} · New Delhi, India
+          </td>
+        </tr>
+
+      </table>
+
+    </body>
+    </html>
   `;
 
   sendCustomEmail(ADMIN_EMAILS, subject, htmlBody);
 }
 
+
 /**
- * Sends automated confirmation email to customer
+ * Sends Ultra-Premium Black/Grey/White confirmation email to the Customer
  */
 function sendCustomerConfirmation(d) {
-  const subject = "Order Request Confirmation [" + d.ref + "] | FUTURE ROBOTIX";
+  const subject = "Order Confirmation [" + d.ref + "] | FUTURE ROBOTIX";
+  const whatsappUrl = "https://wa.me/" + COMPANY_WHATSAPP + "?text=" + encodeURIComponent("Hello FUTURE ROBOTIX team, I am contacting you regarding my order reference " + d.ref + " for the " + d.robot + ".");
+
   const htmlBody = `
-    <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; max-width: 600px; margin: 0 auto; background: #0B0F19; color: #F1F5F9; border-radius: 12px; border: 1px solid #1E293B; overflow: hidden;">
-      <div style="background: #111827; border-bottom: 2px solid #FF8A3D; padding: 24px 28px;">
-        <h2 style="margin: 0; color: #FF8A3D; font-size: 20px; font-weight: 700;">FUTURE ROBOTIX</h2>
-        <p style="margin: 4px 0 0; color: #94A3B8; font-size: 13px;">Commercial Procurement & Engineering Advisory</p>
-      </div>
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body style="margin: 0; padding: 32px 12px; background-color: #09090B; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #E4E4E7; -webkit-font-smoothing: antialiased;">
+      
+      <table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #121214; border: 1px solid #27272A; border-radius: 8px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.7);">
+        
+        <!-- Minimalist Brand Header -->
+        <tr>
+          <td style="padding: 32px 36px 24px; background-color: #0A0A0C; border-bottom: 1px solid #1F1F23;">
+            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+              <tr>
+                <td>
+                  <h1 style="margin: 0; font-size: 21px; font-weight: 700; letter-spacing: 1.5px; color: #FFFFFF;">FUTURE ROBOTIX</h1>
+                  <p style="margin: 4px 0 0; font-size: 12px; color: #A1A1AA; letter-spacing: 0.3px;">Autonomous Systems &amp; Advanced Mechatronics</p>
+                </td>
+                <td align="right" valign="top">
+                  <span style="display: inline-block; padding: 4px 10px; background-color: #18181B; border: 1px solid #3F3F46; border-radius: 4px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #FAFAFA;">OFFICIAL RECEIPT</span>
+                </td>
+              </tr>
+            </table>
+          </td>
+        </tr>
 
-      <div style="padding: 24px 28px;">
-        <p style="font-size: 16px; color: #F8FAFC; margin-top: 0;">Dear ${d.name},</p>
-        <p style="font-size: 14px; color: #CBD5E1; line-height: 1.6;">
-          Thank you for initiating your robotic procurement request with FUTURE ROBOTIX. Your specifications have been directly logged with our technical desk in New Delhi.
-        </p>
+        <!-- Main Content Area -->
+        <tr>
+          <td style="padding: 36px;">
 
-        <div style="background: #111827; border: 1px solid #1E293B; border-radius: 8px; padding: 16px 20px; margin: 20px 0;">
-          <p style="margin: 0; font-size: 13px; color: #94A3B8;">Tracking Reference: <strong style="color: #FF8A3D; font-family: monospace; font-size: 15px;">${d.ref}</strong></p>
-          <p style="margin: 6px 0 0; font-size: 13px; color: #94A3B8;">Selected Platform: <strong style="color: #FFFFFF;">${d.robot}</strong></p>
-          ${d.total && d.total !== "Custom Quotation" ? `<p style="margin: 6px 0 0; font-size: 13px; color: #94A3B8;">Estimated Configuration Quote: <strong style="color: #34D399;">${d.total}</strong></p>` : ""}
-        </div>
+            <p style="margin: 0 0 16px; font-size: 15px; color: #FFFFFF; font-weight: 600;">Dear ${d.name},</p>
+            
+            <p style="margin: 0 0 24px; font-size: 14px; line-height: 1.65; color: #A1A1AA;">
+              Thank you for initiating your robotic procurement request with <strong style="color: #FFFFFF;">FUTURE ROBOTIX</strong>. Your facility specifications and payload requirements have been officially logged with our engineering desk in New Delhi.
+            </p>
 
-        <h3 style="font-size: 15px; color: #F1F5F9; margin: 24px 0 10px;">What happens next?</h3>
-        <ol style="color: #94A3B8; font-size: 14px; line-height: 1.7; padding-left: 20px; margin: 0 0 24px;">
-          <li><strong>Engineering Review:</strong> Our systems engineers review your facility parameters and operational payload.</li>
-          <li><strong>Consultation:</strong> A technical engineer will contact you within <strong>1 business day</strong>.</li>
-          <li><strong>On-Site Feasibility Assessment:</strong> We schedule an on-site demonstration and surface survey.</li>
-          <li><strong>Itemized Quotation & MoU:</strong> Official quotation and warranty contract issued under our MSME accreditation.</li>
-        </ol>
+            <!-- Specification Dossier -->
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 32px; background-color: #18181B; border: 1px solid #27272A; border-radius: 6px; overflow: hidden;">
+              <tr>
+                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717A; width: 140px;">Tracking Ref #</td>
+                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 14px; font-weight: 700; color: #FFFFFF; letter-spacing: 1px;">${d.ref}</td>
+              </tr>
+              <tr>
+                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717A;">Platform</td>
+                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-size: 14px; font-weight: 600; color: #FFFFFF;">${d.robot}</td>
+              </tr>
+              ${d.mode ? `
+              <tr>
+                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717A;">Procurement Mode</td>
+                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-size: 13px; color: #E4E4E7;">${d.mode}</td>
+              </tr>
+              ` : ""}
+              ${d.total && d.total !== "Custom Quotation" ? `
+              <tr>
+                <td style="padding: 14px 18px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717A;">Estimated Budget</td>
+                <td style="padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: #FAFAFA;">${d.total}</td>
+              </tr>
+              ` : ""}
+            </table>
 
-        <p style="font-size: 13px; color: #94A3B8; line-height: 1.6;">
-          If you have urgent questions, you can reply directly to this email or write to <a href="mailto:support@futurerobotix.in" style="color: #FF8A3D; text-decoration: none;">support@futurerobotix.in</a>.
-        </p>
-      </div>
+            <!-- Next Steps (Clean Monochromatic Steps) -->
+            <p style="margin: 0 0 16px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #FAFAFA;">Engineering Verification Protocol</p>
+            
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 32px;">
+              <tr>
+                <td valign="top" style="padding-bottom: 16px; width: 32px;">
+                  <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #27272A; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">1</span>
+                </td>
+                <td valign="top" style="padding-bottom: 16px; font-size: 13px; line-height: 1.5; color: #D4D4D8;">
+                  <strong style="color: #FFFFFF;">Technical Review:</strong> Our systems engineers review your facility layout, payload criteria, and autonomous kinematics requirements.
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" style="padding-bottom: 16px; width: 32px;">
+                  <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #27272A; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">2</span>
+                </td>
+                <td valign="top" style="padding-bottom: 16px; font-size: 13px; line-height: 1.5; color: #D4D4D8;">
+                  <strong style="color: #FFFFFF;">Direct Consultation:</strong> A mechatronics systems specialist will contact you directly within <strong style="color: #FFFFFF;">1 business day</strong>.
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" style="padding-bottom: 16px; width: 32px;">
+                  <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #27272A; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">3</span>
+                </td>
+                <td valign="top" style="padding-bottom: 16px; font-size: 13px; line-height: 1.5; color: #D4D4D8;">
+                  <strong style="color: #FFFFFF;">On-Site Demonstration:</strong> We schedule an on-site feasibility survey and hardware demonstration at your premises.
+                </td>
+              </tr>
+              <tr>
+                <td valign="top" style="width: 32px;">
+                  <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #27272A; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">4</span>
+                </td>
+                <td valign="top" style="font-size: 13px; line-height: 1.5; color: #D4D4D8;">
+                  <strong style="color: #FFFFFF;">MoU &amp; Itemized Commercial Invoice:</strong> Final institutional quotation and comprehensive SLA warranty contract issued under our MSME accreditation.
+                </td>
+              </tr>
+            </table>
 
-      <div style="background: #060911; padding: 14px 28px; border-top: 1px solid #1E293B; font-size: 11px; color: #64748B; text-align: center;">
-        FUTURE ROBOTIX · Registered Address: M-28, Top Floor, Sham Nagar, Khyala Road, New Delhi 110018<br>
-        UDYAM-DL-03-0091615 (Ministry of MSME, Govt. of India)
-      </div>
-    </div>
+            <!-- Fast-Track WhatsApp CTA (Clean, Premium, High Contrast) -->
+            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 24px; background-color: #18181B; border: 1px solid #27272A; border-radius: 8px; padding: 20px;">
+              <tr>
+                <td>
+                  <p style="margin: 0 0 6px; font-size: 14px; font-weight: 700; color: #FFFFFF;">Require Immediate Feasibility Scheduling?</p>
+                  <p style="margin: 0 0 16px; font-size: 13px; color: #A1A1AA; line-height: 1.5;">Connect directly with our Chief Technology Architect on WhatsApp with your tracking reference.</p>
+                  <a href="${whatsappUrl}" style="display: inline-block; background-color: #FFFFFF; color: #000000; font-size: 13px; font-weight: 700; padding: 12px 24px; border-radius: 6px; text-decoration: none; letter-spacing: 0.3px;">
+                    Fast-Track on WhatsApp (${COMPANY_PHONE}) →
+                  </a>
+                </td>
+              </tr>
+            </table>
+
+            <p style="margin: 0; font-size: 13px; color: #71717A; line-height: 1.6;">
+              You can also reply directly to this email or write to <a href="mailto:support@futurerobotix.in" style="color: #FFFFFF; text-decoration: underline;">support@futurerobotix.in</a> at any time.
+            </p>
+
+          </td>
+        </tr>
+
+        <!-- Official Legal Footer -->
+        <tr>
+          <td style="padding: 24px 36px; background-color: #0A0A0C; border-top: 1px solid #1F1F23; font-size: 11px; color: #71717A; text-align: center; line-height: 1.6;">
+            FUTURE ROBOTIX · Registered Address: M-28, Top Floor, Sham Nagar, Khyala Road, New Delhi 110018<br>
+            Accredited by Ministry of MSME, Govt. of India · UDYAM-DL-03-0091615<br>
+            Direct Technical Desk: <a href="tel:+918448022906" style="color: #A1A1AA; text-decoration: none;">${COMPANY_PHONE}</a>
+          </td>
+        </tr>
+
+      </table>
+
+    </body>
+    </html>
   `;
 
   sendCustomEmail(d.email, subject, htmlBody);

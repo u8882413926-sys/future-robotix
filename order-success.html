@@ -67,7 +67,7 @@
             </div>
           </div>
           <div style="margin-top:var(--s-4)">
-            <a id="btn-whatsapp-track" href="https://wa.me/919876543210" target="_blank" rel="noopener noreferrer" class="btn" style="background:#25D366;color:#000;font-weight:600;width:100%;justify-content:center;padding:12px 20px">
+            <a id="btn-whatsapp-track" href="https://wa.me/918448022906" target="_blank" rel="noopener noreferrer" class="btn" style="background:#25D366;color:#000;font-weight:600;width:100%;justify-content:center;padding:12px 20px">
               Fast-Track on WhatsApp →
             </a>
           </div>
@@ -153,7 +153,7 @@
       // Configure WhatsApp fast-track deep link
       const waBtn = document.getElementById('btn-whatsapp-track');
       if (waBtn) {
-        const waNumber = (window.SITE?.contact?.whatsappNumber || '919876543210').replace(/[^0-9]/g, '');
+        const waNumber = (window.SITE?.contact?.whatsappNumber || '918448022906').replace(/[^0-9]/g, '');
         const clientDesc = (name && org) ? ` for ${name} at ${org}` : (name ? ` for ${name}` : '');
         const waText = encodeURIComponent(`Hello FUTURE ROBOTIX,\n\nI have initiated procurement order request ${ref} for the ${robot}${clientDesc}.\n\nPlease let me know the soonest available slot for technical consultation / on-site demonstration.`);
         waBtn.href = `https://wa.me/${waNumber}?text=${waText}`;
