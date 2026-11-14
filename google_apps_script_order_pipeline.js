@@ -77,9 +77,9 @@ function doGet(e) {
   const statusResponse = {
     service: "FUTURE ROBOTIX Procurement Pipeline Webhook",
     status: sheetStatus === "connected" ? "operational" : "degraded",
-    buildVersion: "2026.11.14-v2.1",
-    templateVersion: "v2-monochrome-executive",
-    emailTheme: "Executive Black, Charcoal Grey & Platinum White (Zero Orange)",
+    buildVersion: "2026.11.14-v3-light",
+    templateVersion: "v3-light-executive",
+    emailTheme: "Executive Clean White, Charcoal Grey & Black",
     spreadsheet: {
       status: sheetStatus,
       name: spreadsheetName,
@@ -451,11 +451,11 @@ function testSendCustomerConfirmation() {
 
 
 // =============================================================================
-// 9. LUXURY MONOCHROME EMAIL TEMPLATES (Black, Grey & White Theme)
+// 9. EXECUTIVE LIGHT EMAIL TEMPLATES (Clean White, Charcoal Grey & Black)
 // =============================================================================
 
 /**
- * Sends Executive Black/Grey/White notification email to orders@ and support@futurerobotix.in
+ * Sends Executive White/Grey/Black notification email to orders@ and support@futurerobotix.in
  */
 function sendAdminNotification(d) {
   const cleanPhone = (d.phone || "").replace(/[^0-9]/g, "");
@@ -472,134 +472,134 @@ function sendAdminNotification(d) {
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body style="margin: 0; padding: 0; background-color: #050505; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #E4E4E7; -webkit-font-smoothing: antialiased;">
+    <body style="margin: 0; padding: 0; background-color: #F4F5F7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #111827; -webkit-font-smoothing: antialiased;">
       
-      <!-- Outer Full-Width Wrapper Table (Forces Gmail Web to keep dark executive background) -->
-      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#050505" style="width: 100% !important; background-color: #050505; margin: 0; padding: 32px 12px;">
+      <!-- Outer Full-Width Wrapper Table (Crisp Light Executive Canvas) -->
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#F4F5F7" style="width: 100% !important; background-color: #F4F5F7; margin: 0; padding: 36px 12px;">
         <tr>
-          <td align="center" valign="top" bgcolor="#050505">
+          <td align="center" valign="top" bgcolor="#F4F5F7">
             
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #0F0F11; border: 1px solid #27272A; border-radius: 10px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.6);">
-        
-        <!-- Header -->
-        <tr>
-          <td style="padding: 28px 32px; background-color: #0A0A0C; border-bottom: 1px solid #27272A;">
-            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+              
+              <!-- Header -->
               <tr>
-                <td>
-                  <p style="margin: 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #A1A1AA;">Internal Procurement Desk</p>
-                  <h1 style="margin: 4px 0 0; font-size: 20px; font-weight: 700; color: #FFFFFF; letter-spacing: 0.5px;">FUTURE ROBOTIX</h1>
-                </td>
-                <td align="right" valign="middle">
-                  <span style="display: inline-block; padding: 4px 10px; background-color: #18181B; border: 1px solid #3F3F46; border-radius: 4px; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 11px; font-weight: 600; color: #FAFAFA; letter-spacing: 0.5px;">${d.ref}</span>
+                <td style="padding: 28px 32px; background-color: #FFFFFF; border-bottom: 1px solid #F3F4F6;">
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+                        <p style="margin: 0; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 2px; color: #6B7280;">Internal Procurement Desk</p>
+                        <h1 style="margin: 4px 0 0; font-size: 20px; font-weight: 800; color: #111827; letter-spacing: 1px;">FUTURE ROBOTIX</h1>
+                      </td>
+                      <td align="right" valign="middle">
+                        <span style="display: inline-block; padding: 4px 10px; background-color: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 4px; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 12px; font-weight: 700; color: #111827; letter-spacing: 0.5px;">${d.ref}</span>
+                      </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
-            </table>
-          </td>
-        </tr>
 
-        <!-- Body -->
-        <tr>
-          <td style="padding: 32px;">
+              <!-- Body -->
+              <tr>
+                <td style="padding: 32px;">
 
-            <!-- Meta Strip -->
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 28px; background-color: #18181B; border: 1px solid #27272A; border-radius: 6px; padding: 12px 16px;">
-              <tr>
-                <td style="font-size: 13px; color: #A1A1AA;">
-                  Logged: <strong style="color: #FFFFFF; font-weight: 600;">${d.date}</strong>
-                </td>
-                <td align="right" style="font-size: 12px; color: #A1A1AA;">
-                  Status: <span style="display: inline-block; padding: 2px 8px; background-color: #27272A; color: #FFFFFF; border-radius: 3px; font-weight: 600; font-size: 11px;">NEW LEAD</span>
-                </td>
-              </tr>
-            </table>
+                  <!-- Meta Strip -->
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 28px; background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 6px; padding: 12px 16px;">
+                    <tr>
+                      <td style="font-size: 13px; color: #6B7280;">
+                        Logged: <strong style="color: #111827; font-weight: 600;">${d.date}</strong>
+                      </td>
+                      <td align="right" style="font-size: 12px; color: #6B7280;">
+                        Status: <span style="display: inline-block; padding: 2px 8px; background-color: #111827; color: #FFFFFF; border-radius: 3px; font-weight: 600; font-size: 11px;">NEW LEAD</span>
+                      </td>
+                    </tr>
+                  </table>
 
-            <!-- Section 1: Client Profile -->
-            <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #71717A;">Client Profile</p>
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 28px; border-collapse: collapse;">
-              <tr>
-                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 13px; color: #A1A1AA; width: 140px;">Client Name</td>
-                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 14px; color: #FFFFFF; font-weight: 600;">${d.name}</td>
-              </tr>
-              <tr>
-                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 13px; color: #A1A1AA;">Organisation</td>
-                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 14px; color: #E4E4E7;">${d.organisation}</td>
-              </tr>
-              <tr>
-                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 13px; color: #A1A1AA;">Sector / Type</td>
-                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 14px; color: #E4E4E7; text-transform: capitalize;">${d.contactType}</td>
-              </tr>
-              <tr>
-                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 13px; color: #A1A1AA;">Direct Phone</td>
-                <td style="padding: 9px 0; border-bottom: 1px solid #1F1F23; font-size: 14px; font-weight: 600;">
-                  <a href="tel:${d.phone}" style="color: #FFFFFF; text-decoration: underline;">${d.phone}</a>
-                </td>
-              </tr>
-              <tr>
-                <td style="padding: 9px 0; font-size: 13px; color: #A1A1AA;">Email Address</td>
-                <td style="padding: 9px 0; font-size: 14px;">
-                  <a href="mailto:${d.email}" style="color: #FFFFFF; text-decoration: underline;">${d.email}</a>
-                </td>
-              </tr>
-            </table>
+                  <!-- Section 1: Client Profile -->
+                  <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #6B7280;">Client Profile</p>
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 28px; border-collapse: collapse;">
+                    <tr>
+                      <td style="padding: 10px 0; border-bottom: 1px solid #F3F4F6; font-size: 13px; color: #6B7280; width: 140px;">Client Name</td>
+                      <td style="padding: 10px 0; border-bottom: 1px solid #F3F4F6; font-size: 14px; color: #111827; font-weight: 600;">${d.name}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 10px 0; border-bottom: 1px solid #F3F4F6; font-size: 13px; color: #6B7280;">Organisation</td>
+                      <td style="padding: 10px 0; border-bottom: 1px solid #F3F4F6; font-size: 14px; color: #374151;">${d.organisation}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 10px 0; border-bottom: 1px solid #F3F4F6; font-size: 13px; color: #6B7280;">Sector / Type</td>
+                      <td style="padding: 10px 0; border-bottom: 1px solid #F3F4F6; font-size: 14px; color: #374151; text-transform: capitalize;">${d.contactType}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 10px 0; border-bottom: 1px solid #F3F4F6; font-size: 13px; color: #6B7280;">Direct Phone</td>
+                      <td style="padding: 10px 0; border-bottom: 1px solid #F3F4F6; font-size: 14px; font-weight: 600;">
+                        <a href="tel:${d.phone}" style="color: #111827; text-decoration: underline;">${d.phone}</a>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 10px 0; font-size: 13px; color: #6B7280;">Email Address</td>
+                      <td style="padding: 10px 0; font-size: 14px;">
+                        <a href="mailto:${d.email}" style="color: #111827; text-decoration: underline;">${d.email}</a>
+                      </td>
+                    </tr>
+                  </table>
 
-            <!-- Section 2: Technical Specifications -->
-            <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #71717A;">Platform Specifications</p>
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 28px; background-color: #141417; border: 1px solid #27272A; border-radius: 6px; overflow: hidden;">
-              <tr>
-                <td style="padding: 12px 16px; border-bottom: 1px solid #27272A; font-size: 13px; color: #A1A1AA; width: 140px;">Robot Model</td>
-                <td style="padding: 12px 16px; border-bottom: 1px solid #27272A; font-size: 14px; color: #FFFFFF; font-weight: 700;">${d.robot}</td>
-              </tr>
-              <tr>
-                <td style="padding: 12px 16px; border-bottom: 1px solid #27272A; font-size: 13px; color: #A1A1AA;">Procurement Mode</td>
-                <td style="padding: 12px 16px; border-bottom: 1px solid #27272A; font-size: 13px; color: #E4E4E7;">${d.mode}</td>
-              </tr>
-              <tr>
-                <td style="padding: 12px 16px; font-size: 13px; color: #A1A1AA;">Config Estimate</td>
-                <td style="padding: 12px 16px; font-size: 15px; color: #FFFFFF; font-weight: 700; font-family: 'JetBrains Mono', monospace;">${d.total}</td>
-              </tr>
-            </table>
+                  <!-- Section 2: Technical Specifications -->
+                  <p style="margin: 0 0 12px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #6B7280;">Platform Specifications</p>
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 28px; background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 6px; overflow: hidden;">
+                    <tr>
+                      <td style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; font-size: 13px; color: #6B7280; width: 140px;">Robot Model</td>
+                      <td style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; font-size: 14px; color: #111827; font-weight: 700;">${d.robot}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; font-size: 13px; color: #6B7280;">Procurement Mode</td>
+                      <td style="padding: 12px 16px; border-bottom: 1px solid #E5E7EB; font-size: 13px; color: #374151;">${d.mode}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 12px 16px; font-size: 13px; color: #6B7280;">Config Estimate</td>
+                      <td style="padding: 12px 16px; font-size: 15px; color: #111827; font-weight: 700; font-family: 'JetBrains Mono', monospace;">${d.total}</td>
+                    </tr>
+                  </table>
 
-            <!-- Section 3: Requirements Note -->
-            <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #71717A;">Client Requirements</p>
-            <div style="background-color: #141417; border: 1px solid #27272A; border-radius: 6px; padding: 14px 18px; color: #D4D4D8; font-size: 13px; line-height: 1.6; white-space: pre-wrap; margin-bottom: 28px;">
+                  <!-- Section 3: Requirements Note -->
+                  <p style="margin: 0 0 8px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #6B7280;">Client Requirements</p>
+                  <div style="background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 6px; padding: 14px 18px; color: #374151; font-size: 13px; line-height: 1.6; white-space: pre-wrap; margin-bottom: 28px;">
 ${d.message}
-            </div>
+                  </div>
 
-            <!-- Action Buttons -->
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
-              <tr>
-                <td style="padding-right: 8px;" width="50%">
-                  ${clientWhatsappUrl ? `
-                    <a href="${clientWhatsappUrl}" style="display: block; text-align: center; background-color: #FFFFFF; color: #000000; font-size: 13px; font-weight: 700; padding: 12px 0; border-radius: 6px; text-decoration: none; border: 1px solid #FFFFFF;">
-                      Chat with Client on WhatsApp →
-                    </a>
-                  ` : `
-                    <a href="tel:${d.phone}" style="display: block; text-align: center; background-color: #FFFFFF; color: #000000; font-size: 13px; font-weight: 700; padding: 12px 0; border-radius: 6px; text-decoration: none;">
-                      Call Client Directly →
-                    </a>
-                  `}
-                </td>
-                <td style="padding-left: 8px;" width="50%">
-                  <a href="mailto:${d.email}?subject=RE: Order Request ${d.ref} - FUTURE ROBOTIX" style="display: block; text-align: center; background-color: #18181B; color: #FFFFFF; font-size: 13px; font-weight: 600; padding: 12px 0; border-radius: 6px; text-decoration: none; border: 1px solid #3F3F46;">
-                    Reply via Email →
-                  </a>
+                  <!-- Action Buttons -->
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-top: 10px;">
+                    <tr>
+                      <td style="padding-right: 8px;" width="50%">
+                        ${clientWhatsappUrl ? `
+                          <a href="${clientWhatsappUrl}" style="display: block; text-align: center; background-color: #111827; color: #FFFFFF; font-size: 13px; font-weight: 700; padding: 12px 0; border-radius: 6px; text-decoration: none;">
+                            Chat with Client on WhatsApp →
+                          </a>
+                        ` : `
+                          <a href="tel:${d.phone}" style="display: block; text-align: center; background-color: #111827; color: #FFFFFF; font-size: 13px; font-weight: 700; padding: 12px 0; border-radius: 6px; text-decoration: none;">
+                            Call Client Directly →
+                          </a>
+                        `}
+                      </td>
+                      <td style="padding-left: 8px;" width="50%">
+                        <a href="mailto:${d.email}?subject=RE: Order Request ${d.ref} - FUTURE ROBOTIX" style="display: block; text-align: center; background-color: #FFFFFF; color: #111827; font-size: 13px; font-weight: 600; padding: 12px 0; border-radius: 6px; text-decoration: none; border: 1px solid #D1D5DB;">
+                          Reply via Email →
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+
                 </td>
               </tr>
+
+              <!-- Footer -->
+              <tr>
+                <td style="padding: 20px 32px; background-color: #F9FAFB; border-top: 1px solid #E5E7EB; font-size: 11px; color: #6B7280; text-align: center; line-height: 1.5;">
+                  FUTURE ROBOTIX Engineering Desk · Registered MSME: UDYAM-DL-03-0091615<br>
+                  Direct Helpline: ${COMPANY_PHONE} · New Delhi, India
+                </td>
+              </tr>
+
             </table>
-
-          </td>
-        </tr>
-
-        <!-- Footer -->
-        <tr>
-          <td style="padding: 20px 32px; background-color: #0A0A0C; border-top: 1px solid #1F1F23; font-size: 11px; color: #71717A; text-align: center; line-height: 1.5;">
-            FUTURE ROBOTIX Engineering Desk · Registered MSME: UDYAM-DL-03-0091615<br>
-            Direct Helpline: ${COMPANY_PHONE} · New Delhi, India
-          </td>
-        </tr>
-
-      </table>
 
           </td>
         </tr>
@@ -614,7 +614,7 @@ ${d.message}
 
 
 /**
- * Sends Ultra-Premium Black/Grey/White confirmation email to the Customer
+ * Sends Ultra-Clean Executive White/Grey/Black confirmation email to the Customer
  */
 function sendCustomerConfirmation(d) {
   const subject = "Order Confirmation [" + d.ref + "] | FUTURE ROBOTIX";
@@ -627,134 +627,134 @@ function sendCustomerConfirmation(d) {
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
-    <body style="margin: 0; padding: 0; background-color: #09090B; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #E4E4E7; -webkit-font-smoothing: antialiased;">
+    <body style="margin: 0; padding: 0; background-color: #F4F5F7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif; color: #111827; -webkit-font-smoothing: antialiased;">
       
-      <!-- Outer Full-Width Wrapper Table (Forces Gmail Web to keep dark executive background) -->
-      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#09090B" style="width: 100% !important; background-color: #09090B; margin: 0; padding: 32px 12px;">
+      <!-- Outer Full-Width Wrapper Table (Crisp Light Executive Canvas) -->
+      <table width="100%" border="0" cellpadding="0" cellspacing="0" bgcolor="#F4F5F7" style="width: 100% !important; background-color: #F4F5F7; margin: 0; padding: 36px 12px;">
         <tr>
-          <td align="center" valign="top" bgcolor="#09090B">
+          <td align="center" valign="top" bgcolor="#F4F5F7">
             
-            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #121214; border: 1px solid #27272A; border-radius: 8px; overflow: hidden; box-shadow: 0 12px 40px rgba(0,0,0,0.7);">
-        
-        <!-- Minimalist Brand Header -->
-        <tr>
-          <td style="padding: 32px 36px 24px; background-color: #0A0A0C; border-bottom: 1px solid #1F1F23;">
-            <table width="100%" border="0" cellpadding="0" cellspacing="0">
+            <table border="0" cellpadding="0" cellspacing="0" width="100%" style="max-width: 600px; background-color: #FFFFFF; border: 1px solid #E5E7EB; border-radius: 12px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.06);">
+              
+              <!-- Minimalist Brand Header -->
               <tr>
-                <td>
-                  <h1 style="margin: 0; font-size: 21px; font-weight: 700; letter-spacing: 1.5px; color: #FFFFFF;">FUTURE ROBOTIX</h1>
-                  <p style="margin: 4px 0 0; font-size: 12px; color: #A1A1AA; letter-spacing: 0.3px;">Autonomous Systems &amp; Advanced Mechatronics</p>
-                </td>
-                <td align="right" valign="top">
-                  <span style="display: inline-block; padding: 4px 10px; background-color: #18181B; border: 1px solid #3F3F46; border-radius: 4px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #FAFAFA;">OFFICIAL RECEIPT</span>
+                <td style="padding: 32px 36px 24px; background-color: #FFFFFF; border-bottom: 1px solid #F3F4F6;">
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                      <td>
+                        <h1 style="margin: 0; font-size: 21px; font-weight: 800; letter-spacing: 1.5px; color: #111827;">FUTURE ROBOTIX</h1>
+                        <p style="margin: 4px 0 0; font-size: 12px; color: #6B7280; letter-spacing: 0.3px;">Autonomous Systems &amp; Advanced Mechatronics</p>
+                      </td>
+                      <td align="right" valign="top">
+                        <span style="display: inline-block; padding: 5px 12px; background-color: #F3F4F6; border: 1px solid #E5E7EB; border-radius: 4px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: #1F2937;">OFFICIAL RECEIPT</span>
+                      </td>
+                    </tr>
+                  </table>
                 </td>
               </tr>
+
+              <!-- Main Content Area -->
+              <tr>
+                <td style="padding: 36px;">
+
+                  <p style="margin: 0 0 16px; font-size: 16px; color: #111827; font-weight: 700;">Dear ${d.name},</p>
+                  
+                  <p style="margin: 0 0 24px; font-size: 14px; line-height: 1.65; color: #374151;">
+                    Thank you for initiating your robotic procurement request with <strong style="color: #111827;">FUTURE ROBOTIX</strong>. Your facility specifications and payload requirements have been officially logged with our engineering desk in New Delhi.
+                  </p>
+
+                  <!-- Specification Dossier -->
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 32px; background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px; overflow: hidden;">
+                    <tr>
+                      <td style="padding: 14px 18px; border-bottom: 1px solid #E5E7EB; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #6B7280; width: 140px;">Tracking Ref #</td>
+                      <td style="padding: 14px 18px; border-bottom: 1px solid #E5E7EB; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 14px; font-weight: 700; color: #111827; letter-spacing: 0.5px;">${d.ref}</td>
+                    </tr>
+                    <tr>
+                      <td style="padding: 14px 18px; border-bottom: 1px solid #E5E7EB; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #6B7280;">Platform</td>
+                      <td style="padding: 14px 18px; border-bottom: 1px solid #E5E7EB; font-size: 14px; font-weight: 700; color: #111827;">${d.robot}</td>
+                    </tr>
+                    ${d.mode ? `
+                    <tr>
+                      <td style="padding: 14px 18px; border-bottom: 1px solid #E5E7EB; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #6B7280;">Procurement Mode</td>
+                      <td style="padding: 14px 18px; border-bottom: 1px solid #E5E7EB; font-size: 13px; color: #374151;">${d.mode}</td>
+                    </tr>
+                    ` : ""}
+                    ${d.total && d.total !== "Custom Quotation" ? `
+                    <tr>
+                      <td style="padding: 14px 18px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: #6B7280;">Estimated Budget</td>
+                      <td style="padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: #111827;">${d.total}</td>
+                    </tr>
+                    ` : ""}
+                  </table>
+
+                  <!-- Next Steps (Clean Monochromatic Steps) -->
+                  <p style="margin: 0 0 16px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #6B7280;">Engineering Verification Protocol</p>
+                  
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 32px;">
+                    <tr>
+                      <td valign="top" style="padding-bottom: 16px; width: 32px;">
+                        <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #111827; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">1</span>
+                      </td>
+                      <td valign="top" style="padding-bottom: 16px; font-size: 13px; line-height: 1.5; color: #4B5563;">
+                        <strong style="color: #111827;">Technical Review:</strong> Our systems engineers review your facility layout, payload criteria, and autonomous kinematics requirements.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="top" style="padding-bottom: 16px; width: 32px;">
+                        <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #111827; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">2</span>
+                      </td>
+                      <td valign="top" style="padding-bottom: 16px; font-size: 13px; line-height: 1.5; color: #4B5563;">
+                        <strong style="color: #111827;">Direct Consultation:</strong> A mechatronics systems specialist will contact you directly within <strong style="color: #111827;">1 business day</strong>.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="top" style="padding-bottom: 16px; width: 32px;">
+                        <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #111827; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">3</span>
+                      </td>
+                      <td valign="top" style="padding-bottom: 16px; font-size: 13px; line-height: 1.5; color: #4B5563;">
+                        <strong style="color: #111827;">On-Site Demonstration:</strong> We schedule an on-site feasibility survey and hardware demonstration at your premises.
+                      </td>
+                    </tr>
+                    <tr>
+                      <td valign="top" style="width: 32px;">
+                        <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #111827; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">4</span>
+                      </td>
+                      <td valign="top" style="font-size: 13px; line-height: 1.5; color: #4B5563;">
+                        <strong style="color: #111827;">MoU &amp; Itemized Commercial Invoice:</strong> Final institutional quotation and comprehensive SLA warranty contract issued under our MSME accreditation.
+                      </td>
+                    </tr>
+                  </table>
+
+                  <!-- Fast-Track WhatsApp CTA (Clean, Executive High Contrast) -->
+                  <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 24px; background-color: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px; padding: 22px;">
+                    <tr>
+                      <td>
+                        <p style="margin: 0 0 6px; font-size: 14px; font-weight: 700; color: #111827;">Require Immediate Feasibility Scheduling?</p>
+                        <p style="margin: 0 0 16px; font-size: 13px; color: #6B7280; line-height: 1.5;">Connect directly with our Chief Technology Architect on WhatsApp with your tracking reference.</p>
+                        <a href="${whatsappUrl}" style="display: inline-block; background-color: #111827; color: #FFFFFF; font-size: 13px; font-weight: 700; padding: 12px 24px; border-radius: 6px; text-decoration: none; letter-spacing: 0.3px;">
+                          Fast-Track on WhatsApp (${COMPANY_PHONE}) →
+                        </a>
+                      </td>
+                    </tr>
+                  </table>
+
+                  <p style="margin: 0; font-size: 13px; color: #6B7280; line-height: 1.6;">
+                    You can also reply directly to this email or write to <a href="mailto:support@futurerobotix.in" style="color: #111827; text-decoration: underline; font-weight: 600;">support@futurerobotix.in</a> at any time.
+                  </p>
+
+                </td>
+              </tr>
+
+              <!-- Official Legal Footer -->
+              <tr>
+                <td style="padding: 24px 36px; background-color: #F9FAFB; border-top: 1px solid #E5E7EB; font-size: 11px; color: #6B7280; text-align: center; line-height: 1.6;">
+                  FUTURE ROBOTIX · Registered Address: M-28, Top Floor, Sham Nagar, Khyala Road, New Delhi 110018<br>
+                  Accredited by Ministry of MSME, Govt. of India · UDYAM-DL-03-0091615<br>
+                  Direct Technical Desk: <a href="tel:+918448022906" style="color: #111827; text-decoration: none; font-weight: 600;">${COMPANY_PHONE}</a>
+                </td>
+              </tr>
+
             </table>
-          </td>
-        </tr>
-
-        <!-- Main Content Area -->
-        <tr>
-          <td style="padding: 36px;">
-
-            <p style="margin: 0 0 16px; font-size: 15px; color: #FFFFFF; font-weight: 600;">Dear ${d.name},</p>
-            
-            <p style="margin: 0 0 24px; font-size: 14px; line-height: 1.65; color: #A1A1AA;">
-              Thank you for initiating your robotic procurement request with <strong style="color: #FFFFFF;">FUTURE ROBOTIX</strong>. Your facility specifications and payload requirements have been officially logged with our engineering desk in New Delhi.
-            </p>
-
-            <!-- Specification Dossier -->
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 32px; background-color: #18181B; border: 1px solid #27272A; border-radius: 6px; overflow: hidden;">
-              <tr>
-                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717A; width: 140px;">Tracking Ref #</td>
-                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-family: 'JetBrains Mono', Consolas, monospace; font-size: 14px; font-weight: 700; color: #FFFFFF; letter-spacing: 1px;">${d.ref}</td>
-              </tr>
-              <tr>
-                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717A;">Platform</td>
-                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-size: 14px; font-weight: 600; color: #FFFFFF;">${d.robot}</td>
-              </tr>
-              ${d.mode ? `
-              <tr>
-                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717A;">Procurement Mode</td>
-                <td style="padding: 14px 18px; border-bottom: 1px solid #27272A; font-size: 13px; color: #E4E4E7;">${d.mode}</td>
-              </tr>
-              ` : ""}
-              ${d.total && d.total !== "Custom Quotation" ? `
-              <tr>
-                <td style="padding: 14px 18px; font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: #71717A;">Estimated Budget</td>
-                <td style="padding: 14px 18px; font-family: 'JetBrains Mono', monospace; font-size: 14px; font-weight: 700; color: #FAFAFA;">${d.total}</td>
-              </tr>
-              ` : ""}
-            </table>
-
-            <!-- Next Steps (Clean Monochromatic Steps) -->
-            <p style="margin: 0 0 16px; font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: #FAFAFA;">Engineering Verification Protocol</p>
-            
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 32px;">
-              <tr>
-                <td valign="top" style="padding-bottom: 16px; width: 32px;">
-                  <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #27272A; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">1</span>
-                </td>
-                <td valign="top" style="padding-bottom: 16px; font-size: 13px; line-height: 1.5; color: #D4D4D8;">
-                  <strong style="color: #FFFFFF;">Technical Review:</strong> Our systems engineers review your facility layout, payload criteria, and autonomous kinematics requirements.
-                </td>
-              </tr>
-              <tr>
-                <td valign="top" style="padding-bottom: 16px; width: 32px;">
-                  <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #27272A; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">2</span>
-                </td>
-                <td valign="top" style="padding-bottom: 16px; font-size: 13px; line-height: 1.5; color: #D4D4D8;">
-                  <strong style="color: #FFFFFF;">Direct Consultation:</strong> A mechatronics systems specialist will contact you directly within <strong style="color: #FFFFFF;">1 business day</strong>.
-                </td>
-              </tr>
-              <tr>
-                <td valign="top" style="padding-bottom: 16px; width: 32px;">
-                  <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #27272A; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">3</span>
-                </td>
-                <td valign="top" style="padding-bottom: 16px; font-size: 13px; line-height: 1.5; color: #D4D4D8;">
-                  <strong style="color: #FFFFFF;">On-Site Demonstration:</strong> We schedule an on-site feasibility survey and hardware demonstration at your premises.
-                </td>
-              </tr>
-              <tr>
-                <td valign="top" style="width: 32px;">
-                  <span style="display: block; width: 22px; height: 22px; line-height: 22px; text-align: center; background-color: #27272A; color: #FFFFFF; font-size: 11px; font-weight: 700; border-radius: 50%;">4</span>
-                </td>
-                <td valign="top" style="font-size: 13px; line-height: 1.5; color: #D4D4D8;">
-                  <strong style="color: #FFFFFF;">MoU &amp; Itemized Commercial Invoice:</strong> Final institutional quotation and comprehensive SLA warranty contract issued under our MSME accreditation.
-                </td>
-              </tr>
-            </table>
-
-            <!-- Fast-Track WhatsApp CTA (Clean, Premium, High Contrast) -->
-            <table width="100%" border="0" cellpadding="0" cellspacing="0" style="margin-bottom: 24px; background-color: #18181B; border: 1px solid #27272A; border-radius: 8px; padding: 20px;">
-              <tr>
-                <td>
-                  <p style="margin: 0 0 6px; font-size: 14px; font-weight: 700; color: #FFFFFF;">Require Immediate Feasibility Scheduling?</p>
-                  <p style="margin: 0 0 16px; font-size: 13px; color: #A1A1AA; line-height: 1.5;">Connect directly with our Chief Technology Architect on WhatsApp with your tracking reference.</p>
-                  <a href="${whatsappUrl}" style="display: inline-block; background-color: #FFFFFF; color: #000000; font-size: 13px; font-weight: 700; padding: 12px 24px; border-radius: 6px; text-decoration: none; letter-spacing: 0.3px;">
-                    Fast-Track on WhatsApp (${COMPANY_PHONE}) →
-                  </a>
-                </td>
-              </tr>
-            </table>
-
-            <p style="margin: 0; font-size: 13px; color: #71717A; line-height: 1.6;">
-              You can also reply directly to this email or write to <a href="mailto:support@futurerobotix.in" style="color: #FFFFFF; text-decoration: underline;">support@futurerobotix.in</a> at any time.
-            </p>
-
-          </td>
-        </tr>
-
-        <!-- Official Legal Footer -->
-        <tr>
-          <td style="padding: 24px 36px; background-color: #0A0A0C; border-top: 1px solid #1F1F23; font-size: 11px; color: #71717A; text-align: center; line-height: 1.6;">
-            FUTURE ROBOTIX · Registered Address: M-28, Top Floor, Sham Nagar, Khyala Road, New Delhi 110018<br>
-            Accredited by Ministry of MSME, Govt. of India · UDYAM-DL-03-0091615<br>
-            Direct Technical Desk: <a href="tel:+918448022906" style="color: #A1A1AA; text-decoration: none;">${COMPANY_PHONE}</a>
-          </td>
-        </tr>
-
-      </table>
 
           </td>
         </tr>
