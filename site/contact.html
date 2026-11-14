@@ -295,7 +295,7 @@
           sessionStorage.setItem('fr_order_total', totalVal ? (window.FR.formatINR(totalVal) || ('₹' + totalVal)) : 'Custom Quotation');
 
           // Check if webhook pipeline is active in SITE.contact with fallback
-          const pipelineEndpoint = (window.SITE?.contact?.pipelineEndpoint || 'https://script.google.com/macros/s/AKfycbxuxSe2bZTvJxUK3QrKHjy_ACUlzS4BCcrCe-6-O02SGJ2UJJye_5ELLBGv2Jx9wGcr/exec').trim();
+          const pipelineEndpoint = (window.SITE?.contact?.pipelineEndpoint || 'https://script.google.com/macros/s/AKfycbytUe3H_qAyNcEaEeKUd9RBj-4gsaGLgC55MxW99nrYWd9_bEGKkJWSr_e1zIpLEbg/exec').trim();
 
           if (pipelineEndpoint) {
             try {

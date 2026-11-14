@@ -1,52 +1,63 @@
 <!DOCTYPE html>
 <html lang="en-IN">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Procurement & Engineering Advisory | FUTURE ROBOTIX</title>
-  <meta name="description" content="Submit a commercial procurement request or schedule an on-site autonomous robotics demonstration with the FUTURE ROBOTIX engineering desk.">
+  <meta name="description"
+    content="Submit a commercial procurement request or schedule an on-site autonomous robotics demonstration with the FUTURE ROBOTIX engineering desk.">
   <link rel="canonical" href="https://futurerobotix.in/contact">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon.png">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap"
+    rel="stylesheet">
   <link rel="stylesheet" href="css/design.css">
 </head>
+
 <body>
   <header class="nav" id="site-nav" role="banner"></header>
 
   <main class="page-content" id="main">
 
-    <div class="page-hero" style="background:var(--bg-0);padding:calc(72px + var(--s-8)) 0 var(--s-6);border-bottom:1px solid var(--line)">
+    <div class="page-hero"
+      style="background:var(--bg-0);padding:calc(72px + var(--s-8)) 0 var(--s-6);border-bottom:1px solid var(--line)">
       <div class="container">
         <p class="eyebrow reveal">Commercial Procurement &amp; Engineering Advisory</p>
         <h1 class="h1 mt-3 reveal">Initiate Your Robotic Deployment.</h1>
         <p class="lead text-mid mt-3 reveal" style="max-width:64ch">
-          Submit a formal commercial order request or schedule an on-site feasibility demonstration at your corporate headquarters, university campus, or research laboratory. Our engineering desk replies within 1 business day.
+          Submit a formal commercial order request or schedule an on-site feasibility demonstration at your corporate
+          headquarters, university campus, or research laboratory. Our engineering desk replies within 1 business day.
         </p>
       </div>
     </div>
 
-    <section class="section" style="padding-top:var(--s-8);padding-bottom:var(--s-10);background:var(--bg-1)" aria-label="Contact and Order Form">
+    <section class="section" style="padding-top:var(--s-8);padding-bottom:var(--s-10);background:var(--bg-1)"
+      aria-label="Contact and Order Form">
       <div class="container">
         <div style="display:grid;grid-template-columns:1fr 380px;gap:var(--s-9);align-items:start" id="contact-layout">
 
           <!-- Left: Order / Inquiry Form -->
-          <div style="background:var(--bg-0);padding:var(--s-8);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--sh-sm)">
+          <div
+            style="background:var(--bg-0);padding:var(--s-8);border:1px solid var(--line);border-radius:var(--r-md);box-shadow:var(--sh-sm)">
             <h2 class="h2 reveal">Send Your Request</h2>
-            <p class="text-mid mt-1 mb-5">Order requests are 100% commitment-free. Our technical team visits your site before any quotation is finalized.</p>
+            <p class="text-mid mt-1 mb-5">Order requests are 100% commitment-free. Our technical team visits your site
+              before any quotation is finalized.</p>
 
             <!-- Pre-selection Banner -->
-            <div id="ct-robot-banner" class="note-box note-box--info" style="display:none;margin-bottom:var(--s-5)"></div>
+            <div id="ct-robot-banner" class="note-box note-box--info" style="display:none;margin-bottom:var(--s-5)">
+            </div>
 
             <form id="contact-form" style="display:flex;flex-direction:column;gap:var(--s-5)" novalidate>
               <!-- Hidden tracking fields for order calculation -->
               <input type="hidden" id="ct-mode" name="mode" value="buy">
               <input type="hidden" id="ct-total" name="total" value="">
               <input type="hidden" id="ct-ref" name="ref" value="">
-              
+
               <!-- Robot Model Selection (Populated & pre-selected from robot cards) -->
               <div class="field" id="field-robot-select">
                 <label class="field__label" for="ct-robot">Robot Model / Configuration of Interest</label>
@@ -83,13 +94,17 @@
               <!-- Name & Organisation -->
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4)">
                 <div class="field">
-                  <label class="field__label" for="ct-name">Your Full Name <span style="color:var(--danger)">*</span></label>
-                  <input class="field__input" type="text" id="ct-name" name="name" required data-error-required="Please enter your name." autocomplete="name" placeholder="e.g. Dr. Rajesh Sharma">
+                  <label class="field__label" for="ct-name">Your Full Name <span
+                      style="color:var(--danger)">*</span></label>
+                  <input class="field__input" type="text" id="ct-name" name="name" required
+                    data-error-required="Please enter your name." autocomplete="name"
+                    placeholder="e.g. Dr. Rajesh Sharma">
                   <span class="field__error" id="ct-name-error" aria-live="polite"></span>
                 </div>
                 <div class="field">
                   <label class="field__label" for="ct-org">Organisation / Institution</label>
-                  <input class="field__input" type="text" id="ct-org" name="organisation" autocomplete="organization" placeholder="e.g. Tech Corp / IIT Delhi">
+                  <input class="field__input" type="text" id="ct-org" name="organisation" autocomplete="organization"
+                    placeholder="e.g. Tech Corp / IIT Delhi">
                 </div>
               </div>
 
@@ -107,37 +122,47 @@
               <!-- Email & Phone -->
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--s-4)">
                 <div class="field">
-                  <label class="field__label" for="ct-email">Official Email Address <span style="color:var(--danger)">*</span></label>
-                  <input class="field__input" type="email" id="ct-email" name="email" required autocomplete="email" placeholder="name@company.com">
+                  <label class="field__label" for="ct-email">Official Email Address <span
+                      style="color:var(--danger)">*</span></label>
+                  <input class="field__input" type="email" id="ct-email" name="email" required autocomplete="email"
+                    placeholder="name@company.com">
                   <span class="field__error" id="ct-email-error" aria-live="polite"></span>
                 </div>
                 <div class="field">
                   <label class="field__label" for="ct-phone">Phone Number</label>
-                  <input class="field__input" type="tel" id="ct-phone" name="phone" autocomplete="tel" placeholder="+91 98765 43210">
+                  <input class="field__input" type="tel" id="ct-phone" name="phone" autocomplete="tel"
+                    placeholder="+91 98765 43210">
                   <span class="field__error" id="ct-phone-error" aria-live="polite"></span>
                 </div>
               </div>
 
               <!-- Message -->
               <div class="field">
-                <label class="field__label" for="ct-message">Your Message & Requirements <span style="color:var(--danger)">*</span></label>
-                <textarea class="field__textarea" id="ct-message" name="message" required data-error-required="Please describe your requirements." placeholder="Tell us about your facility, preferred timeline, or questions for our team..."></textarea>
+                <label class="field__label" for="ct-message">Your Message & Requirements <span
+                    style="color:var(--danger)">*</span></label>
+                <textarea class="field__textarea" id="ct-message" name="message" required
+                  data-error-required="Please describe your requirements."
+                  placeholder="Tell us about your facility, preferred timeline, or questions for our team..."></textarea>
                 <span class="field__error" id="ct-message-error" aria-live="polite"></span>
               </div>
 
               <!-- Consent Checkbox -->
               <label class="checkbox-row">
                 <input type="checkbox" id="ct-consent" name="consent" required checked>
-                <span class="small text-mid">I agree to the <a href="privacy.html" class="link-text" style="font-size:inherit">Privacy Policy</a> and authorize FUTURE ROBOTIX to contact me regarding this request.</span>
+                <span class="small text-mid">I agree to the <a href="privacy.html" class="link-text"
+                    style="font-size:inherit">Privacy Policy</a> and authorize FUTURE ROBOTIX to contact me regarding
+                  this request.</span>
               </label>
               <span class="field__error" id="ct-consent-error" aria-live="polite"></span>
 
               <!-- Feedback Messages -->
               <div id="ct-error-msg" class="note-box note-box--danger" style="display:none">
-                We could not send your message. Please write directly to <a href="mailto:orders@futurerobotix.in">orders@futurerobotix.in</a>.
+                We could not send your message. Please write directly to <a
+                  href="mailto:orders@futurerobotix.in">orders@futurerobotix.in</a>.
               </div>
               <div id="ct-success-msg" class="note-box note-box--success" style="display:none">
-                <strong class="text-hi">Order Request Received!</strong> Our robotics engineering team will review your requirements and reach out within 1 business day.
+                <strong class="text-hi">Order Request Received!</strong> Our robotics engineering team will review your
+                requirements and reach out within 1 business day.
               </div>
 
               <!-- Submit Button -->
@@ -263,18 +288,18 @@
           if (errorMsg) errorMsg.style.display = 'none';
           if (successMsg) successMsg.style.display = 'none';
 
-          if (btn) { 
-            btn.disabled = true; 
-            btn.innerHTML = '<span class="spinner"></span> Logging Request...'; 
+          if (btn) {
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner"></span> Logging Request...';
           }
 
           // Generate unique reference
           const ref = window.FR.genRef ? window.FR.genRef() : ('FR-' + Date.now().toString(36).toUpperCase().slice(-6));
           const robotSelect = document.getElementById('ct-robot');
-          const selectedRobot = (robotSelect && robotSelect.selectedIndex >= 0 && robotSelect.value) 
-            ? robotSelect.options[robotSelect.selectedIndex].text 
+          const selectedRobot = (robotSelect && robotSelect.selectedIndex >= 0 && robotSelect.value)
+            ? robotSelect.options[robotSelect.selectedIndex].text
             : (robotName || 'General Robotic Advisory');
-          
+
           const name = (document.getElementById('ct-name')?.value || '').trim();
           const org = (document.getElementById('ct-org')?.value || '').trim();
           const type = (document.getElementById('ct-type')?.value || 'company');
@@ -295,7 +320,7 @@
           sessionStorage.setItem('fr_order_total', totalVal ? (window.FR.formatINR(totalVal) || ('₹' + totalVal)) : 'Custom Quotation');
 
           // Check if webhook pipeline is active in SITE.contact with fallback
-          const pipelineEndpoint = (window.SITE?.contact?.pipelineEndpoint || 'https://script.google.com/macros/s/AKfycbxuxSe2bZTvJxUK3QrKHjy_ACUlzS4BCcrCe-6-O02SGJ2UJJye_5ELLBGv2Jx9wGcr/exec').trim();
+          const pipelineEndpoint = (window.SITE?.contact?.pipelineEndpoint || 'https://script.google.com/macros/s/AKfycbytUe3H_qAyNcEaEeKUd9RBj-4gsaGLgC55MxW99nrYWd9_bEGKkJWSr_e1zIpLEbg/exec').trim();
 
           if (pipelineEndpoint) {
             try {
@@ -333,22 +358,30 @@
   </script>
 
   <style>
-    @keyframes spin { to { transform: rotate(360deg); } }
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
     .spinner {
       display: inline-block;
       width: 14px;
       height: 14px;
-      border: 2px solid rgba(255,255,255,0.3);
+      border: 2px solid rgba(255, 255, 255, 0.3);
       border-top-color: #fff;
       border-radius: 50%;
       animation: spin 0.8s linear infinite;
       margin-right: 8px;
       vertical-align: middle;
     }
+
     @media (max-width: 1024px) {
-      #contact-layout { grid-template-columns: 1fr; }
+      #contact-layout {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </body>
-</html>
 
+</html>

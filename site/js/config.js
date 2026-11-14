@@ -41,8 +41,8 @@ const SITE = {
     emailSupport: 'support@futurerobotix.in',
     phone: '+91 98765 43210',
     whatsappNumber: '919876543210',
-    // Google Apps Script Web App URL:
-    pipelineEndpoint: 'https://script.google.com/macros/s/AKfycbxuxSe2bZTvJxUK3QrKHjy_ACUlzS4BCcrCe-6-O02SGJ2UJJye_5ELLBGv2Jx9wGcr/exec', 
+    // Google Apps Script Web App URL (Google Workspace: support@futurerobotix.in):
+    pipelineEndpoint: 'https://script.google.com/macros/s/AKfycbytUe3H_qAyNcEaEeKUd9RBj-4gsaGLgC55MxW99nrYWd9_bEGKkJWSr_e1zIpLEbg/exec', 
     supportHours: 'Monday – Saturday: 09:30 – 18:30 IST',
     responseTime: 'Guaranteed technical response within 1 business day'
   },
