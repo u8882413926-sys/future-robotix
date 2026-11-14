@@ -19,10 +19,7 @@
 // PASTE YOUR GOOGLE SHEET URL OR SPREADSHEET ID HERE.
 // If your script was created standalone or outside the sheet, pasting your URL/ID
 // guarantees 100% that incoming orders are written to your exact Google Sheet!
-// Example: "https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit"
-// Or just ID: "1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms"
-// (Leave as "" ONLY if this script is directly inside Google Sheets via Extensions > Apps Script)
-const SPREADSHEET_ID_OR_URL = "";
+const SPREADSHEET_ID_OR_URL = "https://docs.google.com/spreadsheets/d/1ZTS1s22x__Or70Atk2vjAt_BQXHixGQfNY3VjuGDe1w/edit";
 
 // The name of the tab inside your Google Sheet where orders are logged
 const SHEET_NAME = "Orders & Inquiries";
@@ -83,16 +80,9 @@ function doGet(e) {
     sheetStatus = "error: " + err.message;
   }
 
-  let emailMode = "GmailApp (Primary Account)";
+  let emailMode = "Google Workspace Native (support@futurerobotix.in)";
   if (typeof RESEND_API_KEY !== 'undefined' && RESEND_API_KEY && RESEND_API_KEY.trim().startsWith("re_")) {
-    emailMode = "Resend API (Cloud Custom Domain: " + SENDER_EMAIL + ")";
-  } else {
-    try {
-      const aliases = GmailApp.getAliases();
-      if (aliases && aliases.indexOf(SENDER_EMAIL) !== -1) {
-        emailMode = "GmailApp Alias (" + SENDER_EMAIL + " verified)";
-      }
-    } catch (e) {}
+    emailMode = "Resend API (" + SENDER_EMAIL + ")";
   }
 
   const statusResponse = {
